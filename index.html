@@ -6,679 +6,1212 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="FuelTrack">
-<meta name="theme-color" content="#185FA5">
+<meta name="theme-color" content="#0f4c81">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
 <title>FuelTrack Pro</title>
 <style>
-  :root {
-    --blue: #185FA5;
-    --blue-light: #E6F1FB;
-    --blue-dark: #0C447C;
-    --green-bg: #EAF3DE;
-    --green-text: #27500A;
-    --amber-bg: #FAEEDA;
-    --amber-text: #633806;
-    --red-bg: #FCEBEB;
-    --red-text: #791F1F;
-    --red-border: #F7C1C1;
-    --teal-bg: #E1F5EE;
-    --surface: #f8f9fa;
-    --border: rgba(0,0,0,0.12);
-    --border-strong: rgba(0,0,0,0.22);
-    --text: #1a1a1a;
-    --text-muted: #6b7280;
-    --radius: 10px;
-    --radius-lg: 14px;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-  html, body { height: 100%; overflow: hidden; background: #f0f4f8; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 15px; color: var(--text); }
+:root{
+  --blue:#0f4c81;--blue2:#1a6db5;--blue-light:#e8f2fc;--blue-pale:#f0f7ff;
+  --green-bg:#e8f5e9;--green:#2e7d32;
+  --amber-bg:#fff8e1;--amber:#b45309;
+  --red-bg:#ffebee;--red:#c62828;--red-b:#ffcdd2;
+  --purple-bg:#f3e5f5;--purple:#6a1b9a;
+  --surface:#f5f7fa;--card:#fff;
+  --border:rgba(0,0,0,0.09);--border2:rgba(0,0,0,0.17);
+  --text:#111;--muted:#6b7280;--r:10px;--rl:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden;background:#dde3ee;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:15px;color:var(--text)}
+#app{display:flex;flex-direction:column;height:100vh;height:100dvh;max-width:480px;margin:0 auto;background:#fff;box-shadow:0 0 60px rgba(0,0,0,0.18)}
 
-  /* LAYOUT */
-  #app { display: flex; flex-direction: column; height: 100vh; height: 100dvh; max-width: 480px; margin: 0 auto; background: #fff; box-shadow: 0 0 40px rgba(0,0,0,0.12); }
+/* ── SETUP SCREEN ── */
+#setup{position:fixed;inset:0;background:#fff;z-index:300;overflow-y:auto;padding:30px 20px 40px;max-width:480px;margin:0 auto}
+.s-logo{text-align:center;font-size:44px;margin-bottom:12px}
+.s-title{text-align:center;font-size:21px;font-weight:700;color:var(--blue);margin-bottom:6px}
+.s-sub{text-align:center;font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.6}
+.s-card{background:var(--surface);border:0.5px solid var(--border2);border-radius:var(--rl);padding:18px;margin-bottom:14px}
+.s-step{font-size:10px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:10px}
+.s-label{font-size:13px;color:var(--muted);font-weight:600;margin-bottom:5px;display:block}
+.s-input{width:100%;padding:11px 13px;font-size:14px;border:0.5px solid var(--border2);border-radius:var(--r);background:#fff;color:var(--text);outline:none;font-family:inherit}
+.s-input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(15,76,129,0.12)}
+.s-hint{font-size:11px;color:var(--muted);margin-top:5px;line-height:1.55}
+.s-hint a{color:var(--blue)}
+.s-btn{width:100%;padding:14px;font-size:15px;font-weight:700;background:var(--blue);color:#fff;border:none;border-radius:var(--r);cursor:pointer;margin-top:6px}
+.s-link{text-align:center;font-size:13px;color:var(--blue);margin-top:12px;cursor:pointer;text-decoration:underline}
+.s-help{background:var(--blue-pale);border:1px solid #bdd6f0;border-radius:var(--r);padding:14px;margin-top:10px;font-size:13px;color:#0a3d6e;line-height:1.75;display:none}
+.s-help b{display:block;font-weight:700;margin-bottom:2px}
 
-  /* TOP BAR */
-  .top-bar { background: var(--blue); color: #fff; padding: 12px 16px; padding-top: max(12px, env(safe-area-inset-top)); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
-  .top-bar-left { display: flex; align-items: center; gap: 10px; }
-  .top-bar-icon { width: 32px; height: 32px; background: rgba(255,255,255,0.2); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
-  .top-bar-title { font-size: 17px; font-weight: 600; letter-spacing: -0.3px; }
-  .top-bar-sub { font-size: 11px; opacity: 0.75; }
-  .admin-pill { background: rgba(255,255,255,0.25); color: #fff; font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px; }
+/* ── TOP BAR ── */
+.topbar{background:linear-gradient(135deg,#0d3f6e,#1a6db5);color:#fff;padding:13px 16px;padding-top:max(13px,env(safe-area-inset-top));display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.tb-l{display:flex;align-items:center;gap:10px}
+.tb-ico{width:34px;height:34px;background:rgba(255,255,255,0.18);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:19px}
+.tb-title{font-size:17px;font-weight:700;letter-spacing:-0.3px}
+.tb-sub{font-size:10px;opacity:0.72;margin-top:1px}
+.tb-r{display:flex;align-items:center;gap:8px}
+.sync-dot{width:8px;height:8px;border-radius:50%;background:#4caf50;flex-shrink:0}
+.sync-dot.off{background:#ef5350}.sync-dot.busy{background:#ffa726;animation:blink 0.8s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+.admin-tag{background:rgba(255,255,255,0.22);font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px}
 
-  /* NAV */
-  .nav-bar { display: flex; background: #fff; border-bottom: 0.5px solid var(--border); flex-shrink: 0; }
-  .nav-btn { flex: 1; padding: 10px 4px 8px; border: none; background: none; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 3px; color: var(--text-muted); font-size: 10px; font-weight: 500; border-bottom: 2px solid transparent; transition: all 0.15s; }
-  .nav-btn.active { color: var(--blue); border-bottom-color: var(--blue); }
-  .nav-btn svg { width: 22px; height: 22px; }
+/* ── NAV ── */
+.navbar{display:flex;background:#fff;border-bottom:0.5px solid var(--border);flex-shrink:0}
+.nb{flex:1;padding:10px 4px 8px;border:none;background:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--muted);font-size:10px;font-weight:600;border-bottom:2px solid transparent}
+.nb.active{color:var(--blue);border-bottom-color:var(--blue)}
+.nb svg{width:21px;height:21px}
 
-  /* SCROLL AREA */
-  .page { display: none; flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 14px 14px max(14px, env(safe-area-inset-bottom)); }
-  .page.active { display: block; }
+/* ── PAGES ── */
+.page{display:none;flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:14px 14px max(80px,env(safe-area-inset-bottom))}
+.page.active{display:block}
 
-  /* CARDS */
-  .card { background: #fff; border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 14px 16px; margin-bottom: 12px; }
-  .card-title { font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.7px; margin-bottom: 12px; }
+/* ── CARDS ── */
+.card{background:var(--card);border:0.5px solid var(--border);border-radius:var(--rl);padding:14px 16px;margin-bottom:12px}
+.card-t{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.7px;margin-bottom:12px}
 
-  /* FORM */
-  .form-group { margin-bottom: 12px; }
-  .form-label { font-size: 13px; color: var(--text-muted); margin-bottom: 5px; display: block; font-weight: 500; }
-  .form-input { width: 100%; padding: 11px 13px; font-size: 15px; border: 0.5px solid var(--border-strong); border-radius: var(--radius); background: var(--surface); color: var(--text); outline: none; appearance: none; -webkit-appearance: none; }
-  .form-input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(24,95,165,0.15); background: #fff; }
-  select.form-input { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 13px center; padding-right: 36px; }
+/* ── FORM ── */
+.fg{margin-bottom:12px}
+.fl{font-size:13px;color:var(--muted);font-weight:600;margin-bottom:5px;display:block}
+.fi{width:100%;padding:11px 13px;font-size:15px;border:0.5px solid var(--border2);border-radius:var(--r);background:var(--surface);color:var(--text);outline:none;-webkit-appearance:none;font-family:inherit}
+.fi:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(15,76,129,0.12);background:#fff}
+select.fi{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:34px}
+textarea.fi{resize:vertical;min-height:68px}
 
-  /* BUTTONS */
-  .btn { width: 100%; padding: 14px; font-size: 15px; font-weight: 600; border: none; border-radius: var(--radius); cursor: pointer; transition: all 0.15s; }
-  .btn:active { transform: scale(0.98); }
-  .btn-primary { background: var(--blue); color: #fff; }
-  .btn-primary:active { background: var(--blue-dark); }
-  .btn-outline { background: #fff; color: var(--blue); border: 1.5px solid var(--blue); margin-top: 8px; }
+/* ── BUTTONS ── */
+.btn{width:100%;padding:13px;font-size:15px;font-weight:700;border:none;border-radius:var(--r);cursor:pointer;transition:transform 0.1s}
+.btn:active{transform:scale(0.98)}
+.btn-blue{background:var(--blue);color:#fff}
+.btn-red{background:var(--red-bg);color:var(--red);border:1px solid var(--red-b);font-size:12px;padding:7px 12px;width:auto}
+.btn-green{background:var(--green-bg);color:var(--green);border:none;font-size:12px;padding:7px 12px;width:auto;font-weight:700;border-radius:8px;cursor:pointer}
+.btn-purple{background:var(--purple-bg);color:var(--purple);border:none;font-size:12px;padding:7px 12px;width:auto;font-weight:700;border-radius:8px;cursor:pointer}
+.btn-sm-blue{background:var(--blue-light);color:var(--blue);border:none;font-size:12px;padding:7px 12px;width:auto;font-weight:700;border-radius:8px;cursor:pointer}
 
-  /* BILL UPLOAD */
-  .bill-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
-  .bill-opt { border: 1.5px solid var(--border); border-radius: var(--radius); padding: 14px 8px; display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: pointer; background: var(--surface); position: relative; overflow: hidden; transition: all 0.15s; min-height: 80px; justify-content: center; }
-  .bill-opt.selected { border-color: var(--blue); background: var(--blue-light); }
-  .bill-opt input[type=file] { position: absolute; inset: 0; opacity: 0; width: 100%; height: 100%; cursor: pointer; }
-  .bill-opt-icon { font-size: 22px; line-height: 1; }
-  .bill-opt-label { font-size: 13px; font-weight: 600; color: var(--text); }
-  .bill-opt-sub { font-size: 11px; color: var(--text-muted); }
-  .bill-preview { display: none; align-items: center; gap: 10px; background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius); padding: 10px 12px; margin-top: 4px; }
-  .bill-thumb { width: 48px; height: 48px; border-radius: 8px; object-fit: cover; flex-shrink: 0; border: 0.5px solid var(--border); }
-  .bill-thumb-pdf { width: 48px; height: 48px; border-radius: 8px; background: var(--amber-bg); display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
-  .bill-info { flex: 1; min-width: 0; }
-  .bill-name { font-size: 13px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--text); }
-  .bill-meta { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
-  .bill-remove { font-size: 12px; color: var(--red-text); cursor: pointer; padding: 4px 8px; background: var(--red-bg); border-radius: 6px; flex-shrink: 0; font-weight: 500; }
+/* ── BILL OPTIONS ── */
+.bill-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.bopt{border:1.5px solid var(--border);border-radius:var(--r);padding:14px 8px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;background:var(--surface);position:relative;overflow:hidden;min-height:82px;justify-content:center;transition:all 0.15s}
+.bopt.sel{border-color:var(--blue);background:var(--blue-light)}
+.bopt input[type=file]{position:absolute;inset:0;opacity:0;width:100%;height:100%;cursor:pointer}
+.bopt-ico{font-size:22px;line-height:1}
+.bopt-lbl{font-size:13px;font-weight:700;color:var(--text)}
+.bopt-sub{font-size:11px;color:var(--muted)}
 
-  /* BADGES */
-  .badge { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
-  .badge-ok { background: var(--green-bg); color: var(--green-text); }
-  .badge-flag { background: var(--red-bg); color: var(--red-text); }
-  .badge-info { background: var(--blue-light); color: var(--blue-dark); }
-  .badge-warn { background: var(--amber-bg); color: var(--amber-text); }
+/* ── BILL PREVIEW ── */
+.bpreview{display:none;align-items:center;gap:10px;background:var(--surface);border:0.5px solid var(--border);border-radius:var(--r);padding:10px 12px;margin-top:6px}
+.bthumb{width:50px;height:50px;border-radius:8px;object-fit:cover;flex-shrink:0;border:0.5px solid var(--border);cursor:pointer}
+.bthumb-pdf{width:50px;height:50px;border-radius:8px;background:var(--amber-bg);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.binfo{flex:1;min-width:0}
+.bname{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bmeta{font-size:11px;color:var(--muted);margin-top:2px}
+.bremove{font-size:12px;color:var(--red);cursor:pointer;padding:5px 10px;background:var(--red-bg);border-radius:6px;flex-shrink:0;font-weight:600}
 
-  /* ALERTS */
-  .alert { padding: 11px 14px; border-radius: var(--radius); font-size: 13px; margin-bottom: 12px; line-height: 1.5; }
-  .alert-ok { background: var(--green-bg); color: var(--green-text); }
-  .alert-err { background: var(--red-bg); color: var(--red-text); }
-  .alert-warn { background: var(--amber-bg); color: var(--amber-text); }
-  .alert-info { background: var(--blue-light); color: var(--blue-dark); }
+/* ── AI BOX ── */
+.ai-box{background:var(--blue-pale);border:1px solid #b8d4f0;border-radius:var(--r);padding:13px;margin-top:8px;display:none}
+.ai-hd{font-size:12px;font-weight:700;color:var(--blue);margin-bottom:8px}
+.ai-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:0.5px solid rgba(15,76,129,0.1)}
+.ai-row:last-of-type{border-bottom:none}
+.ai-key{font-size:12px;color:var(--muted)}
+.ai-val{font-size:13px;font-weight:700;color:var(--blue)}
+.ai-apply{margin-top:10px;background:var(--blue);color:#fff;border:none;border-radius:8px;padding:10px;font-size:13px;font-weight:700;cursor:pointer;width:100%}
+.ai-status{font-size:12px;padding:6px 0;color:var(--muted);text-align:center}
 
-  /* STATS */
-  .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
-  .stat-card { background: var(--surface); border-radius: var(--radius); padding: 13px; }
-  .stat-label { font-size: 11px; color: var(--text-muted); font-weight: 500; margin-bottom: 4px; }
-  .stat-val { font-size: 22px; font-weight: 600; color: var(--text); line-height: 1; }
-  .stat-val.red { color: #A32D2D; }
-  .stat-sub { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
+/* ── BADGES ── */
+.badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;white-space:nowrap}
+.b-ok{background:var(--green-bg);color:var(--green)}
+.b-flag{background:var(--red-bg);color:var(--red)}
+.b-info{background:var(--blue-light);color:var(--blue)}
+.b-arch{background:var(--purple-bg);color:var(--purple)}
+.b-over{background:#e0f7fa;color:#00695c}
 
-  /* LIST ITEMS */
-  .list-item { padding: 12px 0; border-bottom: 0.5px solid var(--border); }
-  .list-item:last-child { border-bottom: none; }
-  .list-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 3px; }
-  .list-title { font-size: 14px; font-weight: 600; color: var(--text); }
-  .list-sub { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
-  .list-blue { color: var(--blue); font-size: 12px; margin-top: 2px; }
+/* ── ALERTS ── */
+.alert{padding:11px 14px;border-radius:var(--r);font-size:13px;margin-bottom:12px;line-height:1.55}
+.a-ok{background:var(--green-bg);color:var(--green)}
+.a-err{background:var(--red-bg);color:var(--red)}
+.a-warn{background:var(--amber-bg);color:var(--amber)}
+.a-info{background:var(--blue-light);color:var(--blue)}
 
-  /* FLAG ITEMS */
-  .flag-card { background: var(--red-bg); border: 0.5px solid var(--red-border); border-radius: var(--radius); padding: 13px; margin-bottom: 8px; }
-  .flag-title { font-size: 14px; font-weight: 600; color: var(--red-text); margin-bottom: 4px; }
-  .flag-sub { font-size: 12px; color: #A32D2D; line-height: 1.5; }
+/* ── STATS ── */
+.sgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.scard{background:var(--surface);border-radius:var(--r);padding:13px}
+.slabel{font-size:11px;color:var(--muted);font-weight:600;margin-bottom:4px}
+.sval{font-size:22px;font-weight:700;color:var(--text);line-height:1}
+.sval.red{color:var(--red)}.sval.green{color:var(--green)}
+.ssub{font-size:11px;color:var(--muted);margin-top:3px}
 
-  /* ADMIN SUBTABS */
-  .subtab-row { display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; }
-  .subtab { padding: 7px 14px; font-size: 12px; font-weight: 600; border: 1px solid var(--border-strong); border-radius: 20px; cursor: pointer; background: #fff; color: var(--text-muted); }
-  .subtab.active { background: var(--blue); color: #fff; border-color: var(--blue); }
-  .tab-pane { display: none; }
-  .tab-pane.active { display: block; }
+/* ── LIST ── */
+.li{padding:13px 0;border-bottom:0.5px solid var(--border)}
+.li:last-child{border-bottom:none}
+.li-row{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px}
+.li-title{font-size:14px;font-weight:700}
+.li-sub{font-size:12px;color:var(--muted);line-height:1.55}
+.li-blue{color:var(--blue);font-size:12px;margin-top:3px;cursor:pointer;font-weight:600}
 
-  /* LOGIN */
-  .lock-screen { text-align: center; padding: 50px 20px 20px; }
-  .lock-icon { font-size: 48px; margin-bottom: 14px; }
-  .lock-title { font-size: 18px; font-weight: 600; margin-bottom: 6px; }
-  .lock-sub { font-size: 14px; color: var(--text-muted); margin-bottom: 24px; }
+/* ── EXCEPTION CARDS ── */
+.exc-card{border-radius:var(--r);padding:13px;margin-bottom:10px}
+.exc-active{background:var(--red-bg);border:0.5px solid var(--red-b)}
+.exc-arch{background:var(--purple-bg);border:0.5px solid #d1a8e8}
+.exc-title{font-size:14px;font-weight:700;margin-bottom:5px}
+.exc-active .exc-title{color:var(--red)}
+.exc-arch .exc-title{color:var(--purple)}
+.exc-body{font-size:12px;line-height:1.65}
+.exc-active .exc-body{color:#b71c1c}
+.exc-arch .exc-body{color:#7b1fa2}
+.exc-acts{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
 
-  /* UPLOAD DROP */
-  .drop-zone { border: 2px dashed var(--border-strong); border-radius: var(--radius); padding: 24px; text-align: center; cursor: pointer; background: var(--surface); position: relative; }
-  .drop-zone input { position: absolute; inset: 0; opacity: 0; width: 100%; height: 100%; cursor: pointer; }
-  .drop-icon { font-size: 28px; margin-bottom: 8px; }
-  .drop-text { font-size: 13px; color: var(--text-muted); }
+/* ── VEHICLE ROWS ── */
+.vrow{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:0.5px solid var(--border)}
+.vrow:last-child{border-bottom:none}
+.vname{font-size:14px;font-weight:700}
+.vmeta{font-size:12px;color:var(--muted)}
 
-  /* MISC */
-  .empty { text-align: center; padding: 32px 20px; color: var(--text-muted); font-size: 14px; }
-  .section-label { font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.7px; margin: 16px 0 8px; }
-  .veh-row { display: flex; align-items: center; justify-content: space-between; padding: 11px 0; border-bottom: 0.5px solid var(--border); }
-  .veh-row:last-child { border-bottom: none; }
+/* ── SUBTABS ── */
+.stabs{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
+.stab{padding:7px 13px;font-size:12px;font-weight:700;border:1px solid var(--border2);border-radius:20px;cursor:pointer;background:#fff;color:var(--muted)}
+.stab.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+.tpane{display:none}
+.tpane.active{display:block}
 
-  /* INSTALL BANNER */
-  #install-banner { display: none; background: var(--blue); color: #fff; padding: 12px 16px; font-size: 13px; align-items: center; justify-content: space-between; gap: 10px; flex-shrink: 0; }
-  #install-banner.show { display: flex; }
-  #install-banner button { background: rgba(255,255,255,0.2); border: none; color: #fff; padding: 6px 14px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; }
-  #install-banner .dismiss { background: none; padding: 4px 8px; opacity: 0.7; }
+/* ── LOGIN ── */
+.lock{text-align:center;padding:40px 20px 20px}
+.lock-ico{font-size:52px;margin-bottom:14px}
+.lock-title{font-size:20px;font-weight:700;margin-bottom:6px}
+.lock-sub{font-size:14px;color:var(--muted);margin-bottom:24px}
 
-  /* iOS install tip */
-  #ios-tip { display: none; background: var(--blue-dark); color: #fff; padding: 12px 16px; font-size: 12px; line-height: 1.6; flex-shrink: 0; }
-  #ios-tip.show { display: block; }
-  #ios-tip strong { display: block; font-size: 13px; margin-bottom: 4px; }
-  .ios-close { float: right; cursor: pointer; opacity: 0.7; font-size: 16px; }
+/* ── DROP ZONE ── */
+.dropzone{border:2px dashed var(--border2);border-radius:var(--r);padding:22px;text-align:center;cursor:pointer;background:var(--surface);position:relative}
+.dropzone input{position:absolute;inset:0;opacity:0;width:100%;height:100%;cursor:pointer}
+
+/* ── MODAL ── */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:100;display:none;align-items:center;justify-content:center;padding:20px}
+.overlay.open{display:flex}
+.mbox{background:#fff;border-radius:var(--rl);padding:16px;max-width:440px;width:100%;max-height:88vh;overflow-y:auto}
+.mbox-hd{font-size:15px;font-weight:700;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
+.mclose{font-size:22px;cursor:pointer;color:var(--muted);line-height:1}
+.mimg{width:100%;border-radius:8px;border:0.5px solid var(--border)}
+
+/* ── JSON PREVIEW ── */
+.json-box{background:#1e1e2e;color:#cdd6f4;border-radius:var(--r);padding:14px;font-family:monospace;font-size:12px;line-height:1.7;overflow-x:auto;margin-top:8px;white-space:pre-wrap;word-break:break-all}
+.jk{color:#89b4fa}.jv{color:#a6e3a1}.jvs{color:#f9e2af}.jvn{color:#fab387}
+
+/* ── LOADING ── */
+.loader{position:fixed;inset:0;background:rgba(255,255,255,0.88);z-index:200;display:none;align-items:center;justify-content:center;flex-direction:column;gap:12px}
+.loader.show{display:flex}
+.spin{width:36px;height:36px;border:3px solid var(--blue-light);border-top-color:var(--blue);border-radius:50%;animation:spin 0.65s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loader-txt{font-size:14px;color:var(--muted);font-weight:500}
+
+.empty{text-align:center;padding:30px 20px;color:var(--muted);font-size:14px}
+.sec-lbl{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.7px;margin:16px 0 8px}
+
+/* ── INSTALL ── */
+#ibanner{display:none;background:var(--blue);color:#fff;padding:12px 16px;font-size:13px;align-items:center;justify-content:space-between;gap:10px;flex-shrink:0}
+#ibanner.show{display:flex}
+#ibanner button{background:rgba(255,255,255,0.2);border:none;color:#fff;padding:6px 14px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer}
+#iostip{display:none;background:#052d52;color:#fff;padding:12px 16px;font-size:12px;line-height:1.6;flex-shrink:0}
+#iostip.show{display:block}
+.ios-x{float:right;cursor:pointer;opacity:0.7;font-size:16px}
+
+/* ── REMARK REQUIRED ── */
+.remark-required{background:var(--amber-bg);border:1px solid #fcd28b;border-radius:var(--r);padding:12px;margin-top:8px;display:none}
+.rr-title{font-size:13px;font-weight:700;color:var(--amber);margin-bottom:8px}
 </style>
 </head>
 <body>
-<div id="app">
 
-  <!-- TOP BAR -->
-  <div class="top-bar">
-    <div class="top-bar-left">
-      <div class="top-bar-icon">⛽</div>
-      <div>
-        <div class="top-bar-title">FuelTrack Pro</div>
-        <div class="top-bar-sub">Fleet fuel management</div>
+<!-- ══════════════════ SETUP SCREEN ══════════════════ -->
+<div id="setup">
+  <div class="s-logo">⛽</div>
+  <div class="s-title">FuelTrack Pro</div>
+  <div class="s-sub">Connect your JSONBin cloud database so drivers and admin share data in real time.</div>
+
+  <div class="s-card">
+    <div class="s-step">Step 1 — JSONBin API Key</div>
+    <label class="s-label">Master API Key</label>
+    <input class="s-input" id="s-apikey" placeholder="$2b$10$xxxxxxxxxxxxxxxxxxxxxxxxx" type="password">
+    <div class="s-hint">Free at <a href="https://jsonbin.io" target="_blank">jsonbin.io</a> → Sign up → API Keys → Copy your Master Key</div>
+  </div>
+
+  <div class="s-card">
+    <div class="s-step">Step 2 — Admin password</div>
+    <label class="s-label">Admin password</label>
+    <input class="s-input" id="s-pass" placeholder="e.g. Momdad143" type="password">
+    <div class="s-hint">Only admins know this password. Drivers do not need it.</div>
+  </div>
+
+  <div id="s-err" class="alert a-err" style="display:none;"></div>
+  <button class="s-btn" onclick="doSetup()">Connect &amp; Start →</button>
+  <div class="s-link" onclick="toggleHelp()">How do I get a JSONBin API key? →</div>
+  <div class="s-help" id="s-help">
+    <b>Quick steps (2 minutes, free):</b>
+    1. Go to <b>jsonbin.io</b><br>
+    2. Click <b>Sign Up</b> → create account<br>
+    3. Go to <b>API Keys</b> in top menu<br>
+    4. Copy your <b>Master Key</b><br>
+    5. Paste it above ✓<br><br>
+    The app will automatically create 4 cloud databases for you.
+  </div>
+</div>
+
+<!-- ══════════════════ MAIN APP ══════════════════ -->
+<div id="mainapp" style="display:none;flex-direction:column;height:100%;overflow:hidden;">
+
+<div class="topbar">
+  <div class="tb-l">
+    <div class="tb-ico">⛽</div>
+    <div><div class="tb-title">FuelTrack Pro</div><div class="tb-sub" id="tb-sub">Fleet fuel management</div></div>
+  </div>
+  <div class="tb-r">
+    <span class="sync-dot" id="sdot"></span>
+    <div id="admin-tag" style="display:none;"><span class="admin-tag">🔑 Admin</span></div>
+  </div>
+</div>
+
+<div id="ibanner">
+  <span>📲 Install FuelTrack on your phone</span>
+  <div style="display:flex;gap:6px;">
+    <button onclick="installPWA()">Install</button>
+    <button onclick="this.closest('#ibanner').classList.remove('show')" style="background:rgba(255,255,255,0.1);">✕</button>
+  </div>
+</div>
+<div id="iostip">
+  <span class="ios-x" onclick="this.parentElement.classList.remove('show');ls('iot','1')">✕</span>
+  <strong>📲 Install on iPhone:</strong> Tap Share (□↑) in Safari → "Add to Home Screen"
+</div>
+
+<div class="navbar">
+  <button class="nb active" id="nav-d" onclick="goPage('driver',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+    Submit
+  </button>
+  <button class="nb" id="nav-h" onclick="goPage('history',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+    History
+  </button>
+  <button class="nb" id="nav-a" onclick="goPage('admin',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    Admin
+  </button>
+</div>
+
+<!-- ══════ DRIVER PAGE ══════ -->
+<div class="page active" id="page-driver">
+  <div class="alert a-info" style="margin-top:2px;">
+    📸 Take a photo of your fuel bill — the AI will read it automatically. Just enter your vehicle number.
+  </div>
+  <div id="d-alert" style="display:none;"></div>
+
+  <div class="card">
+    <div class="card-t">Step 1 — Upload fuel bill</div>
+    <div class="bill-grid">
+      <div class="bopt" id="bo-camera">
+        <input type="file" id="f-camera" accept="image/*" capture="environment" onchange="onBill(this,'camera')">
+        <div class="bopt-ico">📷</div><div class="bopt-lbl">Camera</div><div class="bopt-sub">Take photo</div>
+      </div>
+      <div class="bopt" id="bo-gallery">
+        <input type="file" id="f-gallery" accept="image/*" onchange="onBill(this,'gallery')">
+        <div class="bopt-ico">🖼️</div><div class="bopt-lbl">Gallery</div><div class="bopt-sub">Pick image</div>
+      </div>
+      <div class="bopt" id="bo-pdf">
+        <input type="file" id="f-pdf" accept=".pdf,application/pdf" onchange="onBill(this,'pdf')">
+        <div class="bopt-ico">📄</div><div class="bopt-lbl">PDF</div><div class="bopt-sub">Upload PDF</div>
+      </div>
+      <div class="bopt" id="bo-any">
+        <input type="file" id="f-any" accept="image/*,.pdf" onchange="onBill(this,'any')">
+        <div class="bopt-ico">📁</div><div class="bopt-lbl">Any file</div><div class="bopt-sub">Image or PDF</div>
       </div>
     </div>
-    <div id="admin-pill" style="display:none;"><span class="admin-pill">Admin</span></div>
-  </div>
 
-  <!-- INSTALL BANNER (Android) -->
-  <div id="install-banner">
-    <span>📲 Install FuelTrack on your phone</span>
-    <div style="display:flex;gap:6px;">
-      <button onclick="installApp()">Install</button>
-      <button class="dismiss" onclick="document.getElementById('install-banner').classList.remove('show')">✕</button>
+    <div class="bpreview" id="bpreview">
+      <div id="bthumb"></div>
+      <div class="binfo"><div class="bname" id="bname"></div><div class="bmeta" id="bmeta"></div></div>
+      <div class="bremove" onclick="clearBill()">Remove</div>
+    </div>
+
+    <!-- AI Results -->
+    <div class="ai-box" id="ai-box">
+      <div class="ai-hd">✨ AI extracted from your bill</div>
+      <div id="ai-rows"></div>
+      <button class="ai-apply" id="ai-apply" onclick="applyAI()" style="display:none;">✓ Use this data</button>
     </div>
   </div>
 
-  <!-- IOS TIP -->
-  <div id="ios-tip">
-    <span class="ios-close" onclick="this.parentElement.classList.remove('show')">✕</span>
-    <strong>📲 Install on iPhone/iPad</strong>
-    Tap the <strong>Share</strong> button (□↑) in Safari, then tap <strong>"Add to Home Screen"</strong> to use FuelTrack offline.
+  <div class="card">
+    <div class="card-t">Step 2 — Vehicle number</div>
+    <div class="fg">
+      <label class="fl">Select your vehicle</label>
+      <select class="fi" id="veh-sel"><option value="">— Select vehicle —</option></select>
+    </div>
+    <div class="fg" style="margin-bottom:0;">
+      <label class="fl">Or type vehicle number</label>
+      <input type="text" class="fi" id="veh-man" placeholder="e.g. QA-12345" autocapitalize="characters">
+    </div>
   </div>
 
-  <!-- NAV -->
-  <div class="nav-bar">
-    <button class="nav-btn active" id="nav-driver" onclick="showPage('driver',this)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/><circle cx="19" cy="6" r="3" fill="currentColor" stroke="none"/></svg>
-      Driver
-    </button>
-    <button class="nav-btn" id="nav-history" onclick="showPage('history',this)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-      History
-    </button>
-    <button class="nav-btn" id="nav-admin" onclick="showPage('admin',this)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-      Admin
-    </button>
+  <div class="card" id="ai-confirm-card" style="display:none;">
+    <div class="card-t">Step 3 — Confirm extracted data</div>
+    <div class="fg">
+      <label class="fl">Liters (AI detected)</label>
+      <input type="number" class="fi" id="c-liters" placeholder="e.g. 40" step="0.1" inputmode="decimal">
+    </div>
+    <div class="fg">
+      <label class="fl">Date (AI detected)</label>
+      <input type="text" class="fi" id="c-date" placeholder="e.g. 2026-04-28">
+    </div>
+    <div class="fg">
+      <label class="fl">Amount (AI detected)</label>
+      <input type="text" class="fi" id="c-amount" placeholder="e.g. 150 QAR">
+    </div>
+    <div class="fg" style="margin-bottom:0;">
+      <label class="fl">Current odometer (km)</label>
+      <input type="number" class="fi" id="c-odo" placeholder="e.g. 54321" inputmode="numeric">
+    </div>
   </div>
 
-  <!-- =================== DRIVER PAGE =================== -->
-  <div class="page active" id="page-driver">
+  <!-- Remark required for flagged -->
+  <div class="remark-required" id="remark-box">
+    <div class="rr-title">⚠ Early refuel detected — remark required</div>
+    <div style="font-size:12px;color:var(--amber);margin-bottom:8px;" id="flag-reason-txt"></div>
+    <textarea class="fi" id="remark-input" placeholder="Explain why the vehicle refueled early..." style="min-height:60px;"></textarea>
+  </div>
 
-    <div id="submit-alert" style="display:none;"></div>
+  <button class="btn btn-blue" onclick="submitRefuel()" style="margin-bottom:12px;" id="submit-btn">⛽ Submit refuel</button>
 
+  <!-- Result JSON preview -->
+  <div id="result-json" style="display:none;">
+    <div class="sec-lbl">Saved record</div>
+    <div class="json-box" id="json-display"></div>
+  </div>
+</div>
+
+<!-- ══════ HISTORY PAGE ══════ -->
+<div class="page" id="page-history">
+  <div class="sgrid" style="margin-top:2px;">
+    <div class="scard"><div class="slabel">Total refuels</div><div class="sval" id="h-total">—</div></div>
+    <div class="scard"><div class="slabel">Vehicles</div><div class="sval" id="h-veh">—</div></div>
+  </div>
+  <div class="card">
+    <input type="search" class="fi" id="h-search" placeholder="Search vehicle or driver..." oninput="renderHistory()" style="margin-bottom:12px;">
+    <div id="h-list"><div class="empty">Loading...</div></div>
+  </div>
+</div>
+
+<!-- ══════ ADMIN PAGE ══════ -->
+<div class="page" id="page-admin">
+
+  <!-- Login -->
+  <div id="a-login">
+    <div class="lock">
+      <div class="lock-ico">🔐</div>
+      <div class="lock-title">Admin only</div>
+      <div class="lock-sub">Drivers do not need to sign in here.</div>
+    </div>
     <div class="card">
-      <div class="card-title">Driver details</div>
-      <div class="form-group">
-        <label class="form-label">Driver name *</label>
-        <input type="text" class="form-input" id="driver-name" placeholder="Your full name" autocomplete="name">
+      <div class="fg">
+        <label class="fl">Admin password</label>
+        <input type="password" class="fi" id="a-pass" placeholder="Enter password" onkeydown="if(event.key==='Enter')adminLogin()">
       </div>
-      <div class="form-group">
-        <label class="form-label">Vehicle number *</label>
-        <select class="form-input" id="vehicle-select">
-          <option value="">— Select vehicle —</option>
-        </select>
-      </div>
-      <div class="form-group" style="margin-bottom:0;">
-        <label class="form-label">Or type vehicle number</label>
-        <input type="text" class="form-input" id="vehicle-manual" placeholder="e.g. QA-12345" autocomplete="off" autocapitalize="characters">
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">Odometer &amp; fuel</div>
-      <div class="form-group">
-        <label class="form-label">Current odometer reading (km) *</label>
-        <input type="number" class="form-input" id="odometer" placeholder="e.g. 54321" inputmode="numeric">
-      </div>
-      <div class="form-group" style="margin-bottom:0;">
-        <label class="form-label">Liters filled *</label>
-        <input type="number" class="form-input" id="liters" placeholder="e.g. 40" step="0.1" inputmode="decimal">
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">Fuel bill *</div>
-      <div class="bill-grid">
-        <div class="bill-opt" id="opt-camera">
-          <input type="file" id="file-camera" accept="image/*" capture="environment" onchange="handleBill(this,'camera')">
-          <div class="bill-opt-icon">📷</div>
-          <div class="bill-opt-label">Camera</div>
-          <div class="bill-opt-sub">Take photo</div>
-        </div>
-        <div class="bill-opt" id="opt-gallery">
-          <input type="file" id="file-gallery" accept="image/*" onchange="handleBill(this,'gallery')">
-          <div class="bill-opt-icon">🖼️</div>
-          <div class="bill-opt-label">Gallery</div>
-          <div class="bill-opt-sub">Pick image</div>
-        </div>
-        <div class="bill-opt" id="opt-pdf">
-          <input type="file" id="file-pdf" accept=".pdf,application/pdf" onchange="handleBill(this,'pdf')">
-          <div class="bill-opt-icon">📄</div>
-          <div class="bill-opt-label">PDF</div>
-          <div class="bill-opt-sub">Upload PDF</div>
-        </div>
-        <div class="bill-opt" id="opt-any">
-          <input type="file" id="file-any" accept="image/*,.pdf" onchange="handleBill(this,'any')">
-          <div class="bill-opt-icon">📁</div>
-          <div class="bill-opt-label">Any file</div>
-          <div class="bill-opt-sub">Image or PDF</div>
-        </div>
-      </div>
-      <div class="bill-preview" id="bill-preview">
-        <div id="bill-thumb-wrap"></div>
-        <div class="bill-info">
-          <div class="bill-name" id="bill-fname"></div>
-          <div class="bill-meta" id="bill-fmeta"></div>
-        </div>
-        <div class="bill-remove" onclick="removeBill()">Remove</div>
-      </div>
-    </div>
-
-    <button class="btn btn-primary" onclick="submitEntry()">Submit refuel entry</button>
-
-    <div class="card" id="entry-summary" style="display:none; margin-top:12px;">
-      <div class="card-title">Entry summary</div>
-      <div class="stat-grid">
-        <div class="stat-card"><div class="stat-label">Liters filled</div><div class="stat-val" id="s-liters">—</div></div>
-        <div class="stat-card"><div class="stat-label">Expected range</div><div class="stat-val" id="s-range">—</div><div class="stat-sub">at 5 km/L</div></div>
-      </div>
-      <div class="stat-grid">
-        <div class="stat-card"><div class="stat-label">Days since last</div><div class="stat-val" id="s-days">—</div></div>
-        <div class="stat-card"><div class="stat-label">km since last</div><div class="stat-val" id="s-km">—</div></div>
-      </div>
-      <div id="s-status"></div>
+      <div id="a-err" class="alert a-err" style="display:none;">Incorrect password.</div>
+      <button class="btn btn-blue" onclick="adminLogin()">Sign in →</button>
     </div>
   </div>
 
-  <!-- =================== HISTORY PAGE =================== -->
-  <div class="page" id="page-history">
-    <div class="stat-grid" style="margin-top:2px;">
-      <div class="stat-card"><div class="stat-label">Total entries</div><div class="stat-val" id="h-total">0</div></div>
-      <div class="stat-card"><div class="stat-label">Vehicles tracked</div><div class="stat-val" id="h-vehicles">0</div></div>
+  <!-- Dashboard -->
+  <div id="a-dash" style="display:none;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin:2px 0 14px;">
+      <div style="font-size:16px;font-weight:700;">Admin dashboard</div>
+      <div style="display:flex;gap:6px;">
+        <button onclick="adminRefresh()" style="font-size:12px;color:var(--blue);background:var(--blue-light);border:none;padding:6px 12px;border-radius:8px;font-weight:700;cursor:pointer;">↻ Refresh</button>
+        <button onclick="adminLogout()" style="font-size:12px;color:var(--red);background:var(--red-bg);border:none;padding:6px 12px;border-radius:8px;font-weight:700;cursor:pointer;">Sign out</button>
+      </div>
     </div>
-    <div class="card">
-      <input type="search" class="form-input" id="search-q" placeholder="Search vehicle..." oninput="renderHistory()" style="margin-bottom:12px;">
-      <div id="history-list"><div class="empty">No entries yet.</div></div>
+    <div class="stabs">
+      <button class="stab active" onclick="stab('overview',this)">Overview</button>
+      <button class="stab" onclick="stab('exceptions',this)">⚠ Exceptions</button>
+      <button class="stab" onclick="stab('archive',this)">✓ Archive</button>
+      <button class="stab" onclick="stab('vehicles',this)">Vehicles</button>
+      <button class="stab" onclick="stab('import',this)">Import</button>
     </div>
-  </div>
 
-  <!-- =================== ADMIN PAGE =================== -->
-  <div class="page" id="page-admin">
+    <!-- Overview -->
+    <div class="tpane active" id="tp-overview">
+      <div class="sgrid">
+        <div class="scard"><div class="slabel">Total refuels</div><div class="sval" id="ao-total">0</div></div>
+        <div class="scard"><div class="slabel">Exceptions</div><div class="sval red" id="ao-exc">0</div></div>
+      </div>
+      <div class="sgrid">
+        <div class="scard"><div class="slabel">Vehicles</div><div class="sval" id="ao-veh">0</div></div>
+        <div class="scard"><div class="slabel">Fleet avg</div><div class="sval" id="ao-avg">—</div><div class="ssub">km / litre</div></div>
+      </div>
+      <div class="sec-lbl">Vehicle performance</div>
+      <div class="card"><div id="vperf"><div class="empty">Loading...</div></div></div>
+      <div class="sec-lbl">Recent entries (all drivers)</div>
+      <div class="card"><div id="recent"><div class="empty">Loading...</div></div></div>
+    </div>
 
-    <!-- Login -->
-    <div id="admin-login">
-      <div class="lock-screen">
-        <div class="lock-icon">🔐</div>
-        <div class="lock-title">Admin access</div>
-        <div class="lock-sub">This area is restricted to administrators.</div>
+    <!-- Exceptions -->
+    <div class="tpane" id="tp-exceptions">
+      <div class="alert a-warn">Vehicles that refueled before completing expected mileage. Review and mark as Checked.</div>
+      <div id="exc-list"><div class="empty">Loading...</div></div>
+    </div>
+
+    <!-- Archive -->
+    <div class="tpane" id="tp-archive">
+      <div class="alert a-info">Exceptions reviewed and checked by admin.</div>
+      <div id="arch-list"><div class="empty">No archived exceptions yet.</div></div>
+    </div>
+
+    <!-- Vehicles -->
+    <div class="tpane" id="tp-vehicles">
+      <div class="sec-lbl">Registered vehicles (<span id="veh-count">0</span>)</div>
+      <div class="card"><div id="veh-list"><div class="empty">Loading...</div></div></div>
+    </div>
+
+    <!-- Import -->
+    <div class="tpane" id="tp-import">
+      <div class="card">
+        <div class="card-t">Bulk import vehicles</div>
+        <div style="font-size:13px;color:var(--muted);margin-bottom:12px;line-height:1.6;">Upload a CSV or text file. One vehicle number per line.</div>
+        <div class="dropzone">
+          <input type="file" id="imp-file" accept=".csv,.txt" onchange="importVehicles(this)">
+          <div style="font-size:26px;margin-bottom:8px;">📂</div>
+          <div style="font-size:13px;color:var(--muted);">Tap to upload CSV / TXT</div>
+        </div>
+        <div id="imp-result" style="display:none;margin-top:10px;"></div>
       </div>
       <div class="card">
-        <div class="form-group">
-          <label class="form-label">Password</label>
-          <input type="password" class="form-input" id="admin-pass" placeholder="Enter admin password" onkeydown="if(event.key==='Enter')doLogin()">
-        </div>
-        <div id="login-err" class="alert alert-err" style="display:none;">Incorrect password. Please try again.</div>
-        <button class="btn btn-primary" onclick="doLogin()">Sign in</button>
+        <div class="card-t">Add vehicle manually</div>
+        <div class="fg"><input type="text" class="fi" id="add-veh" placeholder="e.g. QA-12345" autocapitalize="characters"></div>
+        <button class="btn btn-blue" onclick="addVehicle()">Add vehicle</button>
       </div>
-    </div>
-
-    <!-- Dashboard -->
-    <div id="admin-dash" style="display:none;">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;margin-top:2px;">
-        <div style="font-size:16px;font-weight:600;">Dashboard</div>
-        <button onclick="doLogout()" style="font-size:12px;color:var(--red-text);background:var(--red-bg);border:none;padding:5px 12px;border-radius:8px;font-weight:600;cursor:pointer;">Sign out</button>
-      </div>
-
-      <div class="subtab-row">
-        <button class="subtab active" onclick="switchTab('overview',this)">Overview</button>
-        <button class="subtab" onclick="switchTab('flags',this)">⚠ Flags</button>
-        <button class="subtab" onclick="switchTab('vehicles',this)">Vehicles</button>
-        <button class="subtab" onclick="switchTab('import',this)">Import</button>
-      </div>
-
-      <!-- Overview -->
-      <div class="tab-pane active" id="tab-overview">
-        <div class="stat-grid">
-          <div class="stat-card"><div class="stat-label">Total entries</div><div class="stat-val" id="a-total">0</div></div>
-          <div class="stat-card"><div class="stat-label">Flagged entries</div><div class="stat-val red" id="a-flags">0</div></div>
-        </div>
-        <div class="stat-grid">
-          <div class="stat-card"><div class="stat-label">Vehicles</div><div class="stat-val" id="a-vehicles">0</div></div>
-          <div class="stat-card"><div class="stat-label">Fleet avg</div><div class="stat-val" id="a-avg">—</div><div class="stat-sub">km per litre</div></div>
-        </div>
-        <div class="section-label">Vehicle performance</div>
-        <div class="card"><div id="veh-perf"><div class="empty">No data yet.</div></div></div>
-      </div>
-
-      <!-- Flags -->
-      <div class="tab-pane" id="tab-flags">
-        <div class="alert alert-warn">Vehicles that refueled before completing expected mileage.</div>
-        <div id="flags-list"><div class="empty">No flagged entries.</div></div>
-      </div>
-
-      <!-- Vehicles -->
-      <div class="tab-pane" id="tab-vehicles">
-        <div class="section-label">Registered vehicles (<span id="veh-count">0</span>)</div>
-        <div class="card"><div id="veh-list"><div class="empty">No vehicles registered.</div></div></div>
-      </div>
-
-      <!-- Import -->
-      <div class="tab-pane" id="tab-import">
-        <div class="card">
-          <div class="card-title">Bulk import vehicles</div>
-          <div style="font-size:13px;color:var(--text-muted);margin-bottom:12px;line-height:1.6;">Upload a CSV or text file with vehicle numbers, one per line. Supports 1,000+ vehicles. Header row is auto-detected.</div>
-          <div class="drop-zone">
-            <input type="file" id="veh-import-file" accept=".csv,.txt,.xlsx" onchange="importVehicles(this)">
-            <div class="drop-icon">📂</div>
-            <div class="drop-text">Tap to upload vehicle list (CSV / TXT)</div>
-          </div>
-          <div id="import-result" style="display:none;margin-top:10px;"></div>
-        </div>
-        <div class="card">
-          <div class="card-title">Add vehicle manually</div>
-          <div class="form-group">
-            <input type="text" class="form-input" id="add-veh-input" placeholder="e.g. QA-12345" autocapitalize="characters">
-          </div>
-          <button class="btn btn-primary" onclick="addVehicle()">Add vehicle</button>
-        </div>
+      <div class="card">
+        <div class="card-t">Database settings</div>
+        <button class="btn" style="background:var(--amber-bg);color:var(--amber);font-size:13px;padding:10px;" onclick="resetSetup()">⚙ Change API key / settings</button>
       </div>
     </div>
   </div>
+</div>
 
-</div><!-- /#app -->
+</div><!-- /#mainapp -->
+
+<!-- Bill modal -->
+<div class="overlay" id="bmodal" onclick="if(event.target===this)closeMod()">
+  <div class="mbox">
+    <div class="mbox-hd"><span id="mod-title">Bill</span><span class="mclose" onclick="closeMod()">✕</span></div>
+    <div id="mod-body"></div>
+  </div>
+</div>
+
+<!-- Loader -->
+<div class="loader" id="loader">
+  <div class="spin"></div>
+  <div class="loader-txt" id="loader-txt">Saving...</div>
+</div>
 
 <script>
-const BASE = 5;
-const PASS = 'Momdad143';
-let db = {entries:[], flags:[], vehicles:[]};
-let billFile = null, billKind = null;
+// ══════════════════════════════════════════════════
+//  CONFIG & STATE
+// ══════════════════════════════════════════════════
+const ADMIN_PASS_DEFAULT = 'Momdad143';
+const BASE_KM = 5;
+let CFG = {};
+let bins = {}; // {vehicles, refuels, exceptions, archive} — JSONBin IDs
+let cache = {vehicles:[], refuels:[], exceptions:[], archive:[]};
+let billFile=null, billKind=null, billDataURL=null;
+let aiExtracted = {};
 let adminIn = false;
-let deferredPrompt = null;
+let deferredInstall = null;
 
-// ─── DB ───
-function save(){ try{ localStorage.setItem('ft_db', JSON.stringify(db)); }catch(e){} }
-function load(){ try{ const d=localStorage.getItem('ft_db'); if(d) db=JSON.parse(d); }catch(e){} }
-load();
+function ls(k,v){ if(v===undefined) return localStorage.getItem(k); localStorage.setItem(k,v); }
+function lsj(k,v){ if(v===undefined){ try{return JSON.parse(ls(k))}catch(e){return null} } ls(k,JSON.stringify(v)); }
 
-// ─── PAGES ───
-function showPage(p, el){
+function loadCFG(){ CFG=lsj('ft_cfg')||{}; bins=lsj('ft_bins')||{}; }
+function saveCFG(){ lsj('ft_cfg',CFG); lsj('ft_bins',bins); }
+loadCFG();
+
+// ══════════════════════════════════════════════════
+//  JSONBIN API
+// ══════════════════════════════════════════════════
+const JB = 'https://api.jsonbin.io/v3';
+
+async function jbCreate(name, data){
+  const r = await fetch(`${JB}/b`,{
+    method:'POST',
+    headers:{'Content-Type':'application/json','X-Master-Key':CFG.apiKey,'X-Bin-Name':name,'X-Bin-Private':'false'},
+    body: JSON.stringify(data)
+  });
+  if(!r.ok) throw new Error('Create failed');
+  const j = await r.json();
+  return j.metadata.id;
+}
+
+async function jbRead(binId){
+  const r = await fetch(`${JB}/b/${binId}/latest`,{
+    headers:{'X-Master-Key':CFG.apiKey}
+  });
+  if(!r.ok) throw new Error('Read failed');
+  const j = await r.json();
+  return j.record;
+}
+
+async function jbWrite(binId, data){
+  const r = await fetch(`${JB}/b/${binId}`,{
+    method:'PUT',
+    headers:{'Content-Type':'application/json','X-Master-Key':CFG.apiKey},
+    body: JSON.stringify(data)
+  });
+  if(!r.ok) throw new Error('Write failed');
+  return r.json();
+}
+
+// ══════════════════════════════════════════════════
+//  SETUP
+// ══════════════════════════════════════════════════
+async function doSetup(){
+  const key = document.getElementById('s-apikey').value.trim();
+  const pass = document.getElementById('s-pass').value.trim();
+  const err = document.getElementById('s-err');
+  if(!key){ err.textContent='Please enter your JSONBin Master Key.'; err.style.display='block'; return; }
+  if(!pass){ err.textContent='Please set an admin password.'; err.style.display='block'; return; }
+
+  CFG = {apiKey:key, adminPass:pass};
+  showLoader('Setting up cloud databases...');
+
+  try{
+    // Create 4 bins if not existing
+    if(!bins.vehicles) bins.vehicles = await jbCreate('ft_vehicles', []);
+    if(!bins.refuels)  bins.refuels  = await jbCreate('ft_refuels',  []);
+    if(!bins.exceptions) bins.exceptions = await jbCreate('ft_exceptions', []);
+    if(!bins.archive)  bins.archive  = await jbCreate('ft_archive',  []);
+    saveCFG();
+    hideLoader();
+    startApp();
+  }catch(e){
+    hideLoader();
+    err.textContent = 'Connection failed. Please check your API key and try again. Error: '+e.message;
+    err.style.display='block';
+  }
+}
+
+function toggleHelp(){
+  const h=document.getElementById('s-help');
+  h.style.display=h.style.display==='none'?'block':'none';
+}
+
+function resetSetup(){
+  if(!confirm('This will show the setup screen again.')) return;
+  lsj('ft_cfg',null); lsj('ft_bins',null);
+  location.reload();
+}
+
+// ══════════════════════════════════════════════════
+//  APP START
+// ══════════════════════════════════════════════════
+function startApp(){
+  document.getElementById('setup').style.display='none';
+  const m=document.getElementById('mainapp');
+  m.style.display='flex'; m.style.flexDirection='column';
+  m.style.height='100%'; m.style.overflow='hidden';
+  refreshAll();
+  setupPWA();
+}
+
+async function refreshAll(){
+  setSyncStatus('busy');
+  try{
+    const [v,r,e,a] = await Promise.all([
+      jbRead(bins.vehicles), jbRead(bins.refuels),
+      jbRead(bins.exceptions), jbRead(bins.archive)
+    ]);
+    cache.vehicles   = Array.isArray(v)?v:[];
+    cache.refuels    = Array.isArray(r)?r:[];
+    cache.exceptions = Array.isArray(e)?e:[];
+    cache.archive    = Array.isArray(a)?a:[];
+    cache.refuels.sort((a,b)=>b.timestamp?.localeCompare(a.timestamp));
+    setSyncStatus('online');
+    updateDropdown();
+    document.getElementById('tb-sub').textContent=`${cache.refuels.length} refuels · ${cache.vehicles.length} vehicles`;
+  }catch(e){
+    setSyncStatus('off');
+    console.warn('Refresh failed',e);
+  }
+}
+
+async function adminRefresh(){ await refreshAll(); if(adminIn) renderAdmin(); }
+
+// ══════════════════════════════════════════════════
+//  SYNC STATUS
+// ══════════════════════════════════════════════════
+function setSyncStatus(s){
+  const d=document.getElementById('sdot');
+  d.className='sync-dot'+(s==='off'?' off':s==='busy'?' busy':'');
+}
+
+// ══════════════════════════════════════════════════
+//  PAGES
+// ══════════════════════════════════════════════════
+function goPage(p, el){
   document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.nb').forEach(x=>x.classList.remove('active'));
   document.getElementById('page-'+p).classList.add('active');
   el.classList.add('active');
-  if(p==='history') renderHistory();
-  if(p==='admin' && adminIn) renderAdmin();
+  if(p==='history'){ refreshAll().then(renderHistory); }
+  if(p==='admin'&&adminIn){ refreshAll().then(renderAdmin); }
 }
 
-// ─── BILL ───
-function handleBill(inp, kind){
-  const f = inp.files[0]; if(!f) return;
-  billFile = f; billKind = kind;
-  document.querySelectorAll('.bill-opt').forEach(x=>x.classList.remove('selected'));
-  document.getElementById('opt-'+kind).classList.add('selected');
-  const preview = document.getElementById('bill-preview');
-  preview.style.display = 'flex';
-  document.getElementById('bill-fname').textContent = f.name;
-  const kb = f.size < 1024 ? f.size+'B' : f.size < 1048576 ? (f.size/1024).toFixed(1)+'KB' : (f.size/1048576).toFixed(1)+'MB';
-  const kindLabel = {camera:'Camera photo', gallery:'Gallery image', pdf:'PDF document', any:'Attached file'}[kind];
-  document.getElementById('bill-fmeta').textContent = kb + ' · ' + kindLabel;
-  const wrap = document.getElementById('bill-thumb-wrap');
+// ══════════════════════════════════════════════════
+//  BILL HANDLING
+// ══════════════════════════════════════════════════
+function onBill(inp, kind){
+  const f=inp.files[0]; if(!f) return;
+  billFile=f; billKind=kind;
+  document.querySelectorAll('.bopt').forEach(x=>x.classList.remove('sel'));
+  document.getElementById('bo-'+kind).classList.add('sel');
+  const prev=document.getElementById('bpreview');
+  prev.style.display='flex';
+  document.getElementById('bname').textContent=f.name;
+  const kb=f.size<1024?f.size+'B':f.size<1048576?(f.size/1024).toFixed(1)+'KB':(f.size/1048576).toFixed(1)+'MB';
+  document.getElementById('bmeta').textContent=kb+' · '+({camera:'Camera photo',gallery:'Gallery image',pdf:'PDF document',any:'Attached file'}[kind]);
+  const wrap=document.getElementById('bthumb');
   if(f.type.startsWith('image/')){
-    const url = URL.createObjectURL(f);
-    wrap.innerHTML = `<img class="bill-thumb" src="${url}" onload="URL.revokeObjectURL(this.src)">`;
+    const rd=new FileReader();
+    rd.onload=e=>{
+      billDataURL=e.target.result;
+      wrap.innerHTML=`<img class="bthumb" src="${billDataURL}" onclick="previewBill()">`;
+      runAI(billDataURL);
+    };
+    rd.readAsDataURL(f);
   } else {
-    wrap.innerHTML = `<div class="bill-thumb-pdf">📄</div>`;
+    billDataURL=null;
+    wrap.innerHTML=`<div class="bthumb-pdf">📄</div>`;
+    document.getElementById('ai-box').style.display='none';
   }
 }
 
-function removeBill(){
-  billFile = null; billKind = null;
-  document.getElementById('bill-preview').style.display = 'none';
-  document.querySelectorAll('.bill-opt').forEach(x=>x.classList.remove('selected'));
-  ['camera','gallery','pdf','any'].forEach(k=>{ document.getElementById('file-'+k).value=''; });
+function clearBill(){
+  billFile=null; billKind=null; billDataURL=null; aiExtracted={};
+  document.getElementById('bpreview').style.display='none';
+  document.getElementById('ai-box').style.display='none';
+  document.getElementById('ai-confirm-card').style.display='none';
+  document.querySelectorAll('.bopt').forEach(x=>x.classList.remove('sel'));
+  ['camera','gallery','pdf','any'].forEach(k=>{ document.getElementById('f-'+k).value=''; });
 }
 
-// ─── SUBMIT ───
+// ══════════════════════════════════════════════════
+//  AI EXTRACTION
+// ══════════════════════════════════════════════════
+async function runAI(dataURL){
+  const box=document.getElementById('ai-box');
+  box.style.display='block';
+  document.getElementById('ai-rows').innerHTML='<div class="ai-status">✨ Reading bill with AI...</div>';
+  document.getElementById('ai-apply').style.display='none';
+
+  try{
+    const b64=dataURL.split(',')[1];
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:400,
+        messages:[{role:'user',content:[
+          {type:'image',source:{type:'base64',media_type:'image/jpeg',data:b64}},
+          {type:'text',text:`You are reading a fuel/petrol receipt. Extract these fields and return ONLY valid JSON — no explanation, no markdown:
+{
+  "liters": <number or null>,
+  "date": "<YYYY-MM-DD or null>",
+  "amount": "<number with currency or null>",
+  "station": "<station name or null>"
+}
+If a field is not visible set it to null.`}
+        ]}]
+      })
+    });
+    const d=await res.json();
+    const txt=d.content?.find(c=>c.type==='text')?.text||'{}';
+    aiExtracted=JSON.parse(txt.replace(/```json|```/g,'').trim());
+    showAIResults(aiExtracted);
+  }catch(e){
+    document.getElementById('ai-rows').innerHTML='<div class="ai-status">Could not read bill automatically. Please fill in manually below.</div>';
+  }
+}
+
+function showAIResults(d){
+  const rows=[
+    ['Liters', d.liters!=null?d.liters+' L':null],
+    ['Date', d.date],
+    ['Amount', d.amount],
+    ['Station', d.station],
+  ].filter(r=>r[1]);
+
+  if(!rows.length){
+    document.getElementById('ai-rows').innerHTML='<div class="ai-status">No data detected. Please fill in manually.</div>';
+    return;
+  }
+  document.getElementById('ai-rows').innerHTML=rows.map(([k,v])=>`
+    <div class="ai-row"><span class="ai-key">${k}</span><span class="ai-val">${v}</span></div>
+  `).join('');
+  document.getElementById('ai-apply').style.display='block';
+}
+
+function applyAI(){
+  if(aiExtracted.liters!=null) document.getElementById('c-liters').value=aiExtracted.liters;
+  if(aiExtracted.date) document.getElementById('c-date').value=aiExtracted.date;
+  if(aiExtracted.amount) document.getElementById('c-amount').value=aiExtracted.amount;
+  document.getElementById('ai-confirm-card').style.display='block';
+  document.getElementById('ai-box').innerHTML='<div style="font-size:13px;color:var(--green);font-weight:600;padding:6px 0;">✅ Data applied — verify and submit.</div>';
+  document.getElementById('ai-confirm-card').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+// ══════════════════════════════════════════════════
+//  SUBMIT REFUEL
+// ══════════════════════════════════════════════════
 function getVehicle(){
-  const man = document.getElementById('vehicle-manual').value.trim().toUpperCase();
-  return man || document.getElementById('vehicle-select').value;
+  const m=document.getElementById('veh-man').value.trim().toUpperCase();
+  return m||document.getElementById('veh-sel').value;
 }
 
-function showAlert(id, cls, msg){
-  const el = document.getElementById(id);
-  el.className = 'alert ' + cls;
-  el.innerHTML = msg;
-  el.style.display = 'block';
-  el.scrollIntoView({behavior:'smooth', block:'nearest'});
+function showDAlert(cls,msg){
+  const el=document.getElementById('d-alert');
+  el.className='alert '+cls; el.innerHTML=msg; el.style.display='block';
+  el.scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 
-function submitEntry(){
-  const driver = document.getElementById('driver-name').value.trim();
-  const vehicle = getVehicle();
-  const odometer = parseFloat(document.getElementById('odometer').value);
-  const liters = parseFloat(document.getElementById('liters').value);
+async function submitRefuel(){
+  const vehicle=getVehicle();
+  const liters=parseFloat(document.getElementById('c-liters').value);
+  const date=document.getElementById('c-date').value.trim()||new Date().toISOString().slice(0,10);
+  const amount=document.getElementById('c-amount').value.trim();
+  const odo=parseFloat(document.getElementById('c-odo').value);
 
-  if(!driver || !vehicle || isNaN(odometer) || isNaN(liters) || liters <= 0){
-    showAlert('submit-alert','alert-err','⚠ Please fill in all required fields correctly.'); return;
-  }
-  if(!billFile){
-    showAlert('submit-alert','alert-warn','📎 Please attach a fuel bill (camera, gallery, or PDF).'); return;
-  }
+  if(!vehicle){ showDAlert('a-err','⚠ Please select or enter your vehicle number.'); return; }
+  if(!billFile){ showDAlert('a-err','⚠ Please attach a fuel bill.'); return; }
+  if(isNaN(liters)||liters<=0){ showDAlert('a-err','⚠ Liters not detected. Please fill in the liters field.'); return; }
+  if(isNaN(odo)||odo<=0){ showDAlert('a-err','⚠ Please enter your current odometer reading.'); return; }
 
-  const now = new Date();
-  const expectedRange = liters * BASE;
-  const prev = db.entries.filter(e=>e.vehicle===vehicle).sort((a,b)=>b.id-a.id)[0] || null;
-  let days=null, km=null, flagged=false, flagReason='';
+  // Calculate km logic
+  const expectedKm = Math.round(liters * BASE_KM);
+  const prevRefuels = cache.refuels.filter(r=>r.vehicle===vehicle).sort((a,b)=>b.timestamp?.localeCompare(a.timestamp));
+  const lastRefuel = prevRefuels[0]||null;
+  let actualKm=null, flagged=false, remark='', days=null;
 
-  if(prev){
-    days = Math.round((now - new Date(prev.ts)) / 86400000);
-    km = Math.round(odometer - prev.odometer);
-    const prevExp = prev.liters * BASE;
-    if(km < prevExp){
-      flagged = true;
-      flagReason = `Refueled after only ${km} km. Expected ${prevExp} km (${prev.liters}L × 5 km/L).`;
+  if(lastRefuel){
+    actualKm=Math.round(odo-(lastRefuel.odometer||0));
+    days=Math.round((new Date()-new Date(lastRefuel.timestamp))/86400000);
+    if(actualKm<expectedKm){
+      flagged=true;
+      remark=`Expected ${expectedKm} km (${liters}L × 5), actual ${actualKm} km → flagged`;
+    } else if(actualKm>expectedKm){
+      remark=`Over average performance: ${actualKm} km vs expected ${expectedKm} km`;
+    } else {
+      remark='Normal refuel';
     }
+  } else {
+    remark='First refuel entry for this vehicle';
   }
 
-  const entry = {id:Date.now(), driver, vehicle, odometer, liters, expectedRange, days, km, ts:now.toISOString(), billName:billFile.name, billKind, flagged};
-  db.entries.push(entry);
-  if(flagged) db.flags.push({...entry, flagReason});
-  if(!db.vehicles.includes(vehicle)) db.vehicles.push(vehicle);
-  save();
-  updateDropdown();
+  // If flagged, need remark
+  if(flagged){
+    document.getElementById('remark-box').style.display='block';
+    document.getElementById('flag-reason-txt').textContent=remark;
+    const driverRemark=document.getElementById('remark-input').value.trim();
+    if(!driverRemark){
+      showDAlert('a-warn','⚠ This refuel was flagged as early. Please add a remark explaining why.');
+      document.getElementById('remark-box').scrollIntoView({behavior:'smooth',block:'nearest'});
+      return;
+    }
+    remark=remark+' | Driver remark: '+driverRemark;
+  } else {
+    document.getElementById('remark-box').style.display='none';
+  }
 
-  // Show summary
-  showAlert('submit-alert','alert-ok','✅ Refuel entry submitted successfully!');
-  const sum = document.getElementById('entry-summary');
-  sum.style.display = 'block';
-  document.getElementById('s-liters').textContent = liters + ' L';
-  document.getElementById('s-range').textContent = expectedRange + ' km';
-  document.getElementById('s-days').textContent = days !== null ? days + 'd' : 'First entry';
-  document.getElementById('s-km').textContent = km !== null ? km + ' km' : '—';
-  document.getElementById('s-status').innerHTML = flagged
-    ? `<div class="alert alert-warn" style="margin-top:10px;margin-bottom:0;">⚠ Early refuel flagged for admin review.<br><small>${flagReason}</small></div>`
-    : km !== null ? `<div class="alert alert-ok" style="margin-top:10px;margin-bottom:0;">✅ Normal refuel — within expected range.</div>` : '';
+  showLoader('Saving to cloud...');
+  try{
+    const ts=new Date().toISOString();
+    // Compress image if large
+    let imgData=null;
+    if(billDataURL){
+      if(billFile.size>400000) imgData=await compressImage(billDataURL,0.6);
+      else imgData=billDataURL;
+    }
 
-  // Reset form
-  document.getElementById('driver-name').value = '';
-  document.getElementById('vehicle-manual').value = '';
-  document.getElementById('odometer').value = '';
-  document.getElementById('liters').value = '';
-  removeBill();
-  sum.scrollIntoView({behavior:'smooth', block:'start'});
+    const record={
+      vehicle, liters, date, amount, odometer:odo,
+      expectedKm, actualKm, days, flagged,
+      remark, timestamp:ts,
+      billName:billFile.name, billKind,
+      billDataURL:imgData
+    };
+
+    // Save to refuels
+    cache.refuels.unshift(record);
+    await jbWrite(bins.refuels, cache.refuels);
+
+    // Save to exceptions if flagged
+    if(flagged){
+      const exc={...record, checkedBy:null, checkedAt:null};
+      cache.exceptions.push(exc);
+      await jbWrite(bins.exceptions, cache.exceptions);
+    }
+
+    // Add vehicle if new
+    if(!cache.vehicles.includes(vehicle)){
+      cache.vehicles.push(vehicle);
+      await jbWrite(bins.vehicles, cache.vehicles);
+    }
+
+    hideLoader();
+    await refreshAll();
+
+    // Show JSON output
+    const display={
+      vehicle:record.vehicle,
+      liters:record.liters,
+      date:record.date,
+      amount:record.amount||'—',
+      expectedKm:record.expectedKm,
+      actualKm:record.actualKm||'—',
+      remark:record.remark,
+      timestamp:record.timestamp
+    };
+    document.getElementById('json-display').innerHTML=formatJSON(display);
+    document.getElementById('result-json').style.display='block';
+    showDAlert('a-ok','✅ Refuel saved to cloud! '+(flagged?'⚠ Flagged for admin review.':''));
+
+    // Reset
+    document.getElementById('veh-man').value='';
+    document.getElementById('veh-sel').value='';
+    document.getElementById('c-liters').value='';
+    document.getElementById('c-date').value='';
+    document.getElementById('c-amount').value='';
+    document.getElementById('c-odo').value='';
+    document.getElementById('remark-input').value='';
+    document.getElementById('remark-box').style.display='none';
+    document.getElementById('ai-confirm-card').style.display='none';
+    clearBill();
+    document.getElementById('result-json').scrollIntoView({behavior:'smooth',block:'start'});
+  }catch(e){
+    hideLoader();
+    showDAlert('a-err','❌ Save failed. Check your internet connection. '+e.message);
+  }
 }
 
-// ─── HISTORY ───
+function formatJSON(obj){
+  const pairs=Object.entries(obj);
+  return pairs.map(([k,v])=>{
+    const vs=typeof v==='string'?`<span class="jvs">"${v}"</span>`:typeof v==='number'?`<span class="jvn">${v}</span>`:`<span class="jv">${v}</span>`;
+    return `  <span class="jk">"${k}"</span>: ${vs}`;
+  }).join(',\n');
+}
+
+async function compressImage(dataURL, quality){
+  return new Promise(resolve=>{
+    const img=new Image();
+    img.onload=()=>{
+      const MAX=800;
+      let w=img.width, h=img.height;
+      if(w>MAX||h>MAX){ const s=MAX/Math.max(w,h); w=Math.round(w*s); h=Math.round(h*s); }
+      const c=document.createElement('canvas');
+      c.width=w; c.height=h;
+      c.getContext('2d').drawImage(img,0,0,w,h);
+      resolve(c.toDataURL('image/jpeg',quality));
+    };
+    img.src=dataURL;
+  });
+}
+
+// ══════════════════════════════════════════════════
+//  HISTORY
+// ══════════════════════════════════════════════════
 function renderHistory(){
-  const q = (document.getElementById('search-q').value||'').toLowerCase();
-  const list = db.entries.slice().reverse().filter(e=>!q||e.vehicle.toLowerCase().includes(q)||e.driver.toLowerCase().includes(q));
-  const vehicles = [...new Set(db.entries.map(e=>e.vehicle))];
-  document.getElementById('h-total').textContent = db.entries.length;
-  document.getElementById('h-vehicles').textContent = vehicles.length;
-  const el = document.getElementById('history-list');
-  if(!list.length){ el.innerHTML='<div class="empty">No entries found.</div>'; return; }
-  const icons = {camera:'📷',gallery:'🖼️',pdf:'📄',any:'📁'};
-  el.innerHTML = list.map(e=>`
-    <div class="list-item">
-      <div class="list-row">
-        <div class="list-title">${e.vehicle}</div>
-        <span class="badge ${e.flagged?'badge-flag':'badge-ok'}">${e.flagged?'⚠ Flagged':'✓ Normal'}</span>
+  const q=(document.getElementById('h-search').value||'').toLowerCase();
+  const list=cache.refuels.filter(r=>!q||r.vehicle?.toLowerCase().includes(q));
+  const vehs=[...new Set(cache.refuels.map(r=>r.vehicle))];
+  document.getElementById('h-total').textContent=cache.refuels.length;
+  document.getElementById('h-veh').textContent=vehs.length;
+  const el=document.getElementById('h-list');
+  if(!list.length){el.innerHTML='<div class="empty">No entries found.</div>';return;}
+  const ico={camera:'📷',gallery:'🖼️',pdf:'📄',any:'📁'};
+  el.innerHTML=list.map(r=>`
+    <div class="li">
+      <div class="li-row">
+        <div class="li-title">${r.vehicle||'—'}</div>
+        <span class="badge ${r.flagged?'b-flag':r.remark?.includes('Over average')?'b-over':'b-ok'}">${r.flagged?'⚠ Flagged':r.remark?.includes('Over average')?'↑ Over avg':'✓ Normal'}</span>
       </div>
-      <div class="list-sub">${e.driver} · ${new Date(e.ts).toLocaleDateString('en-GB')} · ${e.liters}L · ${e.odometer.toLocaleString()} km</div>
-      ${e.km!==null?`<div class="list-sub">+${e.km} km since last · ${e.days}d gap · Expected ${e.liters*BASE} km</div>`:''}
-      <div class="list-blue">${icons[e.billKind]||'📁'} ${e.billName}</div>
+      <div class="li-sub">${r.date||'—'} · ${r.liters}L · ${r.amount||'—'}</div>
+      ${r.actualKm!=null?`<div class="li-sub">Actual: ${r.actualKm} km · Expected: ${r.expectedKm} km${r.days!=null?' · '+r.days+'d gap':''}</div>`:''}
+      ${r.remark?`<div class="li-sub">📝 ${r.remark}</div>`:''}
+      ${r.billDataURL?`<div class="li-blue" onclick="viewBill(${cache.refuels.indexOf(r)},'refuels')">📎 ${r.billName||'View bill'}</div>`:`<div class="li-sub">${ico[r.billKind]||'📁'} ${r.billName||'Bill attached'}</div>`}
     </div>
   `).join('');
 }
 
-// ─── ADMIN ───
-function doLogin(){
-  if(document.getElementById('admin-pass').value === PASS){
-    adminIn = true;
-    document.getElementById('admin-login').style.display = 'none';
-    document.getElementById('admin-dash').style.display = 'block';
-    document.getElementById('admin-pill').style.display = 'block';
-    renderAdmin();
+// ══════════════════════════════════════════════════
+//  BILL MODAL
+// ══════════════════════════════════════════════════
+function viewBill(idx, src){
+  const arr=src==='refuels'?cache.refuels:src==='exceptions'?cache.exceptions:cache.archive;
+  const r=arr[idx];
+  if(!r) return;
+  document.getElementById('mod-title').textContent=`${r.vehicle} — ${r.date||'—'}`;
+  const body=document.getElementById('mod-body');
+  if(r.billDataURL){
+    body.innerHTML=`<img class="mimg" src="${r.billDataURL}"><div style="margin-top:10px;font-size:12px;color:var(--muted);">${r.liters}L · ${r.amount||'—'} · ${r.remark||''}</div>`;
   } else {
-    document.getElementById('login-err').style.display = 'block';
+    body.innerHTML=`<div style="text-align:center;padding:30px;background:var(--amber-bg);border-radius:var(--r);font-size:14px;color:var(--amber);">📄 ${r.billName||'Bill'}<br><br>${r.vehicle} · ${r.date}</div>`;
   }
+  document.getElementById('bmodal').classList.add('open');
 }
-function doLogout(){
-  adminIn = false;
-  document.getElementById('admin-login').style.display = 'block';
-  document.getElementById('admin-dash').style.display = 'none';
-  document.getElementById('admin-pill').style.display = 'none';
-  document.getElementById('admin-pass').value = '';
-  document.getElementById('login-err').style.display = 'none';
+function previewBill(){
+  if(!billDataURL) return;
+  document.getElementById('mod-title').textContent='Bill preview';
+  document.getElementById('mod-body').innerHTML=`<img class="mimg" src="${billDataURL}">`;
+  document.getElementById('bmodal').classList.add('open');
 }
-function switchTab(t, el){
-  document.querySelectorAll('.tab-pane').forEach(x=>x.classList.remove('active'));
-  document.querySelectorAll('.subtab').forEach(x=>x.classList.remove('active'));
-  document.getElementById('tab-'+t).classList.add('active');
-  el.classList.add('active');
+function closeMod(){ document.getElementById('bmodal').classList.remove('open'); }
+
+// ══════════════════════════════════════════════════
+//  ADMIN
+// ══════════════════════════════════════════════════
+function adminLogin(){
+  if(document.getElementById('a-pass').value===CFG.adminPass){
+    adminIn=true;
+    document.getElementById('a-login').style.display='none';
+    document.getElementById('a-dash').style.display='block';
+    document.getElementById('admin-tag').style.display='block';
+    refreshAll().then(renderAdmin);
+  } else { document.getElementById('a-err').style.display='block'; }
 }
+function adminLogout(){
+  adminIn=false;
+  document.getElementById('a-login').style.display='block';
+  document.getElementById('a-dash').style.display='none';
+  document.getElementById('admin-tag').style.display='none';
+  document.getElementById('a-pass').value='';
+  document.getElementById('a-err').style.display='none';
+}
+function stab(t,el){
+  document.querySelectorAll('.tpane').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.stab').forEach(x=>x.classList.remove('active'));
+  document.getElementById('tp-'+t).classList.add('active'); el.classList.add('active');
+}
+
 function renderAdmin(){
-  const vehicles = [...new Set(db.entries.map(e=>e.vehicle))];
-  document.getElementById('a-total').textContent = db.entries.length;
-  document.getElementById('a-flags').textContent = db.flags.length;
-  document.getElementById('a-vehicles').textContent = vehicles.length;
+  const vehs=[...new Set(cache.refuels.map(r=>r.vehicle))];
+  document.getElementById('ao-total').textContent=cache.refuels.length;
+  document.getElementById('ao-exc').textContent=cache.exceptions.length;
+  document.getElementById('ao-veh').textContent=cache.vehicles.length;
+  let totKm=0,totL=0;
+  cache.refuels.forEach(r=>{ if(r.actualKm)totKm+=r.actualKm; totL+=r.liters; });
+  document.getElementById('ao-avg').textContent=totL>0?(totKm/totL).toFixed(1):'—';
 
-  let totKm=0, totL=0;
-  db.entries.forEach(e=>{ if(e.km) totKm+=e.km; totL+=e.liters; });
-  document.getElementById('a-avg').textContent = totL>0 ? (totKm/totL).toFixed(1) : '—';
-
-  // Vehicle performance
-  const vp = document.getElementById('veh-perf');
-  if(!vehicles.length){ vp.innerHTML='<div class="empty">No data.</div>'; }
+  // Vehicle perf
+  const vp=document.getElementById('vperf');
+  if(!vehs.length){vp.innerHTML='<div class="empty">No data.</div>';}
   else{
-    vp.innerHTML = vehicles.map(v=>{
-      const ven = db.entries.filter(e=>e.vehicle===v);
-      const vf = db.flags.filter(f=>f.vehicle===v).length;
-      const km = ven.filter(e=>e.km).reduce((s,e)=>s+e.km,0);
-      const L = ven.reduce((s,e)=>s+e.liters,0);
-      const avg = L>0&&km>0 ? (km/L).toFixed(1) : '—';
-      return `<div class="veh-row"><div><div style="font-size:14px;font-weight:600;">${v}</div><div style="font-size:12px;color:var(--text-muted);">${ven.length} entries · avg ${avg} km/L</div></div><span class="badge ${vf?'badge-flag':'badge-ok'}">${vf?vf+' flag'+(vf>1?'s':''):'Clean'}</span></div>`;
+    vp.innerHTML=vehs.map(v=>{
+      const vr=cache.refuels.filter(r=>r.vehicle===v);
+      const vf=cache.exceptions.filter(e=>e.vehicle===v).length;
+      const km=vr.filter(r=>r.actualKm).reduce((s,r)=>s+r.actualKm,0);
+      const L=vr.reduce((s,r)=>s+r.liters,0);
+      const avg=L>0&&km>0?(km/L).toFixed(1):'—';
+      const last=vr[0];
+      return`<div class="vrow">
+        <div><div class="vname">${v}</div><div class="vmeta">${vr.length} refuels · avg ${avg} km/L${last?` · ${last.date||'—'}`:''}</div></div>
+        <span class="badge ${vf?'b-flag':'b-ok'}">${vf?vf+' exc':'✓ Clean'}</span>
+      </div>`;
     }).join('');
   }
 
-  // Flags
-  const fl = document.getElementById('flags-list');
-  if(!db.flags.length){ fl.innerHTML='<div class="empty">No flagged entries yet.</div>'; }
+  // Recent
+  const re=document.getElementById('recent');
+  if(!cache.refuels.length){re.innerHTML='<div class="empty">No entries.</div>';}
   else{
-    fl.innerHTML = db.flags.slice().reverse().map(f=>`
-      <div class="flag-card">
-        <div class="flag-title">⚠ ${f.vehicle}</div>
-        <div class="flag-sub">Driver: ${f.driver}<br>${new Date(f.ts).toLocaleDateString('en-GB')} · ${f.liters}L · Odo: ${f.odometer.toLocaleString()} km<br>${f.flagReason}</div>
+    re.innerHTML=cache.refuels.slice(0,12).map((r,i)=>`
+      <div class="li">
+        <div class="li-row"><div class="li-title">${r.vehicle||'—'}</div><span class="badge ${r.flagged?'b-flag':r.remark?.includes('Over')?'b-over':'b-ok'}" style="font-size:10px;">${r.flagged?'⚠':r.remark?.includes('Over')?'↑':'✓'}</span></div>
+        <div class="li-sub">${r.date||'—'} · ${r.liters}L · ${r.amount||'—'}</div>
+        ${r.billDataURL?`<div class="li-blue" onclick="viewBill(${i},'refuels')">📎 View bill</div>`:''}
+      </div>
+    `).join('');
+  }
+
+  // Exceptions
+  const el=document.getElementById('exc-list');
+  if(!cache.exceptions.length){el.innerHTML='<div class="empty">No exceptions. 🎉</div>';}
+  else{
+    el.innerHTML=cache.exceptions.map((e,i)=>`
+      <div class="exc-card exc-active">
+        <div class="exc-title">⚠ ${e.vehicle}</div>
+        <div class="exc-body">
+          ${e.date||'—'} · ${e.liters}L · ${e.amount||'—'}<br>
+          Actual: ${e.actualKm??'—'} km · Expected: ${e.expectedKm} km<br>
+          📝 ${e.remark||'—'}
+        </div>
+        <div class="exc-acts">
+          <button class="btn-green" onclick="markChecked(${i})">✓ Mark checked</button>
+          ${e.billDataURL?`<button class="btn-sm-blue" onclick="viewBill(${i},'exceptions')">📎 View bill</button>`:''}
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // Archive
+  const al=document.getElementById('arch-list');
+  if(!cache.archive.length){al.innerHTML='<div class="empty">No archived exceptions.</div>';}
+  else{
+    al.innerHTML=cache.archive.map((e,i)=>`
+      <div class="exc-card exc-arch">
+        <div class="exc-title">✓ ${e.vehicle} — Checked</div>
+        <div class="exc-body">
+          ${e.date||'—'} · ${e.liters}L · ${e.amount||'—'}<br>
+          ${e.remark||'—'}<br>
+          <strong>Checked: ${e.checkedAt?new Date(e.checkedAt).toLocaleDateString('en-GB'):'—'}</strong>
+        </div>
+        <div class="exc-acts">
+          ${e.billDataURL?`<button class="btn-sm-blue" onclick="viewBill(${i},'archive')">📎 View bill</button>`:''}
+          <button class="btn-purple" onclick="restoreExc(${i})">↩ Restore</button>
+        </div>
       </div>
     `).join('');
   }
 
   // Vehicles
-  const allVeh = db.vehicles;
-  document.getElementById('veh-count').textContent = allVeh.length;
-  const vlist = document.getElementById('veh-list');
-  if(!allVeh.length){ vlist.innerHTML='<div class="empty">No vehicles yet.</div>'; }
+  document.getElementById('veh-count').textContent=cache.vehicles.length;
+  const vl=document.getElementById('veh-list');
+  if(!cache.vehicles.length){vl.innerHTML='<div class="empty">No vehicles.</div>';}
   else{
-    vlist.innerHTML = allVeh.map(v=>`<div class="veh-row"><div><div style="font-size:14px;font-weight:600;">${v}</div><div style="font-size:12px;color:var(--text-muted);">${db.entries.filter(e=>e.vehicle===v).length} entries</div></div></div>`).join('');
+    vl.innerHTML=cache.vehicles.map((v,i)=>`
+      <div class="vrow">
+        <div><div class="vname">${v}</div><div class="vmeta">${cache.refuels.filter(r=>r.vehicle===v).length} refuels</div></div>
+        <button class="btn-red" onclick="deleteVehicle(${i},'${v}')">🗑 Delete</button>
+      </div>
+    `).join('');
   }
 }
 
-// ─── VEHICLE IMPORT ───
-function importVehicles(inp){
-  const f = inp.files[0]; if(!f) return;
-  const reader = new FileReader();
-  reader.onload = function(e){
-    const lines = e.target.result.split(/\r?\n/).map(l=>l.trim()).filter(Boolean);
-    let added = 0;
-    lines.forEach(line=>{
-      const raw = line.split(',')[0].trim().replace(/^["']|["']$/g,'').toUpperCase();
-      const skip = ['VEHICLE','NUMBER','PLATE','VEH','ID','NO','REG','NAME'];
-      if(raw && raw.length>1 && !skip.includes(raw)){
-        if(!db.vehicles.includes(raw)){ db.vehicles.push(raw); added++; }
-      }
-    });
-    save(); updateDropdown(); if(adminIn) renderAdmin();
-    const el = document.getElementById('import-result');
-    el.className = 'alert alert-ok';
-    el.textContent = `✅ Imported ${added} new vehicles. Total registered: ${db.vehicles.length}`;
-    el.style.display = 'block';
-  };
-  reader.readAsText(f);
+// ══════════════════════════════════════════════════
+//  EXCEPTION MANAGEMENT
+// ══════════════════════════════════════════════════
+async function markChecked(i){
+  showLoader('Archiving...');
+  try{
+    const exc=cache.exceptions[i];
+    exc.checkedAt=new Date().toISOString();
+    cache.archive.push(exc);
+    cache.exceptions.splice(i,1);
+    await Promise.all([
+      jbWrite(bins.exceptions,cache.exceptions),
+      jbWrite(bins.archive,cache.archive)
+    ]);
+    hideLoader(); renderAdmin();
+  }catch(e){ hideLoader(); alert('Failed. '+e.message); }
 }
 
-function addVehicle(){
-  const v = document.getElementById('add-veh-input').value.trim().toUpperCase();
+async function restoreExc(i){
+  showLoader('Restoring...');
+  try{
+    const arch=cache.archive[i];
+    delete arch.checkedAt;
+    cache.exceptions.push(arch);
+    cache.archive.splice(i,1);
+    await Promise.all([
+      jbWrite(bins.exceptions,cache.exceptions),
+      jbWrite(bins.archive,cache.archive)
+    ]);
+    hideLoader(); renderAdmin();
+  }catch(e){ hideLoader(); alert('Failed. '+e.message); }
+}
+
+// ══════════════════════════════════════════════════
+//  VEHICLES
+// ══════════════════════════════════════════════════
+async function deleteVehicle(i,name){
+  if(!confirm(`Delete vehicle "${name}"? History is kept.`)) return;
+  showLoader('Deleting...');
+  try{
+    cache.vehicles.splice(i,1);
+    await jbWrite(bins.vehicles,cache.vehicles);
+    await refreshAll(); renderAdmin();
+  }catch(e){ hideLoader(); alert('Failed. '+e.message); }
+  hideLoader();
+}
+
+async function addVehicle(){
+  const v=document.getElementById('add-veh').value.trim().toUpperCase();
   if(!v) return;
-  if(!db.vehicles.includes(v)){ db.vehicles.push(v); save(); }
-  updateDropdown(); if(adminIn) renderAdmin();
-  document.getElementById('add-veh-input').value = '';
+  if(cache.vehicles.includes(v)){alert('Already exists.');return;}
+  showLoader('Adding...');
+  try{
+    cache.vehicles.push(v);
+    await jbWrite(bins.vehicles,cache.vehicles);
+    await refreshAll(); if(adminIn) renderAdmin();
+    document.getElementById('add-veh').value='';
+  }catch(e){ alert('Failed. '+e.message); }
+  hideLoader();
+}
+
+async function importVehicles(inp){
+  const f=inp.files[0]; if(!f) return;
+  const rd=new FileReader();
+  rd.onload=async function(e){
+    showLoader('Importing...');
+    try{
+      const lines=e.target.result.split(/\r?\n/).map(l=>l.trim()).filter(Boolean);
+      const skip=['VEHICLE','NUMBER','PLATE','VEH','ID','NO','REG','NAME'];
+      let added=0;
+      lines.forEach(line=>{
+        const raw=line.split(',')[0].trim().replace(/^["']|["']$/g,'').toUpperCase();
+        if(raw&&raw.length>1&&!skip.includes(raw)&&!cache.vehicles.includes(raw)){ cache.vehicles.push(raw); added++; }
+      });
+      await jbWrite(bins.vehicles,cache.vehicles);
+      await refreshAll(); if(adminIn) renderAdmin();
+      updateDropdown();
+      const el=document.getElementById('imp-result');
+      el.className='alert a-ok';
+      el.textContent=`✅ Imported ${added} vehicles. Total: ${cache.vehicles.length}`;
+      el.style.display='block';
+    }catch(err){ alert('Import failed. '+err.message); }
+    hideLoader();
+  };
+  rd.readAsText(f);
 }
 
 function updateDropdown(){
-  const sel = document.getElementById('vehicle-select');
-  const cur = sel.value;
-  sel.innerHTML = '<option value="">— Select vehicle —</option>' +
-    db.vehicles.map(v=>`<option value="${v}"${v===cur?' selected':''}>${v}</option>`).join('');
+  const sel=document.getElementById('veh-sel');
+  const cur=sel.value;
+  sel.innerHTML='<option value="">— Select vehicle —</option>'+
+    cache.vehicles.map(v=>`<option value="${v}"${v===cur?' selected':''}>${v}</option>`).join('');
 }
-updateDropdown();
 
-// ─── PWA INSTALL ───
-window.addEventListener('beforeinstallprompt', e=>{
-  e.preventDefault();
-  deferredPrompt = e;
-  document.getElementById('install-banner').classList.add('show');
+// ══════════════════════════════════════════════════
+//  LOADER
+// ══════════════════════════════════════════════════
+function showLoader(t){ document.getElementById('loader-txt').textContent=t||'Loading...'; document.getElementById('loader').classList.add('show'); }
+function hideLoader(){ document.getElementById('loader').classList.remove('show'); }
+
+// ══════════════════════════════════════════════════
+//  PWA
+// ══════════════════════════════════════════════════
+function setupPWA(){
+  if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
+  const isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent);
+  const isSaf=/^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+  if(isIOS&&!window.navigator.standalone&&isSaf&&!ls('iot')){
+    document.getElementById('iostip').classList.add('show');
+  }
+}
+window.addEventListener('beforeinstallprompt',e=>{
+  e.preventDefault(); deferredInstall=e;
+  document.getElementById('ibanner').classList.add('show');
 });
-function installApp(){
-  if(!deferredPrompt) return;
-  deferredPrompt.prompt();
-  deferredPrompt.userChoice.then(()=>{ deferredPrompt=null; document.getElementById('install-banner').classList.remove('show'); });
+function installPWA(){
+  if(!deferredInstall) return;
+  deferredInstall.prompt();
+  deferredInstall.userChoice.then(()=>{ deferredInstall=null; document.getElementById('ibanner').classList.remove('show'); });
 }
-window.addEventListener('appinstalled', ()=>{ document.getElementById('install-banner').classList.remove('show'); });
 
-// iOS Safari detection
-const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-const isStandalone = window.navigator.standalone;
-const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-if(isIOS && !isStandalone && isSafari && !localStorage.getItem('ios_tip_dismissed')){
-  document.getElementById('ios-tip').classList.add('show');
-}
-document.querySelector('#ios-tip .ios-close').addEventListener('click',()=>{
-  localStorage.setItem('ios_tip_dismissed','1');
-});
-
-// ─── SERVICE WORKER ───
-if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('sw.js').catch(()=>{});
-}
+// ══════════════════════════════════════════════════
+//  AUTO-START
+// ══════════════════════════════════════════════════
+if(CFG.apiKey && bins.vehicles){ startApp(); }
 </script>
 </body>
 </html>
