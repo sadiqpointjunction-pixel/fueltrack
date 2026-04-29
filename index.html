@@ -3,429 +3,187 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="FuelTrack">
 <meta name="theme-color" content="#0f4c81">
-<link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="icon-192.png">
 <title>FuelTrack Pro</title>
 <style>
-:root{
-  --blue:#0f4c81;--blue2:#1a6db5;--bl:#e8f2fc;--bp:#f0f7ff;
-  --gbg:#e8f5e9;--g:#2e7d32;
-  --abg:#fff8e1;--a:#b45309;
-  --rbg:#ffebee;--r:#c62828;--rb:#ffcdd2;
-  --pbg:#f3e5f5;--p:#6a1b9a;
-  --sf:#f5f7fa;--card:#fff;
-  --bdr:rgba(0,0,0,0.09);--bdr2:rgba(0,0,0,0.17);
-  --tx:#111;--mt:#6b7280;--rd:10px;--rl:14px;
-}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{height:100%;overflow:hidden;background:#dde3ee;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:15px;color:var(--tx)}
-#app{display:flex;flex-direction:column;height:100vh;height:100dvh;max-width:480px;margin:0 auto;background:#fff;box-shadow:0 0 60px rgba(0,0,0,0.18)}
-
-/* SETUP */
-#setup{position:fixed;inset:0;background:#f0f4f8;z-index:300;overflow-y:auto;padding:28px 20px 50px;}#setup .sc,#setup .sl,#setup .st,#setup .ss,#setup .sbtn,#setup .slink,#setup .shelp{max-width:480px;margin-left:auto;margin-right:auto;width:100%;}
-.sl{text-align:center;font-size:42px;margin-bottom:10px}
-.st{text-align:center;font-size:20px;font-weight:700;color:var(--blue);margin-bottom:6px}
-.ss{text-align:center;font-size:13px;color:var(--mt);margin-bottom:20px;line-height:1.6}
-.sc{background:var(--sf);border:0.5px solid var(--bdr2);border-radius:var(--rl);padding:16px;margin-bottom:12px}
-.sstep{font-size:10px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px}
-.slbl{font-size:13px;color:var(--mt);font-weight:600;margin-bottom:5px;display:block}
-.si{width:100%;padding:10px 12px;font-size:14px;border:0.5px solid var(--bdr2);border-radius:var(--rd);background:#fff;color:var(--tx);outline:none;font-family:inherit;word-break:break-all}
-.si:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(15,76,129,0.12)}
-.sh{font-size:11px;color:var(--mt);margin-top:5px;line-height:1.55}
-.sbtn{width:100%;padding:14px;font-size:15px;font-weight:700;background:var(--blue);color:#fff;border:none;border-radius:var(--rd);cursor:pointer;margin-top:6px}
-.slink{text-align:center;font-size:13px;color:var(--blue);margin-top:10px;cursor:pointer;text-decoration:underline;display:block}
-.shelp{background:var(--bp);border:1px solid #bdd6f0;border-radius:var(--rd);padding:14px;margin-top:10px;font-size:13px;color:#0a3d6e;line-height:1.8;display:none}
-.step-num{display:inline-flex;width:20px;height:20px;border-radius:50%;background:var(--blue);color:#fff;font-size:11px;font-weight:700;align-items:center;justify-content:center;margin-right:6px;flex-shrink:0}
-.step-row{display:flex;align-items:flex-start;margin-bottom:8px}
-.copy-box{background:#1e1e2e;color:#a6e3a1;border-radius:8px;padding:10px 12px;font-family:monospace;font-size:12px;margin:8px 0;word-break:break-all;cursor:pointer;position:relative}
-.copy-box::after{content:'tap to copy';position:absolute;bottom:4px;right:8px;font-size:10px;color:#6c7086}
-
-/* TOP BAR */
+html,body{height:100%;background:#dde3ee;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:15px;color:#111;overflow:hidden}
+#app{display:flex;flex-direction:column;height:100vh;height:100dvh;max-width:480px;margin:0 auto;background:#fff;box-shadow:0 0 40px rgba(0,0,0,0.15)}
 .topbar{background:linear-gradient(135deg,#0d3f6e,#1a6db5);color:#fff;padding:13px 16px;padding-top:max(13px,env(safe-area-inset-top));display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
 .tbl{display:flex;align-items:center;gap:10px}
-.tbico{width:34px;height:34px;background:rgba(255,255,255,0.18);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:19px}
-.tbtitle{font-size:17px;font-weight:700;letter-spacing:-0.3px}
-.tbsub{font-size:10px;opacity:0.72;margin-top:1px}
-.tbr{display:flex;align-items:center;gap:8px}
-.sdot{width:8px;height:8px;border-radius:50%;background:#4caf50}
-.sdot.off{background:#ef5350}.sdot.busy{background:#ffa726;animation:bl 0.8s infinite}
-@keyframes bl{0%,100%{opacity:1}50%{opacity:0.3}}
-.atag{background:rgba(255,255,255,0.22);font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px}
-
-/* NAV */
-.nav{display:flex;background:#fff;border-bottom:0.5px solid var(--bdr);flex-shrink:0}
-.nb{flex:1;padding:10px 4px 8px;border:none;background:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--mt);font-size:10px;font-weight:600;border-bottom:2px solid transparent}
-.nb.on{color:var(--blue);border-bottom-color:var(--blue)}
+.tbico{width:34px;height:34px;background:rgba(255,255,255,0.2);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:19px}
+.tbtitle{font-size:17px;font-weight:700}
+.tbsub{font-size:10px;opacity:0.75;margin-top:1px}
+.sdot{width:8px;height:8px;border-radius:50%;background:#4caf50;display:inline-block}
+.sdot.off{background:#ef5350}.sdot.busy{background:#ffa726;animation:blink 0.8s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+.atag{background:rgba(255,255,255,0.25);font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px}
+.nav{display:flex;background:#fff;border-bottom:0.5px solid rgba(0,0,0,0.1);flex-shrink:0}
+.nb{flex:1;padding:10px 4px 8px;border:none;background:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;color:#6b7280;font-size:10px;font-weight:600;border-bottom:2px solid transparent}
+.nb.on{color:#0f4c81;border-bottom-color:#0f4c81}
 .nb svg{width:21px;height:21px}
-
-/* PAGES */
-.pg{display:none;flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:14px 14px max(80px,env(safe-area-inset-bottom))}
+.pg{display:none;flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:14px 14px 80px}
 .pg.on{display:block}
-
-/* CARDS */
-.card{background:var(--card);border:0.5px solid var(--bdr);border-radius:var(--rl);padding:14px 16px;margin-bottom:12px}
-.ct{font-size:11px;font-weight:700;color:var(--mt);text-transform:uppercase;letter-spacing:0.7px;margin-bottom:12px}
-
-/* FORM */
+.card{background:#fff;border:0.5px solid rgba(0,0,0,0.1);border-radius:14px;padding:14px 16px;margin-bottom:12px}
+.ct{font-size:11px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:0.7px;margin-bottom:12px}
 .fg{margin-bottom:12px}
-.fl{font-size:13px;color:var(--mt);font-weight:600;margin-bottom:5px;display:block}
-.fi{width:100%;padding:11px 13px;font-size:15px;border:0.5px solid var(--bdr2);border-radius:var(--rd);background:var(--sf);color:var(--tx);outline:none;-webkit-appearance:none;font-family:inherit}
-.fi:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(15,76,129,0.12);background:#fff}
+.fl{font-size:13px;color:#6b7280;font-weight:600;margin-bottom:5px;display:block}
+.fi{width:100%;padding:11px 13px;font-size:15px;border:0.5px solid rgba(0,0,0,0.18);border-radius:10px;background:#f5f7fa;color:#111;outline:none;-webkit-appearance:none;font-family:inherit}
+.fi:focus{border-color:#0f4c81;box-shadow:0 0 0 3px rgba(15,76,129,0.12);background:#fff}
 select.fi{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:34px}
 textarea.fi{resize:vertical;min-height:68px}
-
-/* BUTTONS */
-.btn{width:100%;padding:13px;font-size:15px;font-weight:700;border:none;border-radius:var(--rd);cursor:pointer;transition:transform 0.1s}
-.btn:active{transform:scale(0.98)}
-.bblu{background:var(--blue);color:#fff}
-.bred{background:var(--rbg);color:var(--r);border:1px solid var(--rb);font-size:12px;padding:7px 12px;width:auto;border-radius:8px;cursor:pointer;font-weight:700}
-.bgre{background:var(--gbg);color:var(--g);border:none;font-size:12px;padding:7px 12px;width:auto;font-weight:700;border-radius:8px;cursor:pointer}
-.bpup{background:var(--pbg);color:var(--p);border:none;font-size:12px;padding:7px 12px;width:auto;font-weight:700;border-radius:8px;cursor:pointer}
-.bbli{background:var(--bl);color:var(--blue);border:none;font-size:12px;padding:7px 12px;width:auto;font-weight:700;border-radius:8px;cursor:pointer}
-
-/* BILL */
+.btn{width:100%;padding:13px;font-size:15px;font-weight:700;border:none;border-radius:10px;cursor:pointer}
+.btn:active{opacity:0.85}
+.bblu{background:#0f4c81;color:#fff}
 .bgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
-.bo{border:1.5px solid var(--bdr);border-radius:var(--rd);padding:14px 8px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;background:var(--sf);position:relative;overflow:hidden;min-height:82px;justify-content:center}
-.bo.sel{border-color:var(--blue);background:var(--bl)}
+.bo{border:1.5px solid rgba(0,0,0,0.1);border-radius:10px;padding:14px 8px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;background:#f5f7fa;position:relative;overflow:hidden;min-height:82px;justify-content:center}
+.bo.sel{border-color:#0f4c81;background:#e8f2fc}
 .bo input[type=file]{position:absolute;inset:0;opacity:0;width:100%;height:100%;cursor:pointer}
-.bo-ic{font-size:22px;line-height:1}
-.bo-lb{font-size:13px;font-weight:700;color:var(--tx)}
-.bo-sb{font-size:11px;color:var(--mt)}
-.bprev{display:none;align-items:center;gap:10px;background:var(--sf);border:0.5px solid var(--bdr);border-radius:var(--rd);padding:10px 12px;margin-top:6px}
-.bth{width:50px;height:50px;border-radius:8px;object-fit:cover;flex-shrink:0;border:0.5px solid var(--bdr);cursor:pointer}
-.bthp{width:50px;height:50px;border-radius:8px;background:var(--abg);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.bo-ic{font-size:22px}.bo-lb{font-size:13px;font-weight:700;color:#111}.bo-sb{font-size:11px;color:#6b7280}
+.bprev{display:none;align-items:center;gap:10px;background:#f5f7fa;border:0.5px solid rgba(0,0,0,0.1);border-radius:10px;padding:10px 12px;margin-top:6px}
+.bth{width:50px;height:50px;border-radius:8px;object-fit:cover;flex-shrink:0;cursor:pointer}
+.bthp{width:50px;height:50px;border-radius:8px;background:#fff8e1;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
 .binf{flex:1;min-width:0}
 .bnm{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.bmt{font-size:11px;color:var(--mt);margin-top:2px}
-.brm{font-size:12px;color:var(--r);cursor:pointer;padding:5px 10px;background:var(--rbg);border-radius:6px;flex-shrink:0;font-weight:600}
-
-/* AI BOX */
-.aibox{background:var(--bp);border:1px solid #b8d4f0;border-radius:var(--rd);padding:13px;margin-top:8px;display:none}
-.aihd{font-size:12px;font-weight:700;color:var(--blue);margin-bottom:8px}
-.airow{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:0.5px solid rgba(15,76,129,0.1)}
+.bmt{font-size:11px;color:#6b7280;margin-top:2px}
+.brm{font-size:12px;color:#c62828;cursor:pointer;padding:5px 10px;background:#ffebee;border-radius:6px;flex-shrink:0;font-weight:600}
+.aibox{background:#f0f7ff;border:1px solid #b8d4f0;border-radius:10px;padding:13px;margin-top:8px;display:none}
+.aihd{font-size:12px;font-weight:700;color:#0f4c81;margin-bottom:8px}
+.airow{display:flex;justify-content:space-between;padding:5px 0;border-bottom:0.5px solid rgba(15,76,129,0.1)}
 .airow:last-of-type{border-bottom:none}
-.aik{font-size:12px;color:var(--mt)}
-.aiv{font-size:13px;font-weight:700;color:var(--blue)}
-.aiap{margin-top:10px;background:var(--blue);color:#fff;border:none;border-radius:8px;padding:10px;font-size:13px;font-weight:700;cursor:pointer;width:100%}
-
-/* BADGES */
-.bdg{display:inline-flex;align-items:center;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;white-space:nowrap}
-.bok{background:var(--gbg);color:var(--g)}
-.bfl{background:var(--rbg);color:var(--r)}
-.bov{background:#e0f7fa;color:#00695c}
-.bar{background:var(--pbg);color:var(--p)}
-
-/* ALERTS */
-.alt{padding:11px 14px;border-radius:var(--rd);font-size:13px;margin-bottom:12px;line-height:1.55}
-.aok{background:var(--gbg);color:var(--g)}
-.aer{background:var(--rbg);color:var(--r)}
-.awn{background:var(--abg);color:var(--a)}
-.ain{background:var(--bl);color:var(--blue)}
-
-/* STATS */
+.aik{font-size:12px;color:#6b7280}.aiv{font-size:13px;font-weight:700;color:#0f4c81}
+.aiap{margin-top:10px;background:#0f4c81;color:#fff;border:none;border-radius:8px;padding:10px;font-size:13px;font-weight:700;cursor:pointer;width:100%}
+.bdg{display:inline-flex;align-items:center;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700}
+.bok{background:#e8f5e9;color:#2e7d32}.bfl{background:#ffebee;color:#c62828}.bov{background:#e0f7fa;color:#00695c}
+.alt{padding:11px 14px;border-radius:10px;font-size:13px;margin-bottom:12px;line-height:1.55}
+.aok{background:#e8f5e9;color:#2e7d32}.aer{background:#ffebee;color:#c62828}.awn{background:#fff8e1;color:#b45309}.ain{background:#e8f2fc;color:#0f4c81}
 .sg{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
-.sc2{background:var(--sf);border-radius:var(--rd);padding:13px}
-.slb{font-size:11px;color:var(--mt);font-weight:600;margin-bottom:4px}
-.sv{font-size:22px;font-weight:700;color:var(--tx);line-height:1}
-.sv.red{color:var(--r)}.sv.grn{color:var(--g)}
-.ssb{font-size:11px;color:var(--mt);margin-top:3px}
-
-/* LIST */
-.li{padding:13px 0;border-bottom:0.5px solid var(--bdr)}
+.sc2{background:#f5f7fa;border-radius:10px;padding:13px}
+.slb{font-size:11px;color:#6b7280;font-weight:600;margin-bottom:4px}
+.sv{font-size:22px;font-weight:700;color:#111;line-height:1}
+.sv.red{color:#c62828}.ssb{font-size:11px;color:#6b7280;margin-top:3px}
+.li{padding:13px 0;border-bottom:0.5px solid rgba(0,0,0,0.08)}
 .li:last-child{border-bottom:none}
 .lir{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px}
-.lit{font-size:14px;font-weight:700}
-.lis{font-size:12px;color:var(--mt);line-height:1.55}
-.lib{color:var(--blue);font-size:12px;margin-top:3px;cursor:pointer;font-weight:600}
-
-/* EXCEPTION CARDS */
-.exc{border-radius:var(--rd);padding:13px;margin-bottom:10px}
-.exa{background:var(--rbg);border:0.5px solid var(--rb)}
-.exr{background:var(--pbg);border:0.5px solid #d1a8e8}
+.lit{font-size:14px;font-weight:700}.lis{font-size:12px;color:#6b7280;line-height:1.55}
+.lib{color:#0f4c81;font-size:12px;margin-top:3px;cursor:pointer;font-weight:600}
+.exc{border-radius:10px;padding:13px;margin-bottom:10px}
+.exa{background:#ffebee;border:0.5px solid #ffcdd2}.exr{background:#f3e5f5;border:0.5px solid #d1a8e8}
 .ext{font-size:14px;font-weight:700;margin-bottom:5px}
-.exa .ext{color:var(--r)}.exr .ext{color:var(--p)}
+.exa .ext{color:#c62828}.exr .ext{color:#6a1b9a}
 .exb{font-size:12px;line-height:1.65}
 .exa .exb{color:#b71c1c}.exr .exb{color:#7b1fa2}
 .exac{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
-
-/* VEHICLE ROWS */
-.vr{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:0.5px solid var(--bdr)}
+.bgre{background:#e8f5e9;color:#2e7d32;border:none;font-size:12px;padding:7px 12px;width:auto;font-weight:700;border-radius:8px;cursor:pointer}
+.bbli{background:#e8f2fc;color:#0f4c81;border:none;font-size:12px;padding:7px 12px;width:auto;font-weight:700;border-radius:8px;cursor:pointer}
+.bpup{background:#f3e5f5;color:#6a1b9a;border:none;font-size:12px;padding:7px 12px;width:auto;font-weight:700;border-radius:8px;cursor:pointer}
+.bred{background:#ffebee;color:#c62828;border:1px solid #ffcdd2;font-size:12px;padding:7px 12px;width:auto;font-weight:700;border-radius:8px;cursor:pointer}
+.vr{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:0.5px solid rgba(0,0,0,0.08)}
 .vr:last-child{border-bottom:none}
-.vn{font-size:14px;font-weight:700}
-.vm{font-size:12px;color:var(--mt)}
-
-/* SUBTABS */
+.vn{font-size:14px;font-weight:700}.vm{font-size:12px;color:#6b7280}
 .stbs{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
-.stb{padding:7px 13px;font-size:12px;font-weight:700;border:1px solid var(--bdr2);border-radius:20px;cursor:pointer;background:#fff;color:var(--mt)}
-.stb.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+.stb{padding:7px 13px;font-size:12px;font-weight:700;border:1px solid rgba(0,0,0,0.18);border-radius:20px;cursor:pointer;background:#fff;color:#6b7280}
+.stb.on{background:#0f4c81;color:#fff;border-color:#0f4c81}
 .tp{display:none}.tp.on{display:block}
-
-/* LOGIN */
 .lk{text-align:center;padding:40px 20px 20px}
 .lkic{font-size:52px;margin-bottom:14px}
 .lktl{font-size:20px;font-weight:700;margin-bottom:6px}
-.lksb{font-size:14px;color:var(--mt);margin-bottom:24px}
-
-/* DROPZONE */
-.dz{border:2px dashed var(--bdr2);border-radius:var(--rd);padding:22px;text-align:center;cursor:pointer;background:var(--sf);position:relative}
+.lksb{font-size:14px;color:#6b7280;margin-bottom:24px}
+.dz{border:2px dashed rgba(0,0,0,0.18);border-radius:10px;padding:22px;text-align:center;cursor:pointer;background:#f5f7fa;position:relative}
 .dz input{position:absolute;inset:0;opacity:0;width:100%;height:100%;cursor:pointer}
-
-/* MODAL */
 .ovl{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:100;display:none;align-items:center;justify-content:center;padding:20px}
 .ovl.on{display:flex}
-.mb{background:#fff;border-radius:var(--rl);padding:16px;max-width:440px;width:100%;max-height:88vh;overflow-y:auto}
+.mb{background:#fff;border-radius:14px;padding:16px;max-width:440px;width:100%;max-height:88vh;overflow-y:auto}
 .mbhd{font-size:15px;font-weight:700;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
-.mbc{font-size:20px;cursor:pointer;color:var(--mt);line-height:1}
-.mimg{width:100%;border-radius:8px;border:0.5px solid var(--bdr)}
-
-/* JSON BOX */
-.jbox{background:#1e1e2e;color:#cdd6f4;border-radius:var(--rd);padding:14px;font-family:monospace;font-size:12px;line-height:1.7;overflow-x:auto;margin-top:8px;white-space:pre-wrap;word-break:break-all}
-
-/* LOADER */
-.ldr{position:fixed;inset:0;background:rgba(255,255,255,0.88);z-index:200;display:none;align-items:center;justify-content:center;flex-direction:column;gap:12px}
+.mbc{font-size:22px;cursor:pointer;color:#6b7280;line-height:1}
+.mimg{width:100%;border-radius:8px}
+.jbox{background:#1e1e2e;color:#cdd6f4;border-radius:10px;padding:14px;font-family:monospace;font-size:12px;line-height:1.7;overflow-x:auto;margin-top:8px;white-space:pre-wrap;word-break:break-all}
+.ldr{position:fixed;inset:0;background:rgba(255,255,255,0.9);z-index:200;display:none;align-items:center;justify-content:center;flex-direction:column;gap:12px}
 .ldr.on{display:flex}
-.spn{width:36px;height:36px;border:3px solid var(--bl);border-top-color:var(--blue);border-radius:50%;animation:sp 0.65s linear infinite}
+.spn{width:36px;height:36px;border:3px solid #e8f2fc;border-top-color:#0f4c81;border-radius:50%;animation:sp 0.65s linear infinite}
 @keyframes sp{to{transform:rotate(360deg)}}
-.ltx{font-size:14px;color:var(--mt);font-weight:500}
-
-/* REMARK BOX */
-.rmbox{background:var(--abg);border:1px solid #fcd28b;border-radius:var(--rd);padding:12px;margin-top:8px;display:none}
-.rmtl{font-size:13px;font-weight:700;color:var(--a);margin-bottom:6px}
-
-.empty{text-align:center;padding:30px 20px;color:var(--mt);font-size:14px}
-.slbl2{font-size:11px;font-weight:700;color:var(--mt);text-transform:uppercase;letter-spacing:0.7px;margin:16px 0 8px}
-
-#ibn{display:none;background:var(--blue);color:#fff;padding:12px 16px;font-size:13px;align-items:center;justify-content:space-between;gap:10px;flex-shrink:0}
-#ibn.on{display:flex}
-#ibn button{background:rgba(255,255,255,0.2);border:none;color:#fff;padding:6px 14px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer}
-#iosp{display:none;background:#052d52;color:#fff;padding:12px 16px;font-size:12px;line-height:1.6;flex-shrink:0}
-#iosp.on{display:block}
-.iosx{float:right;cursor:pointer;opacity:0.7;font-size:16px}
+.ltx{font-size:14px;color:#6b7280;font-weight:500}
+.rmbox{background:#fff8e1;border:1px solid #fcd28b;border-radius:10px;padding:12px;margin-top:8px;display:none}
+.rmtl{font-size:13px;font-weight:700;color:#b45309;margin-bottom:6px}
+.empty{text-align:center;padding:30px 20px;color:#6b7280;font-size:14px}
+.slbl2{font-size:11px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:0.7px;margin:16px 0 8px}
 </style>
 </head>
-<body onerror="document.body.innerHTML='<div style=padding:20px;color:red;font-size:14px>JS Error: '+event.message+'</div>'"">
-
-<!-- ══ SETUP ══ -->
-<div id="setup">
-  <div class="sl">⛽</div>
-  <div class="st">FuelTrack Pro</div>
-  <div class="ss">Paste your Google Apps Script URL below to connect your cloud database.</div>
-
-  <div class="sc">
-    <div class="sstep">Your Google Apps Script URL</div>
-    <label class="slbl">Web App URL</label>
-    <input class="si" id="s-url" placeholder="https://script.google.com/macros/s/..." type="url" style="font-size:12px;">
-    <div class="sh">You will get this URL in Step 3 below. It connects the app to your Google Sheet database.</div>
-  </div>
-
-  <div class="sc">
-    <div class="sstep">Admin password</div>
-    <label class="slbl">Set your admin password</label>
-    <input class="si" id="s-pass" placeholder="e.g. Momdad143" type="password">
-    <div class="sh">Only admins need this. Drivers do not need a password.</div>
-  </div>
-
-  <div id="s-err" class="alt aer" style="display:none;"></div>
-  <button class="sbtn" onclick="doSetup()">Connect &amp; Start →</button>
-
-  <span class="slink" onclick="toggleHelp()">How do I get the URL? Step-by-step guide →</span>
-  <div class="shelp" id="s-help">
-    <div style="font-weight:700;font-size:13px;margin-bottom:10px;">Follow these steps (5 minutes):</div>
-
-    <div class="step-row"><span class="step-num">1</span><span>Go to <strong>sheets.google.com</strong> and create a new blank spreadsheet. Name it <strong>FuelTrack DB</strong></span></div>
-
-    <div class="step-row"><span class="step-num">2</span><span>In the spreadsheet, click <strong>Extensions</strong> → <strong>Apps Script</strong></span></div>
-
-    <div class="step-row"><span class="step-num">3</span><span>Delete everything in the editor and paste this code:</span></div>
-
-    <div class="copy-box" onclick="copyScript()">const SS=SpreadsheetApp.getActiveSpreadsheet();
-function doGet(e){return handle(e)}
-function doPost(e){return handle(e)}
-function handle(e){
-  try{
-    const p=e.parameter,b=e.postData?JSON.parse(e.postData.contents):{};
-    const a=p.action||b.action;
-    if(a==='read') return res(readSheet(p.sheet||b.sheet));
-    if(a==='write') return res(writeRow(p.sheet||b.sheet,b.row));
-    if(a==='update') return res(updateRow(p.sheet||b.sheet,b.id,b.data));
-    if(a==='delete') return res(deleteRow(p.sheet||b.sheet,b.id));
-    if(a==='ping') return res({ok:true});
-    return res({error:'Unknown action'});
-  }catch(err){return res({error:err.message})}
-}
-function res(d){return ContentService.createTextOutput(JSON.stringify(d)).setMimeType(ContentService.MimeType.JSON)}
-function getSheet(name){
-  let s=SS.getSheetByName(name);
-  if(!s){s=SS.insertSheet(name);s.appendRow(['id','data','ts']);}
-  return s;
-}
-function readSheet(name){
-  const s=getSheet(name),rows=s.getDataRange().getValues();
-  if(rows.length<=1)return[];
-  return rows.slice(1).map(r=>({id:r[0],data:JSON.parse(r[1]||'{}'),ts:r[2]}));
-}
-function writeRow(name,row){
-  const s=getSheet(name),id=Date.now().toString();
-  s.appendRow([id,JSON.stringify(row),new Date().toISOString()]);
-  return{id};
-}
-function updateRow(name,id,data){
-  const s=getSheet(name),rows=s.getDataRange().getValues();
-  for(let i=1;i<rows.length;i++){if(rows[i][0]==id){s.getRange(i+1,2).setValue(JSON.stringify(data));return{ok:true};}}
-  return{error:'Not found'};
-}
-function deleteRow(name,id){
-  const s=getSheet(name),rows=s.getDataRange().getValues();
-  for(let i=1;i<rows.length;i++){if(rows[i][0]==id){s.deleteRow(i+1);return{ok:true};}}
-  return{error:'Not found'};
-}</div>
-
-    <div class="step-row"><span class="step-num">4</span><span>Click <strong>Deploy</strong> → <strong>New deployment</strong> → Type: <strong>Web app</strong></span></div>
-
-    <div class="step-row"><span class="step-num">5</span><span>Set <strong>Execute as: Me</strong> and <strong>Who has access: Anyone</strong> → Click <strong>Deploy</strong></span></div>
-
-    <div class="step-row"><span class="step-num">6</span><span>Authorize when asked → Copy the <strong>Web app URL</strong> → Paste it above</span></div>
-
-    <div style="background:#e8f5e9;border-radius:8px;padding:10px;font-size:12px;color:#2e7d32;margin-top:8px;">
-      ✅ Your Google Sheet will automatically become the database. All driver entries go there instantly.
-    </div>
-  </div>
-</div>
-
-<!-- ══ MAIN APP ══ -->
-<div id="mainapp" style="display:none;flex-direction:column;height:100%;overflow:hidden;">
-
+<body>
+<div id="app">
 <div class="topbar">
   <div class="tbl">
     <div class="tbico">⛽</div>
-    <div><div class="tbtitle">FuelTrack Pro</div><div class="tbsub" id="tbsub">Fleet fuel management</div></div>
+    <div><div class="tbtitle">FuelTrack Pro</div><div class="tbsub" id="tbsub">Connecting to cloud...</div></div>
   </div>
-  <div class="tbr">
-    <span class="sdot" id="sdot"></span>
+  <div style="display:flex;align-items:center;gap:8px;">
+    <span class="sdot busy" id="sdot"></span>
     <div id="atag" style="display:none;"><span class="atag">🔑 Admin</span></div>
   </div>
 </div>
-
-<div id="ibn">
-  <span>📲 Install FuelTrack on your phone</span>
-  <div style="display:flex;gap:6px;">
-    <button onclick="installPWA()">Install</button>
-    <button onclick="document.getElementById('ibn').classList.remove('on')" style="background:rgba(255,255,255,0.1);">✕</button>
-  </div>
-</div>
-<div id="iosp">
-  <span class="iosx" onclick="this.parentElement.classList.remove('on');ls('iot','1')">✕</span>
-  <strong>📲 Install on iPhone:</strong> Tap Share (□↑) in Safari → "Add to Home Screen"
-</div>
-
 <div class="nav">
-  <button class="nb on" id="nav-d" onclick="goPage('driver',this)">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
-    Submit
+  <button class="nb on" onclick="goPage('driver',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>Submit
   </button>
-  <button class="nb" id="nav-h" onclick="goPage('history',this)">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-    History
+  <button class="nb" onclick="goPage('history',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>History
   </button>
-  <button class="nb" id="nav-a" onclick="goPage('admin',this)">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-    Admin
+  <button class="nb" onclick="goPage('admin',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Admin
   </button>
 </div>
 
-<!-- ══ DRIVER ══ -->
 <div class="pg on" id="pg-driver">
-  <div class="alt ain" style="margin-top:2px;">📸 Take a photo of your fuel bill — AI reads it automatically. Then enter your vehicle number only.</div>
+  <div class="alt ain" style="margin-top:2px;">📸 Take photo of your fuel bill — AI reads it automatically. Then enter your vehicle number.</div>
   <div id="d-alt" style="display:none;"></div>
-
   <div class="card">
-    <div class="ct">Step 1 — Upload fuel bill</div>
+    <div class="ct">Step 1 — Fuel bill</div>
     <div class="bgrid">
       <div class="bo" id="bo-cam"><input type="file" id="fc" accept="image/*" capture="environment" onchange="onBill(this,'camera')"><div class="bo-ic">📷</div><div class="bo-lb">Camera</div><div class="bo-sb">Take photo</div></div>
       <div class="bo" id="bo-gal"><input type="file" id="fg" accept="image/*" onchange="onBill(this,'gallery')"><div class="bo-ic">🖼️</div><div class="bo-lb">Gallery</div><div class="bo-sb">Pick image</div></div>
-      <div class="bo" id="bo-pdf"><input type="file" id="fp" accept=".pdf,application/pdf" onchange="onBill(this,'pdf')"><div class="bo-ic">📄</div><div class="bo-lb">PDF</div><div class="bo-sb">Upload PDF</div></div>
+      <div class="bo" id="bo-pdf"><input type="file" id="fp" accept=".pdf" onchange="onBill(this,'pdf')"><div class="bo-ic">📄</div><div class="bo-lb">PDF</div><div class="bo-sb">Upload PDF</div></div>
       <div class="bo" id="bo-any"><input type="file" id="fa" accept="image/*,.pdf" onchange="onBill(this,'any')"><div class="bo-ic">📁</div><div class="bo-lb">Any file</div><div class="bo-sb">Image or PDF</div></div>
     </div>
-    <div class="bprev" id="bprev">
-      <div id="bthumb"></div>
-      <div class="binf"><div class="bnm" id="bnm"></div><div class="bmt" id="bmt"></div></div>
-      <div class="brm" onclick="clearBill()">Remove</div>
-    </div>
+    <div class="bprev" id="bprev"><div id="bthumb"></div><div class="binf"><div class="bnm" id="bnm"></div><div class="bmt" id="bmt"></div></div><div class="brm" onclick="clearBill()">Remove</div></div>
     <div class="aibox" id="aibox">
       <div class="aihd">✨ AI extracted from your bill</div>
       <div id="airows"></div>
       <button class="aiap" id="aiap" onclick="applyAI()" style="display:none;">✓ Use this data →</button>
     </div>
   </div>
-
   <div class="card">
-    <div class="ct">Step 2 — Your vehicle</div>
-    <div class="fg">
-      <label class="fl">Select vehicle</label>
-      <select class="fi" id="vsel"><option value="">— Select your vehicle —</option></select>
-    </div>
-    <div class="fg" style="margin-bottom:0;">
-      <label class="fl">Or type vehicle number</label>
-      <input type="text" class="fi" id="vman" placeholder="e.g. QA-12345" autocapitalize="characters">
-    </div>
+    <div class="ct">Step 2 — Vehicle</div>
+    <div class="fg"><label class="fl">Select vehicle</label><select class="fi" id="vsel"><option value="">— Select your vehicle —</option></select></div>
+    <div class="fg" style="margin-bottom:0;"><label class="fl">Or type vehicle number</label><input type="text" class="fi" id="vman" placeholder="e.g. QA-12345" autocapitalize="characters"></div>
   </div>
-
   <div class="card" id="confcard" style="display:none;">
-    <div class="ct">Step 3 — Confirm &amp; complete</div>
-    <div class="fg"><label class="fl">Liters (from bill)</label><input type="number" class="fi" id="c-lit" placeholder="e.g. 40" step="0.1" inputmode="decimal"></div>
-    <div class="fg"><label class="fl">Date (from bill)</label><input type="text" class="fi" id="c-dat" placeholder="e.g. 2026-04-28"></div>
-    <div class="fg"><label class="fl">Amount (from bill)</label><input type="text" class="fi" id="c-amt" placeholder="e.g. 150 QAR"></div>
+    <div class="ct">Step 3 — Confirm details</div>
+    <div class="fg"><label class="fl">Liters *</label><input type="number" class="fi" id="c-lit" placeholder="e.g. 40" step="0.1" inputmode="decimal"></div>
+    <div class="fg"><label class="fl">Date</label><input type="text" class="fi" id="c-dat" placeholder="e.g. 2026-04-28"></div>
+    <div class="fg"><label class="fl">Amount</label><input type="text" class="fi" id="c-amt" placeholder="e.g. 150 QAR"></div>
     <div class="fg" style="margin-bottom:0;"><label class="fl">Current odometer (km) *</label><input type="number" class="fi" id="c-odo" placeholder="e.g. 54321" inputmode="numeric"></div>
   </div>
-
-  <div class="rmbox" id="rmbox">
-    <div class="rmtl">⚠ Early refuel detected — remark required</div>
-    <div style="font-size:12px;color:var(--a);margin-bottom:8px;" id="rmrsn"></div>
-    <textarea class="fi" id="rminp" placeholder="Explain why the vehicle refueled early..." style="min-height:60px;"></textarea>
-  </div>
-
+  <div class="rmbox" id="rmbox"><div class="rmtl">⚠ Early refuel — remark required</div><div style="font-size:12px;color:#b45309;margin-bottom:8px;" id="rmrsn"></div><textarea class="fi" id="rminp" placeholder="Explain why..." style="min-height:60px;"></textarea></div>
   <button class="btn bblu" onclick="submitRefuel()" style="margin-bottom:12px;">⛽ Submit refuel</button>
-
-  <div id="resjson" style="display:none;">
-    <div class="slbl2">Saved record</div>
-    <div class="jbox" id="jdisp"></div>
-  </div>
+  <div id="resjson" style="display:none;"><div class="slbl2">Saved record</div><div class="jbox" id="jdisp"></div></div>
 </div>
 
-<!-- ══ HISTORY ══ -->
 <div class="pg" id="pg-history">
-  <div class="sg" style="margin-top:2px;">
-    <div class="sc2"><div class="slb">Total refuels</div><div class="sv" id="ht">—</div></div>
-    <div class="sc2"><div class="slb">Vehicles</div><div class="sv" id="hv">—</div></div>
-  </div>
-  <div class="card">
-    <input type="search" class="fi" id="hsrch" placeholder="Search vehicle..." oninput="renderHistory()" style="margin-bottom:12px;">
-    <div id="hlist"><div class="empty">Loading...</div></div>
-  </div>
+  <div class="sg" style="margin-top:2px;"><div class="sc2"><div class="slb">Total refuels</div><div class="sv" id="ht">—</div></div><div class="sc2"><div class="slb">Vehicles</div><div class="sv" id="hv">—</div></div></div>
+  <div class="card"><input type="search" class="fi" id="hsrch" placeholder="Search vehicle..." oninput="renderHistory()" style="margin-bottom:12px;"><div id="hlist"><div class="empty">Loading...</div></div></div>
 </div>
 
-<!-- ══ ADMIN ══ -->
 <div class="pg" id="pg-admin">
-  <div id="alogin">
-    <div class="lk"><div class="lkic">🔐</div><div class="lktl">Admin only</div><div class="lksb">Drivers do not need to sign in here.</div></div>
-    <div class="card">
-      <div class="fg"><label class="fl">Admin password</label><input type="password" class="fi" id="apass" placeholder="Enter password" onkeydown="if(event.key==='Enter')aLogin()"></div>
-      <div id="aerr" class="alt aer" style="display:none;">Incorrect password.</div>
-      <button class="btn bblu" onclick="aLogin()">Sign in →</button>
-    </div>
+  <div id="alogin"><div class="lk"><div class="lkic">🔐</div><div class="lktl">Admin only</div><div class="lksb">Drivers do not need to sign in here.</div></div>
+    <div class="card"><div class="fg"><label class="fl">Admin password</label><input type="password" class="fi" id="apass" placeholder="Enter password" onkeydown="if(event.key==='Enter')aLogin()"></div><div id="aerr" class="alt aer" style="display:none;">Incorrect password.</div><button class="btn bblu" onclick="aLogin()">Sign in →</button></div>
   </div>
-
   <div id="adash" style="display:none;">
     <div style="display:flex;justify-content:space-between;align-items:center;margin:2px 0 14px;">
       <div style="font-size:16px;font-weight:700;">Admin dashboard</div>
-      <div style="display:flex;gap:6px;">
-        <button onclick="aRefresh()" style="font-size:12px;color:var(--blue);background:var(--bl);border:none;padding:6px 12px;border-radius:8px;font-weight:700;cursor:pointer;">↻ Refresh</button>
-        <button onclick="aLogout()" style="font-size:12px;color:var(--r);background:var(--rbg);border:none;padding:6px 12px;border-radius:8px;font-weight:700;cursor:pointer;">Sign out</button>
-      </div>
+      <div style="display:flex;gap:6px;"><button onclick="aRefresh()" style="font-size:12px;color:#0f4c81;background:#e8f2fc;border:none;padding:6px 12px;border-radius:8px;font-weight:700;cursor:pointer;">↻ Refresh</button><button onclick="aLogout()" style="font-size:12px;color:#c62828;background:#ffebee;border:none;padding:6px 12px;border-radius:8px;font-weight:700;cursor:pointer;">Sign out</button></div>
     </div>
     <div class="stbs">
       <button class="stb on" onclick="stab('ov',this)">Overview</button>
@@ -434,154 +192,73 @@ function deleteRow(name,id){
       <button class="stb" onclick="stab('vh',this)">Vehicles</button>
       <button class="stb" onclick="stab('im',this)">Import</button>
     </div>
-
     <div class="tp on" id="tp-ov">
       <div class="sg"><div class="sc2"><div class="slb">Total refuels</div><div class="sv" id="aot">0</div></div><div class="sc2"><div class="slb">Exceptions</div><div class="sv red" id="aoe">0</div></div></div>
-      <div class="sg"><div class="sc2"><div class="slb">Vehicles</div><div class="sv" id="aov">0</div></div><div class="sc2"><div class="slb">Fleet avg</div><div class="sv" id="aoa">—</div><div class="ssb">km / litre</div></div></div>
-      <div class="slbl2">Vehicle performance</div>
-      <div class="card"><div id="vperf"><div class="empty">Loading...</div></div></div>
-      <div class="slbl2">Recent entries (all drivers)</div>
-      <div class="card"><div id="recent"><div class="empty">Loading...</div></div></div>
+      <div class="sg"><div class="sc2"><div class="slb">Vehicles</div><div class="sv" id="aov">0</div></div><div class="sc2"><div class="slb">Fleet avg</div><div class="sv" id="aoa">—</div><div class="ssb">km/litre</div></div></div>
+      <div class="slbl2">Vehicle performance</div><div class="card"><div id="vperf"><div class="empty">Loading...</div></div></div>
+      <div class="slbl2">Recent entries</div><div class="card"><div id="recent"><div class="empty">Loading...</div></div></div>
     </div>
-
-    <div class="tp" id="tp-ex">
-      <div class="alt awn">Vehicles that refueled before completing expected km. Review and mark as Checked.</div>
-      <div id="exlist"><div class="empty">Loading...</div></div>
-    </div>
-
-    <div class="tp" id="tp-ar">
-      <div class="alt ain">Exceptions that have been reviewed and checked by admin.</div>
-      <div id="arlist"><div class="empty">No archived exceptions.</div></div>
-    </div>
-
-    <div class="tp" id="tp-vh">
-      <div class="slbl2">Registered vehicles (<span id="vcount">0</span>)</div>
-      <div class="card"><div id="vlist"><div class="empty">Loading...</div></div></div>
-    </div>
-
+    <div class="tp" id="tp-ex"><div class="alt awn">Vehicles refueled before expected km.</div><div id="exlist"><div class="empty">Loading...</div></div></div>
+    <div class="tp" id="tp-ar"><div class="alt ain">Exceptions reviewed and checked.</div><div id="arlist"><div class="empty">None yet.</div></div></div>
+    <div class="tp" id="tp-vh"><div class="slbl2">Vehicles (<span id="vcount">0</span>)</div><div class="card"><div id="vlist"><div class="empty">Loading...</div></div></div></div>
     <div class="tp" id="tp-im">
-      <div class="card">
-        <div class="ct">Bulk import vehicles</div>
-        <div style="font-size:13px;color:var(--mt);margin-bottom:12px;line-height:1.6;">One vehicle number per line in CSV or TXT file.</div>
-        <div class="dz"><input type="file" id="impf" accept=".csv,.txt" onchange="importVeh(this)"><div style="font-size:26px;margin-bottom:8px;">📂</div><div style="font-size:13px;color:var(--mt);">Tap to upload CSV / TXT</div></div>
-        <div id="impres" style="display:none;margin-top:10px;"></div>
-      </div>
-      <div class="card">
-        <div class="ct">Add vehicle manually</div>
-        <div class="fg"><input type="text" class="fi" id="addv" placeholder="e.g. QA-12345" autocapitalize="characters"></div>
-        <button class="btn bblu" onclick="addVeh()">Add vehicle</button>
-      </div>
-      <div class="card">
-        <div class="ct">Settings</div>
-        <button class="btn" style="background:var(--abg);color:var(--a);font-size:13px;padding:10px;" onclick="resetSetup()">⚙ Change database settings</button>
-      </div>
+      <div class="card"><div class="ct">Import vehicles</div><div class="dz"><input type="file" id="impf" accept=".csv,.txt" onchange="importVeh(this)"><div style="font-size:26px;margin-bottom:8px;">📂</div><div style="font-size:13px;color:#6b7280;">Upload CSV / TXT</div></div><div id="impres" style="display:none;margin-top:10px;"></div></div>
+      <div class="card"><div class="ct">Add manually</div><div class="fg"><input type="text" class="fi" id="addv" placeholder="e.g. QA-12345" autocapitalize="characters"></div><button class="btn bblu" onclick="addVeh()">Add vehicle</button></div>
     </div>
   </div>
 </div>
-</div><!-- mainapp -->
-
-<!-- Modal -->
-<div class="ovl" id="bmod" onclick="if(event.target===this)closeMod()">
-  <div class="mb"><div class="mbhd"><span id="modtl">Bill</span><span class="mbc" onclick="closeMod()">✕</span></div><div id="modbody"></div></div>
 </div>
 
-<!-- Loader -->
+<div class="ovl" id="bmod" onclick="if(event.target===this)closeMod()"><div class="mb"><div class="mbhd"><span id="modtl">Bill</span><span class="mbc" onclick="closeMod()">✕</span></div><div id="modbody"></div></div></div>
 <div class="ldr" id="ldr"><div class="spn"></div><div class="ltx" id="ltx">Loading...</div></div>
 
 <script>
+const GAS='https://script.google.com/macros/s/AKfycbys3K4YIUF7Qk7fVXcOnx2g5nlY2bZkYH46juoITU4TSymSnhNJ321vvbcOio0Xp4Q/exec';
+const PASS='Momdad143';
 const BKM=5;
-let CFG={},cache={refuels:[],exceptions:[],archive:[],vehicles:[]};
-let bFile=null,bKind=null,bDataURL=null,aiEx={};
-let adminIn=false,dInst=null;
+let C={refuels:[],exceptions:[],archive:[],vehicles:[]};
+let bFile=null,bKind=null,bDURL=null,aiEx={},adminIn=false;
 
-function ls(k,v){if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}
-function lsj(k,v){if(v===undefined){try{return JSON.parse(ls(k))}catch(e){return null}}ls(k,JSON.stringify(v))}
-function loadCFG(){CFG=lsj('ft5_cfg')||{}}
-function saveCFG(){lsj('ft5_cfg',CFG)}
-loadCFG();
-
-// ── GOOGLE APPS SCRIPT API ──
-async function gasCall(params){
-  setSyncStatus('busy');
+async function gas(params){
+  setSS('busy');
   try{
-    const url=CFG.url+'?'+new URLSearchParams(params).toString();
-    const r=await fetch(url,{redirect:'follow'});
-    const d=await r.json();
-    setSyncStatus('online');
-    return d;
-  }catch(e){setSyncStatus('off');throw e}
+    const r=await fetch(GAS+'?'+new URLSearchParams(params),{redirect:'follow'});
+    const d=await r.json();setSS('on');return d;
+  }catch(e){setSS('off');throw e}
 }
-
-async function gasPost(body){
-  setSyncStatus('busy');
+async function gasP(body){
+  setSS('busy');
   try{
-    const r=await fetch(CFG.url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body),redirect:'follow'});
-    const d=await r.json();
-    setSyncStatus('online');
-    return d;
-  }catch(e){setSyncStatus('off');throw e}
+    const r=await fetch(GAS,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body),redirect:'follow'});
+    const d=await r.json();setSS('on');return d;
+  }catch(e){setSS('off');throw e}
 }
+async function dbR(s){const d=await gas({action:'read',sheet:s});return Array.isArray(d)?d.map(r=>({...r.data,_id:r.id,_ts:r.ts})):[]}
+async function dbW(s,row){return gasP({action:'write',sheet:s,row})}
+async function dbD(s,id){return gasP({action:'delete',sheet:s,id})}
 
-async function dbRead(sheet){
-  const d=await gasCall({action:'read',sheet});
-  return Array.isArray(d)?d.map(r=>({...r.data,_id:r.id,_ts:r.ts})):[];
-}
-
-async function dbWrite(sheet,row){return gasPost({action:'write',sheet,row})}
-async function dbUpdate(sheet,id,data){return gasPost({action:'update',sheet,id,data})}
-async function dbDelete(sheet,id){return gasPost({action:'delete',sheet,id})}
-
-// ── SETUP ──
-async function doSetup(){
-  const url=document.getElementById('s-url').value.trim();
-  const pass=document.getElementById('s-pass').value.trim();
-  const err=document.getElementById('s-err');
-  if(!url||!url.includes('script.google.com')){err.textContent='Please enter a valid Google Apps Script URL.';err.style.display='block';return}
-  if(!pass){err.textContent='Please set an admin password.';err.style.display='block';return}
-  CFG={url,adminPass:pass};
-  showLoader('Testing connection...');
+async function init(){
   try{
-    const r=await gasCall({action:'ping'});
-    if(r.ok){saveCFG();hideLoader();startApp();}
-    else{hideLoader();err.textContent='Connection test failed: '+(r.error||'Unknown error');err.style.display='block'}
-  }catch(e){hideLoader();err.textContent='Cannot connect. Make sure you deployed as Web App with access: Anyone. Error: '+e.message;err.style.display='block'}
+    const[r,e,a,v]=await Promise.all([dbR('refuels'),dbR('exceptions'),dbR('archive'),dbR('vehicles')]);
+    C.refuels=r.sort((a,b)=>(b._ts||'').localeCompare(a._ts||''));
+    C.exceptions=e;C.archive=a;
+    C.vehicles=v.map(x=>x.vehicle||'').filter(x=>x);
+    updateVD();
+    document.getElementById('tbsub').textContent=`${C.refuels.length} refuels · ${C.vehicles.length} vehicles`;
+  }catch(e){
+    document.getElementById('tbsub').textContent='Connection error — check internet';
+    setSS('off');
+  }
 }
 
-function toggleHelp(){const h=document.getElementById('s-help');h.style.display=h.style.display==='none'?'block':'none'}
-
-function copyScript(){
-  const txt=document.querySelector('.copy-box').textContent;
-  navigator.clipboard?.writeText(txt).then(()=>alert('Code copied! Paste it in Apps Script editor.')).catch(()=>{});
-}
-
-function resetSetup(){
-  if(!confirm('Show setup screen again?'))return;
-  lsj('ft5_cfg',null);location.reload();
-}
-
-// ── START ──
-function startApp(){
-  document.getElementById('setup').style.display='none';
-  const m=document.getElementById('mainapp');
-  m.style.display='flex';m.style.flexDirection='column';m.style.height='100%';m.style.overflow='hidden';
-  refreshAll();setupPWA();
-}
-
-async function refreshAll(){
-  try{
-    const[r,e,a,v]=await Promise.all([dbRead('refuels'),dbRead('exceptions'),dbRead('archive'),dbRead('vehicles')]);
-    cache.refuels=r.sort((a,b)=>b._ts?.localeCompare(a._ts));
-    cache.exceptions=e;cache.archive=a;
-    cache.vehicles=v.map(x=>x.vehicle||x.name||x).filter(x=>typeof x==='string'&&x.length>0);
-    updateVDrop();
-    document.getElementById('tbsub').textContent=`${cache.refuels.length} refuels · ${cache.vehicles.length} vehicles`;
-  }catch(e){console.warn('Refresh failed',e)}
-}
-
+async function refreshAll(){await init()}
 async function aRefresh(){await refreshAll();if(adminIn)renderAdmin()}
-function setSyncStatus(s){const d=document.getElementById('sdot');d.className='sdot'+(s==='off'?' off':s==='busy'?' busy':'')}
 
-// ── PAGES ──
+function setSS(s){
+  const d=document.getElementById('sdot');
+  d.className='sdot'+(s==='off'?' off':s==='busy'?' busy':'');
+}
+
 function goPage(p,el){
   document.querySelectorAll('.pg').forEach(x=>x.classList.remove('on'));
   document.querySelectorAll('.nb').forEach(x=>x.classList.remove('on'));
@@ -590,7 +267,6 @@ function goPage(p,el){
   if(p==='admin'&&adminIn){refreshAll().then(renderAdmin)}
 }
 
-// ── BILL ──
 function onBill(inp,kind){
   const f=inp.files[0];if(!f)return;
   bFile=f;bKind=kind;
@@ -603,184 +279,159 @@ function onBill(inp,kind){
   const wrap=document.getElementById('bthumb');
   if(f.type.startsWith('image/')){
     const rd=new FileReader();
-    rd.onload=e=>{bDataURL=e.target.result;wrap.innerHTML=`<img class="bth" src="${bDataURL}" onclick="prevBill()">`;runAI(bDataURL)};
+    rd.onload=e=>{bDURL=e.target.result;wrap.innerHTML=`<img class="bth" src="${bDURL}" onclick="prevBill()">`;runAI(bDURL)};
     rd.readAsDataURL(f);
-  } else {
-    bDataURL=null;wrap.innerHTML=`<div class="bthp">📄</div>`;
+  }else{
+    bDURL=null;wrap.innerHTML=`<div class="bthp">📄</div>`;
     document.getElementById('aibox').style.display='none';
+    document.getElementById('confcard').style.display='block';
   }
 }
 
 function clearBill(){
-  bFile=null;bKind=null;bDataURL=null;aiEx={};
+  bFile=null;bKind=null;bDURL=null;aiEx={};
   document.getElementById('bprev').style.display='none';
   document.getElementById('aibox').style.display='none';
   document.getElementById('confcard').style.display='none';
   document.querySelectorAll('.bo').forEach(x=>x.classList.remove('sel'));
-  ['fc','fg','fp','fa'].forEach(id=>{document.getElementById(id).value=''});
+  ['fc','fg','fp','fa'].forEach(id=>document.getElementById(id).value='');
 }
 
-// ── AI ──
-async function runAI(dataURL){
+async function runAI(dURL){
   const box=document.getElementById('aibox');
   box.style.display='block';
-  document.getElementById('airows').innerHTML='<div style="text-align:center;padding:10px;font-size:13px;color:var(--blue);">✨ Reading bill with AI...</div>';
+  document.getElementById('airows').innerHTML='<div style="text-align:center;padding:10px;font-size:13px;color:#0f4c81;">✨ Reading bill with AI...</div>';
   document.getElementById('aiap').style.display='none';
   try{
-    const b64=dataURL.split(',')[1];
+    const b64=dURL.split(',')[1];
     const res=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        model:'claude-sonnet-4-20250514',max_tokens:400,
-        messages:[{role:'user',content:[
-          {type:'image',source:{type:'base64',media_type:'image/jpeg',data:b64}},
-          {type:'text',text:`Read this fuel receipt. Return ONLY valid JSON:
-{"liters":number_or_null,"date":"YYYY-MM-DD_or_null","amount":"string_or_null","station":"string_or_null"}
-Null for anything not visible.`}
-        ]}]
-      })
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:400,messages:[{role:'user',content:[
+        {type:'image',source:{type:'base64',media_type:'image/jpeg',data:b64}},
+        {type:'text',text:'Read this fuel receipt. Return ONLY valid JSON: {"liters":number_or_null,"date":"YYYY-MM-DD_or_null","amount":"string_or_null","station":"string_or_null"} Null for anything not visible.'}
+      ]}]})
     });
     const d=await res.json();
     const txt=d.content?.find(c=>c.type==='text')?.text||'{}';
     aiEx=JSON.parse(txt.replace(/```json|```/g,'').trim());
     const rows=[['Liters',aiEx.liters!=null?aiEx.liters+' L':null],['Date',aiEx.date],['Amount',aiEx.amount],['Station',aiEx.station]].filter(r=>r[1]);
-    if(!rows.length){document.getElementById('airows').innerHTML='<div style="font-size:12px;color:var(--mt);padding:4px 0;">Could not read bill. Please fill in manually.</div>';return}
-    document.getElementById('aiap').style.display='block';
-    document.getElementById('airows').innerHTML=rows.map(([k,v])=>`<div class="airow"><span class="aik">${k}</span><span class="aiv">${v}</span></div>`).join('');
-    // Auto-show confirm card
-    document.getElementById('confcard').style.display='block';
+    if(rows.length){
+      document.getElementById('aiap').style.display='block';
+      document.getElementById('airows').innerHTML=rows.map(([k,v])=>`<div class="airow"><span class="aik">${k}</span><span class="aiv">${v}</span></div>`).join('');
+    }else{
+      document.getElementById('airows').innerHTML='<div style="font-size:12px;color:#6b7280;padding:4px 0;">Could not read bill. Fill in manually.</div>';
+    }
   }catch(e){
-    document.getElementById('airows').innerHTML='<div style="font-size:12px;color:var(--mt);padding:4px 0;">Could not auto-read. Fill in manually below.</div>';
-    document.getElementById('confcard').style.display='block';
+    document.getElementById('airows').innerHTML='<div style="font-size:12px;color:#6b7280;padding:4px 0;">Could not auto-read. Fill in manually.</div>';
   }
+  document.getElementById('confcard').style.display='block';
 }
 
 function applyAI(){
   if(aiEx.liters!=null)document.getElementById('c-lit').value=aiEx.liters;
   if(aiEx.date)document.getElementById('c-dat').value=aiEx.date;
   if(aiEx.amount)document.getElementById('c-amt').value=aiEx.amount;
-  document.getElementById('aibox').innerHTML='<div style="font-size:13px;color:var(--g);font-weight:600;padding:6px 0;">✅ Data applied — verify and submit.</div>';
+  document.getElementById('aibox').innerHTML='<div style="font-size:13px;color:#2e7d32;font-weight:600;padding:6px 0;">✅ Data applied — verify and submit.</div>';
 }
 
 function prevBill(){
-  if(!bDataURL)return;
+  if(!bDURL)return;
   document.getElementById('modtl').textContent='Bill preview';
-  document.getElementById('modbody').innerHTML=`<img class="mimg" src="${bDataURL}">`;
+  document.getElementById('modbody').innerHTML=`<img class="mimg" src="${bDURL}">`;
   document.getElementById('bmod').classList.add('on');
 }
 
-// ── SUBMIT ──
 function getVeh(){return document.getElementById('vman').value.trim().toUpperCase()||document.getElementById('vsel').value}
 function dAlert(cls,msg){const el=document.getElementById('d-alt');el.className='alt '+cls;el.innerHTML=msg;el.style.display='block';el.scrollIntoView({behavior:'smooth',block:'nearest'})}
 
 async function submitRefuel(){
-  const vehicle=getVeh();
-  const liters=parseFloat(document.getElementById('c-lit').value);
+  const vehicle=getVeh(),liters=parseFloat(document.getElementById('c-lit').value);
   const date=document.getElementById('c-dat').value.trim()||new Date().toISOString().slice(0,10);
   const amount=document.getElementById('c-amt').value.trim();
   const odo=parseFloat(document.getElementById('c-odo').value);
-
   if(!vehicle){dAlert('aer','⚠ Please select or enter your vehicle number.');return}
   if(!bFile){dAlert('aer','⚠ Please attach a fuel bill.');return}
-  if(isNaN(liters)||liters<=0){dAlert('aer','⚠ Please enter the liters (check AI fields or fill manually).');return}
+  if(isNaN(liters)||liters<=0){dAlert('aer','⚠ Please enter the liters.');return}
   if(isNaN(odo)||odo<=0){dAlert('aer','⚠ Please enter your current odometer reading.');return}
-
   const expKm=Math.round(liters*BKM);
-  const prev=cache.refuels.filter(r=>r.vehicle===vehicle)[0]||null;
+  const prev=C.refuels.filter(r=>r.vehicle===vehicle)[0]||null;
   let actKm=null,flagged=false,remark='',days=null;
-
   if(prev){
     actKm=Math.round(odo-(prev.odometer||0));
     days=Math.round((new Date()-new Date(prev._ts||prev.timestamp))/86400000);
-    if(actKm<expKm){flagged=true;remark=`Expected ${expKm} km (${liters}L × 5), actual ${actKm} km → flagged`}
+    if(actKm<expKm){flagged=true;remark=`Expected ${expKm} km (${liters}L x 5), actual ${actKm} km - flagged`}
     else if(actKm>expKm){remark=`Over average performance: ${actKm} km vs expected ${expKm} km`}
     else{remark='Normal refuel'}
-  } else {remark='First refuel entry for this vehicle'}
-
+  }else{remark='First refuel entry for this vehicle'}
   if(flagged){
     document.getElementById('rmbox').style.display='block';
     document.getElementById('rmrsn').textContent=remark;
     const dr=document.getElementById('rminp').value.trim();
     if(!dr){dAlert('awn','⚠ Early refuel detected. Please add a remark explaining why.');document.getElementById('rmbox').scrollIntoView({behavior:'smooth',block:'nearest'});return}
     remark=remark+' | Driver: '+dr;
-  } else {document.getElementById('rmbox').style.display='none'}
-
+  }else{document.getElementById('rmbox').style.display='none'}
   showLoader('Saving to cloud...');
   try{
-    // Compress image
     let imgData=null;
-    if(bDataURL){imgData=bFile.size>400000?await compressImg(bDataURL,0.55):bDataURL}
-
+    if(bDURL){imgData=bFile.size>400000?await compressImg(bDURL,0.55):bDURL}
     const rec={vehicle,liters,date,amount,odometer:odo,expectedKm:expKm,actualKm:actKm,days,flagged,remark,timestamp:new Date().toISOString(),billName:bFile.name,billKind:bKind,billDataURL:imgData};
-
-    await dbWrite('refuels',rec);
-    if(flagged)await dbWrite('exceptions',{...rec,checkedAt:null});
-    if(!cache.vehicles.includes(vehicle))await dbWrite('vehicles',{vehicle});
-
+    await dbW('refuels',rec);
+    if(flagged)await dbW('exceptions',{...rec,checkedAt:null});
+    if(!C.vehicles.includes(vehicle))await dbW('vehicles',{vehicle});
     await refreshAll();
     hideLoader();
-
-    // Show JSON
     const show={vehicle:rec.vehicle,liters:rec.liters,date:rec.date,amount:rec.amount||'—',expectedKm:rec.expectedKm,actualKm:rec.actualKm||'—',remark:rec.remark,timestamp:rec.timestamp};
     document.getElementById('jdisp').textContent=JSON.stringify(show,null,2);
     document.getElementById('resjson').style.display='block';
     dAlert('aok','✅ Saved to cloud! '+(flagged?'⚠ Flagged for admin review.':''));
-
-    // Reset
     ['vman','c-lit','c-dat','c-amt','c-odo','rminp'].forEach(id=>document.getElementById(id).value='');
     document.getElementById('vsel').value='';
     document.getElementById('rmbox').style.display='none';
     document.getElementById('confcard').style.display='none';
     clearBill();
     document.getElementById('resjson').scrollIntoView({behavior:'smooth',block:'start'});
-  }catch(e){hideLoader();dAlert('aer','❌ Save failed: '+e.message)}
+  }catch(e){hideLoader();dAlert('aer','Save failed: '+e.message)}
 }
 
-async function compressImg(dataURL,q){
+async function compressImg(dURL,q){
   return new Promise(resolve=>{
     const img=new Image();
     img.onload=()=>{const MAX=800,s=Math.min(1,MAX/Math.max(img.width,img.height)),c=document.createElement('canvas');c.width=Math.round(img.width*s);c.height=Math.round(img.height*s);c.getContext('2d').drawImage(img,0,0,c.width,c.height);resolve(c.toDataURL('image/jpeg',q))};
-    img.src=dataURL;
+    img.src=dURL;
   });
 }
 
-// ── HISTORY ──
 function renderHistory(){
   const q=(document.getElementById('hsrch').value||'').toLowerCase();
-  const list=cache.refuels.filter(r=>!q||r.vehicle?.toLowerCase().includes(q));
-  const vehs=[...new Set(cache.refuels.map(r=>r.vehicle))];
-  document.getElementById('ht').textContent=cache.refuels.length;
+  const list=C.refuels.filter(r=>!q||r.vehicle?.toLowerCase().includes(q));
+  const vehs=[...new Set(C.refuels.map(r=>r.vehicle))];
+  document.getElementById('ht').textContent=C.refuels.length;
   document.getElementById('hv').textContent=vehs.length;
   const el=document.getElementById('hlist');
   if(!list.length){el.innerHTML='<div class="empty">No entries found.</div>';return}
   el.innerHTML=list.map((r,i)=>`
     <div class="li">
-      <div class="lir"><div class="lit">${r.vehicle||'—'}</div>
-        <span class="bdg ${r.flagged?'bfl':r.remark?.includes('Over')?'bov':'bok'}">${r.flagged?'⚠ Flagged':r.remark?.includes('Over')?'↑ Over avg':'✓ Normal'}</span>
-      </div>
+      <div class="lir"><div class="lit">${r.vehicle||'—'}</div><span class="bdg ${r.flagged?'bfl':r.remark?.includes('Over')?'bov':'bok'}">${r.flagged?'⚠ Flagged':r.remark?.includes('Over')?'↑ Over avg':'✓ Normal'}</span></div>
       <div class="lis">${r.date||'—'} · ${r.liters}L · ${r.amount||'—'}</div>
-      ${r.actualKm!=null?`<div class="lis">Actual: ${r.actualKm} km · Expected: ${r.expectedKm} km${r.days!=null?' · '+r.days+'d':''}</div>`:''}
+      ${r.actualKm!=null?`<div class="lis">Actual: ${r.actualKm} km · Expected: ${r.expectedKm} km</div>`:''}
       <div class="lis">📝 ${r.remark||'—'}</div>
-      ${r.billDataURL?`<div class="lib" onclick="viewBill(${i},'refuels')">📎 ${r.billName||'View bill'}</div>`:``}
+      ${r.billDataURL?`<div class="lib" onclick="viewBill(${i},'refuels')">📎 View bill</div>`:''}
     </div>`).join('');
 }
 
-// ── BILL MODAL ──
 function viewBill(i,src){
-  const arr=src==='refuels'?cache.refuels:src==='exceptions'?cache.exceptions:cache.archive;
+  const arr=src==='refuels'?C.refuels:src==='exceptions'?C.exceptions:C.archive;
   const r=arr[i];if(!r)return;
   document.getElementById('modtl').textContent=`${r.vehicle} — ${r.date||'—'}`;
   const body=document.getElementById('modbody');
-  if(r.billDataURL){body.innerHTML=`<img class="mimg" src="${r.billDataURL}"><div style="margin-top:10px;font-size:12px;color:var(--mt);">${r.liters}L · ${r.amount||'—'} · ${r.remark||''}</div>`}
-  else{body.innerHTML=`<div style="text-align:center;padding:30px;background:var(--abg);border-radius:var(--rd);font-size:14px;color:var(--a);">📄 ${r.billName||'Bill'}<br><br>${r.vehicle} · ${r.date||'—'}</div>`}
+  if(r.billDataURL){body.innerHTML=`<img class="mimg" src="${r.billDataURL}"><div style="margin-top:10px;font-size:12px;color:#6b7280;">${r.liters}L · ${r.amount||'—'}</div>`}
+  else{body.innerHTML=`<div style="text-align:center;padding:30px;background:#fff8e1;border-radius:10px;font-size:14px;color:#b45309;">📄 ${r.billName||'Bill'}</div>`}
   document.getElementById('bmod').classList.add('on');
 }
 function closeMod(){document.getElementById('bmod').classList.remove('on')}
 
-// ── ADMIN ──
 function aLogin(){
-  if(document.getElementById('apass').value===CFG.adminPass){
+  if(document.getElementById('apass').value===PASS){
     adminIn=true;
     document.getElementById('alogin').style.display='none';
     document.getElementById('adash').style.display='block';
@@ -803,138 +454,72 @@ function stab(t,el){
 }
 
 function renderAdmin(){
-  const vehs=[...new Set(cache.refuels.map(r=>r.vehicle))];
-  document.getElementById('aot').textContent=cache.refuels.length;
-  document.getElementById('aoe').textContent=cache.exceptions.length;
-  document.getElementById('aov').textContent=cache.vehicles.length;
-  let tKm=0,tL=0;
-  cache.refuels.forEach(r=>{if(r.actualKm)tKm+=r.actualKm;tL+=r.liters});
+  const vehs=[...new Set(C.refuels.map(r=>r.vehicle))];
+  document.getElementById('aot').textContent=C.refuels.length;
+  document.getElementById('aoe').textContent=C.exceptions.length;
+  document.getElementById('aov').textContent=C.vehicles.length;
+  let tKm=0,tL=0;C.refuels.forEach(r=>{if(r.actualKm)tKm+=r.actualKm;tL+=r.liters});
   document.getElementById('aoa').textContent=tL>0?(tKm/tL).toFixed(1):'—';
-
-  // Perf
   const vp=document.getElementById('vperf');
   if(!vehs.length){vp.innerHTML='<div class="empty">No data.</div>'}
   else{vp.innerHTML=vehs.map(v=>{
-    const vr=cache.refuels.filter(r=>r.vehicle===v);
-    const vf=cache.exceptions.filter(e=>e.vehicle===v).length;
+    const vr=C.refuels.filter(r=>r.vehicle===v);
+    const vf=C.exceptions.filter(e=>e.vehicle===v).length;
     const km=vr.filter(r=>r.actualKm).reduce((s,r)=>s+r.actualKm,0);
     const L=vr.reduce((s,r)=>s+r.liters,0);
-    const avg=L>0&&km>0?(km/L).toFixed(1):'—';
-    return`<div class="vr"><div><div class="vn">${v}</div><div class="vm">${vr.length} refuels · avg ${avg} km/L</div></div><span class="bdg ${vf?'bfl':'bok'}">${vf?vf+' exc':'✓ Clean'}</span></div>`;
+    return`<div class="vr"><div><div class="vn">${v}</div><div class="vm">${vr.length} refuels · avg ${L>0&&km>0?(km/L).toFixed(1):'—'} km/L</div></div><span class="bdg ${vf?'bfl':'bok'}">${vf?vf+' exc':'✓ Clean'}</span></div>`;
   }).join('')}
-
-  // Recent
   const re=document.getElementById('recent');
-  if(!cache.refuels.length){re.innerHTML='<div class="empty">No entries.</div>'}
-  else{re.innerHTML=cache.refuels.slice(0,10).map((r,i)=>`
-    <div class="li">
-      <div class="lir"><div class="lit">${r.vehicle||'—'}</div><span class="bdg ${r.flagged?'bfl':'bok'}" style="font-size:10px;">${r.flagged?'⚠':'✓'}</span></div>
-      <div class="lis">${r.date||'—'} · ${r.liters}L · ${r.amount||'—'}</div>
-      ${r.billDataURL?`<div class="lib" onclick="viewBill(${i},'refuels')">📎 View bill</div>`:''}
-    </div>`).join('')}
-
-  // Exceptions
+  re.innerHTML=C.refuels.length?C.refuels.slice(0,10).map((r,i)=>`
+    <div class="li"><div class="lir"><div class="lit">${r.vehicle||'—'}</div><span class="bdg ${r.flagged?'bfl':'bok'}" style="font-size:10px;">${r.flagged?'⚠':'✓'}</span></div>
+    <div class="lis">${r.date||'—'} · ${r.liters}L · ${r.amount||'—'}</div>
+    ${r.billDataURL?`<div class="lib" onclick="viewBill(${i},'refuels')">📎 View bill</div>`:''}
+    </div>`).join(''):'<div class="empty">No entries.</div>';
   const el=document.getElementById('exlist');
-  if(!cache.exceptions.length){el.innerHTML='<div class="empty">No exceptions 🎉</div>'}
-  else{el.innerHTML=cache.exceptions.map((e,i)=>`
-    <div class="exc exa">
-      <div class="ext">⚠ ${e.vehicle}</div>
-      <div class="exb">${e.date||'—'} · ${e.liters}L · ${e.amount||'—'}<br>Actual: ${e.actualKm??'—'} km · Expected: ${e.expectedKm} km<br>📝 ${e.remark||'—'}</div>
-      <div class="exac">
-        <button class="bgre" onclick="markChecked(${i})">✓ Mark checked</button>
-        ${e.billDataURL?`<button class="bbli" onclick="viewBill(${i},'exceptions')">📎 View bill</button>`:''}
-      </div>
-    </div>`).join('')}
-
-  // Archive
+  el.innerHTML=C.exceptions.length?C.exceptions.map((e,i)=>`
+    <div class="exc exa"><div class="ext">⚠ ${e.vehicle}</div>
+    <div class="exb">${e.date||'—'} · ${e.liters}L · ${e.amount||'—'}<br>Actual: ${e.actualKm??'—'} km · Expected: ${e.expectedKm} km<br>📝 ${e.remark||'—'}</div>
+    <div class="exac"><button class="bgre" onclick="markChecked(${i})">✓ Mark checked</button>${e.billDataURL?`<button class="bbli" onclick="viewBill(${i},'exceptions')">📎 View bill</button>`:''}</div>
+    </div>`).join(''):'<div class="empty">No exceptions 🎉</div>';
   const al=document.getElementById('arlist');
-  if(!cache.archive.length){al.innerHTML='<div class="empty">No archived exceptions.</div>'}
-  else{al.innerHTML=cache.archive.map((e,i)=>`
-    <div class="exc exr">
-      <div class="ext">✓ ${e.vehicle} — Checked</div>
-      <div class="exb">${e.date||'—'} · ${e.liters}L<br>${e.remark||'—'}<br><strong>Checked: ${e.checkedAt?new Date(e.checkedAt).toLocaleDateString('en-GB'):'—'}</strong></div>
-      <div class="exac">
-        ${e.billDataURL?`<button class="bbli" onclick="viewBill(${i},'archive')">📎 View bill</button>`:''}
-        <button class="bpup" onclick="restoreExc(${i})">↩ Restore</button>
-      </div>
-    </div>`).join('')}
-
-  // Vehicles
-  document.getElementById('vcount').textContent=cache.vehicles.length;
+  al.innerHTML=C.archive.length?C.archive.map((e,i)=>`
+    <div class="exc exr"><div class="ext">✓ ${e.vehicle} — Checked</div>
+    <div class="exb">${e.date||'—'} · ${e.liters}L<br>${e.remark||'—'}</div>
+    <div class="exac">${e.billDataURL?`<button class="bbli" onclick="viewBill(${i},'archive')">📎 View bill</button>`:''}<button class="bpup" onclick="restoreExc(${i})">↩ Restore</button></div>
+    </div>`).join(''):'<div class="empty">None yet.</div>';
+  document.getElementById('vcount').textContent=C.vehicles.length;
   const vl=document.getElementById('vlist');
-  if(!cache.vehicles.length){vl.innerHTML='<div class="empty">No vehicles.</div>'}
-  else{vl.innerHTML=cache.vehicles.map((v,i)=>`
-    <div class="vr">
-      <div><div class="vn">${v}</div><div class="vm">${cache.refuels.filter(r=>r.vehicle===v).length} refuels</div></div>
-      <button class="bred" onclick="delVeh(${i},'${v}')">🗑 Delete</button>
-    </div>`).join('')}
+  vl.innerHTML=C.vehicles.length?C.vehicles.map((v,i)=>`
+    <div class="vr"><div><div class="vn">${v}</div><div class="vm">${C.refuels.filter(r=>r.vehicle===v).length} refuels</div></div><button class="bred" onclick="delVeh(${i},'${v}')">🗑 Delete</button></div>`).join(''):'<div class="empty">No vehicles.</div>';
 }
 
-// ── EXCEPTION MGMT ──
 async function markChecked(i){
   showLoader('Archiving...');
-  try{
-    const exc=cache.exceptions[i];
-    exc.checkedAt=new Date().toISOString();
-    if(exc._id){
-      await dbDelete('exceptions',exc._id);
-      await dbWrite('archive',{...exc});
-    }
-    cache.archive.push(exc);cache.exceptions.splice(i,1);
-    await refreshAll();renderAdmin();
-  }catch(e){alert('Failed: '+e.message)}
+  try{const exc=C.exceptions[i];exc.checkedAt=new Date().toISOString();if(exc._id){await dbD('exceptions',exc._id);await dbW('archive',{...exc});}await refreshAll();renderAdmin();}catch(e){alert('Failed: '+e.message)}
   hideLoader();
 }
-
 async function restoreExc(i){
   showLoader('Restoring...');
-  try{
-    const arc=cache.archive[i];
-    if(arc._id){
-      await dbDelete('archive',arc._id);
-      await dbWrite('exceptions',{...arc,checkedAt:null});
-    }
-    cache.exceptions.push(arc);cache.archive.splice(i,1);
-    await refreshAll();renderAdmin();
-  }catch(e){alert('Failed: '+e.message)}
+  try{const arc=C.archive[i];if(arc._id){await dbD('archive',arc._id);await dbW('exceptions',{...arc,checkedAt:null});}await refreshAll();renderAdmin();}catch(e){alert('Failed: '+e.message)}
   hideLoader();
 }
-
-// ── VEHICLES ──
-function updateVDrop(){
-  const sel=document.getElementById('vsel');
-  const cur=sel.value;
-  sel.innerHTML='<option value="">— Select your vehicle —</option>'+cache.vehicles.map(v=>`<option value="${v}"${v===cur?' selected':''}>${v}</option>`).join('');
+function updateVD(){
+  const sel=document.getElementById('vsel'),cur=sel.value;
+  sel.innerHTML='<option value="">— Select your vehicle —</option>'+C.vehicles.map(v=>`<option value="${v}"${v===cur?' selected':''}>${v}</option>`).join('');
 }
-
 async function delVeh(i,name){
-  if(!confirm(`Delete vehicle "${name}"? History kept.`))return;
+  if(!confirm(`Delete "${name}"?`))return;
   showLoader('Deleting...');
-  try{
-    const rec=cache.vehicles[i];
-    // find row id
-    const rows=await dbRead('vehicles');
-    const row=rows.find(r=>r.vehicle===name||r===name);
-    if(row&&row._id)await dbDelete('vehicles',row._id);
-    cache.vehicles.splice(i,1);
-    await refreshAll();renderAdmin();
-  }catch(e){alert('Failed: '+e.message)}
+  try{const rows=await dbR('vehicles');const row=rows.find(r=>r.vehicle===name);if(row&&row._id)await dbD('vehicles',row._id);await refreshAll();renderAdmin();}catch(e){alert('Failed: '+e.message)}
   hideLoader();
 }
-
 async function addVeh(){
   const v=document.getElementById('addv').value.trim().toUpperCase();
-  if(!v)return;
-  if(cache.vehicles.includes(v)){alert('Already exists.');return}
+  if(!v||C.vehicles.includes(v))return;
   showLoader('Adding...');
-  try{
-    await dbWrite('vehicles',{vehicle:v});
-    await refreshAll();if(adminIn)renderAdmin();
-    document.getElementById('addv').value='';
-  }catch(e){alert('Failed: '+e.message)}
+  try{await dbW('vehicles',{vehicle:v});await refreshAll();if(adminIn)renderAdmin();document.getElementById('addv').value='';}catch(e){alert('Failed: '+e.message)}
   hideLoader();
 }
-
 async function importVeh(inp){
   const f=inp.files[0];if(!f)return;
   const rd=new FileReader();
@@ -945,33 +530,21 @@ async function importVeh(inp){
     let added=0;
     for(const line of lines){
       const raw=line.split(',')[0].trim().replace(/^["']|["']$/g,'').toUpperCase();
-      if(raw&&raw.length>1&&!skip.includes(raw)&&!cache.vehicles.includes(raw)){
-        try{await dbWrite('vehicles',{vehicle:raw});cache.vehicles.push(raw);added++}catch(e){}
+      if(raw&&raw.length>1&&!skip.includes(raw)&&!C.vehicles.includes(raw)){
+        try{await dbW('vehicles',{vehicle:raw});C.vehicles.push(raw);added++}catch(e){}
       }
     }
     await refreshAll();if(adminIn)renderAdmin();
     const el=document.getElementById('impres');
-    el.className='alt aok';el.textContent=`✅ Imported ${added} vehicles. Total: ${cache.vehicles.length}`;el.style.display='block';
+    el.className='alt aok';el.textContent=`Imported ${added} vehicles. Total: ${C.vehicles.length}`;el.style.display='block';
     hideLoader();
   };
   rd.readAsText(f);
 }
-
-// ── LOADER ──
 function showLoader(t){document.getElementById('ltx').textContent=t||'Loading...';document.getElementById('ldr').classList.add('on')}
 function hideLoader(){document.getElementById('ldr').classList.remove('on')}
 
-// ── PWA ──
-function setupPWA(){
-  if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
-  const isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent);
-  const isSaf=/^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-  if(isIOS&&!window.navigator.standalone&&isSaf&&!ls('iot'))document.getElementById('iosp').classList.add('on');
-}
-window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();dInst=e;document.getElementById('ibn').classList.add('on')});
-function installPWA(){if(!dInst)return;dInst.prompt();dInst.userChoice.then(()=>{dInst=null;document.getElementById('ibn').classList.remove('on')})}
-
-if(CFG.url)startApp();
+init();
 </script>
 </body>
 </html>
