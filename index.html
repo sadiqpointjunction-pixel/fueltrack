@@ -522,7 +522,7 @@ async function addVeh(){
 }
 async function importVeh(inp){
   const f=inp.files[0];if(!f)return;
-  const rd=new FileReader();
+  const rd=new FileReader();h
   rd.onload=async function(e){
     showLoader('Importing...');
     const skip=['VEHICLE','NUMBER','PLATE','VEH','ID','NO','REG','NAME'];
