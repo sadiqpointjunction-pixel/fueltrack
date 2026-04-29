@@ -116,12 +116,12 @@ textarea.fi{resize:vertical;min-height:68px}
 <div id="app">
 <div class="topbar">
   <div class="tbl">
-    <div class="tbico">⛽</div>
+    <div class="tbico">â½</div>
     <div><div class="tbtitle">FuelTrack Pro</div><div class="tbsub" id="tbsub">Connecting to cloud...</div></div>
   </div>
   <div style="display:flex;align-items:center;gap:8px;">
     <span class="sdot busy" id="sdot"></span>
-    <div id="atag" style="display:none;"><span class="atag">🔑 Admin</span></div>
+    <div id="atag" style="display:none;"><span class="atag">ð Admin</span></div>
   </div>
 </div>
 <div class="nav">
@@ -137,64 +137,64 @@ textarea.fi{resize:vertical;min-height:68px}
 </div>
 
 <div class="pg on" id="pg-driver">
-  <div class="alt ain" style="margin-top:2px;">📸 Take photo of your fuel bill — AI reads it automatically. Then enter your vehicle number.</div>
+  <div class="alt ain" style="margin-top:2px;">ð¸ Take photo of your fuel bill â AI reads it automatically. Then enter your vehicle number.</div>
   <div id="d-alt" style="display:none;"></div>
   <div class="card">
-    <div class="ct">Step 1 — Fuel bill</div>
+    <div class="ct">Step 1 â Fuel bill</div>
     <div class="bgrid">
-      <div class="bo" id="bo-cam"><input type="file" id="fc" accept="image/*" capture="environment" onchange="onBill(this,'camera')"><div class="bo-ic">📷</div><div class="bo-lb">Camera</div><div class="bo-sb">Take photo</div></div>
-      <div class="bo" id="bo-gal"><input type="file" id="fg" accept="image/*" onchange="onBill(this,'gallery')"><div class="bo-ic">🖼️</div><div class="bo-lb">Gallery</div><div class="bo-sb">Pick image</div></div>
-      <div class="bo" id="bo-pdf"><input type="file" id="fp" accept=".pdf" onchange="onBill(this,'pdf')"><div class="bo-ic">📄</div><div class="bo-lb">PDF</div><div class="bo-sb">Upload PDF</div></div>
-      <div class="bo" id="bo-any"><input type="file" id="fa" accept="image/*,.pdf" onchange="onBill(this,'any')"><div class="bo-ic">📁</div><div class="bo-lb">Any file</div><div class="bo-sb">Image or PDF</div></div>
+      <div class="bo" id="bo-cam"><input type="file" id="fc" accept="image/*" capture="environment" onchange="onBill(this,'camera')"><div class="bo-ic">ð·</div><div class="bo-lb">Camera</div><div class="bo-sb">Take photo</div></div>
+      <div class="bo" id="bo-gal"><input type="file" id="fg" accept="image/*" onchange="onBill(this,'gallery')"><div class="bo-ic">ð¼ï¸</div><div class="bo-lb">Gallery</div><div class="bo-sb">Pick image</div></div>
+      <div class="bo" id="bo-pdf"><input type="file" id="fp" accept=".pdf" onchange="onBill(this,'pdf')"><div class="bo-ic">ð</div><div class="bo-lb">PDF</div><div class="bo-sb">Upload PDF</div></div>
+      <div class="bo" id="bo-any"><input type="file" id="fa" accept="image/*,.pdf" onchange="onBill(this,'any')"><div class="bo-ic">ð</div><div class="bo-lb">Any file</div><div class="bo-sb">Image or PDF</div></div>
     </div>
     <div class="bprev" id="bprev"><div id="bthumb"></div><div class="binf"><div class="bnm" id="bnm"></div><div class="bmt" id="bmt"></div></div><div class="brm" onclick="clearBill()">Remove</div></div>
     <div class="aibox" id="aibox">
-      <div class="aihd">✨ AI extracted from your bill</div>
+      <div class="aihd">â¨ AI extracted from your bill</div>
       <div id="airows"></div>
-      <button class="aiap" id="aiap" onclick="applyAI()" style="display:none;">✓ Use this data →</button>
+      <button class="aiap" id="aiap" onclick="applyAI()" style="display:none;">â Use this data â</button>
     </div>
   </div>
   <div class="card">
-    <div class="ct">Step 2 — Vehicle</div>
-    <div class="fg"><label class="fl">Select vehicle</label><select class="fi" id="vsel"><option value="">— Select your vehicle —</option></select></div>
+    <div class="ct">Step 2 â Vehicle</div>
+    <div class="fg"><label class="fl">Select vehicle</label><select class="fi" id="vsel"><option value="">â Select your vehicle â</option></select></div>
     <div class="fg" style="margin-bottom:0;"><label class="fl">Or type vehicle number</label><input type="text" class="fi" id="vman" placeholder="e.g. QA-12345" autocapitalize="characters"></div>
   </div>
   <div class="card" id="confcard" style="display:none;">
-    <div class="ct">Step 3 — Confirm details</div>
+    <div class="ct">Step 3 â Confirm details</div>
     <div class="fg"><label class="fl">Liters *</label><input type="number" class="fi" id="c-lit" placeholder="e.g. 40" step="0.1" inputmode="decimal"></div>
     <div class="fg"><label class="fl">Date</label><input type="text" class="fi" id="c-dat" placeholder="e.g. 2026-04-28"></div>
     <div class="fg"><label class="fl">Amount</label><input type="text" class="fi" id="c-amt" placeholder="e.g. 150 QAR"></div>
     <div class="fg" style="margin-bottom:0;"><label class="fl">Current odometer (km) *</label><input type="number" class="fi" id="c-odo" placeholder="e.g. 54321" inputmode="numeric"></div>
   </div>
-  <div class="rmbox" id="rmbox"><div class="rmtl">⚠ Early refuel — remark required</div><div style="font-size:12px;color:#b45309;margin-bottom:8px;" id="rmrsn"></div><textarea class="fi" id="rminp" placeholder="Explain why..." style="min-height:60px;"></textarea></div>
-  <button class="btn bblu" onclick="submitRefuel()" style="margin-bottom:12px;">⛽ Submit refuel</button>
+  <div class="rmbox" id="rmbox"><div class="rmtl">â  Early refuel â remark required</div><div style="font-size:12px;color:#b45309;margin-bottom:8px;" id="rmrsn"></div><textarea class="fi" id="rminp" placeholder="Explain why..." style="min-height:60px;"></textarea></div>
+  <button class="btn bblu" onclick="submitRefuel()" style="margin-bottom:12px;">â½ Submit refuel</button>
   <div id="resjson" style="display:none;"><div class="slbl2">Saved record</div><div class="jbox" id="jdisp"></div></div>
 </div>
 
 <div class="pg" id="pg-history">
-  <div class="sg" style="margin-top:2px;"><div class="sc2"><div class="slb">Total refuels</div><div class="sv" id="ht">—</div></div><div class="sc2"><div class="slb">Vehicles</div><div class="sv" id="hv">—</div></div></div>
+  <div class="sg" style="margin-top:2px;"><div class="sc2"><div class="slb">Total refuels</div><div class="sv" id="ht">â</div></div><div class="sc2"><div class="slb">Vehicles</div><div class="sv" id="hv">â</div></div></div>
   <div class="card"><input type="search" class="fi" id="hsrch" placeholder="Search vehicle..." oninput="renderHistory()" style="margin-bottom:12px;"><div id="hlist"><div class="empty">Loading...</div></div></div>
 </div>
 
 <div class="pg" id="pg-admin">
-  <div id="alogin"><div class="lk"><div class="lkic">🔐</div><div class="lktl">Admin only</div><div class="lksb">Drivers do not need to sign in here.</div></div>
-    <div class="card"><div class="fg"><label class="fl">Admin password</label><input type="password" class="fi" id="apass" placeholder="Enter password" onkeydown="if(event.key==='Enter')aLogin()"></div><div id="aerr" class="alt aer" style="display:none;">Incorrect password.</div><button class="btn bblu" onclick="aLogin()">Sign in →</button></div>
+  <div id="alogin"><div class="lk"><div class="lkic">ð</div><div class="lktl">Admin only</div><div class="lksb">Drivers do not need to sign in here.</div></div>
+    <div class="card"><div class="fg"><label class="fl">Admin password</label><input type="password" class="fi" id="apass" placeholder="Enter password" onkeydown="if(event.key==='Enter')aLogin()"></div><div id="aerr" class="alt aer" style="display:none;">Incorrect password.</div><button class="btn bblu" onclick="aLogin()">Sign in â</button></div>
   </div>
   <div id="adash" style="display:none;">
     <div style="display:flex;justify-content:space-between;align-items:center;margin:2px 0 14px;">
       <div style="font-size:16px;font-weight:700;">Admin dashboard</div>
-      <div style="display:flex;gap:6px;"><button onclick="aRefresh()" style="font-size:12px;color:#0f4c81;background:#e8f2fc;border:none;padding:6px 12px;border-radius:8px;font-weight:700;cursor:pointer;">↻ Refresh</button><button onclick="aLogout()" style="font-size:12px;color:#c62828;background:#ffebee;border:none;padding:6px 12px;border-radius:8px;font-weight:700;cursor:pointer;">Sign out</button></div>
+      <div style="display:flex;gap:6px;"><button onclick="aRefresh()" style="font-size:12px;color:#0f4c81;background:#e8f2fc;border:none;padding:6px 12px;border-radius:8px;font-weight:700;cursor:pointer;">â» Refresh</button><button onclick="aLogout()" style="font-size:12px;color:#c62828;background:#ffebee;border:none;padding:6px 12px;border-radius:8px;font-weight:700;cursor:pointer;">Sign out</button></div>
     </div>
     <div class="stbs">
       <button class="stb on" onclick="stab('ov',this)">Overview</button>
-      <button class="stb" onclick="stab('ex',this)">⚠ Exceptions</button>
-      <button class="stb" onclick="stab('ar',this)">✓ Archive</button>
+      <button class="stb" onclick="stab('ex',this)">â  Exceptions</button>
+      <button class="stb" onclick="stab('ar',this)">â Archive</button>
       <button class="stb" onclick="stab('vh',this)">Vehicles</button>
       <button class="stb" onclick="stab('im',this)">Import</button>
     </div>
     <div class="tp on" id="tp-ov">
       <div class="sg"><div class="sc2"><div class="slb">Total refuels</div><div class="sv" id="aot">0</div></div><div class="sc2"><div class="slb">Exceptions</div><div class="sv red" id="aoe">0</div></div></div>
-      <div class="sg"><div class="sc2"><div class="slb">Vehicles</div><div class="sv" id="aov">0</div></div><div class="sc2"><div class="slb">Fleet avg</div><div class="sv" id="aoa">—</div><div class="ssb">km/litre</div></div></div>
+      <div class="sg"><div class="sc2"><div class="slb">Vehicles</div><div class="sv" id="aov">0</div></div><div class="sc2"><div class="slb">Fleet avg</div><div class="sv" id="aoa">â</div><div class="ssb">km/litre</div></div></div>
       <div class="slbl2">Vehicle performance</div><div class="card"><div id="vperf"><div class="empty">Loading...</div></div></div>
       <div class="slbl2">Recent entries</div><div class="card"><div id="recent"><div class="empty">Loading...</div></div></div>
     </div>
@@ -202,348 +202,102 @@ textarea.fi{resize:vertical;min-height:68px}
     <div class="tp" id="tp-ar"><div class="alt ain">Exceptions reviewed and checked.</div><div id="arlist"><div class="empty">None yet.</div></div></div>
     <div class="tp" id="tp-vh"><div class="slbl2">Vehicles (<span id="vcount">0</span>)</div><div class="card"><div id="vlist"><div class="empty">Loading...</div></div></div></div>
     <div class="tp" id="tp-im">
-      <div class="card"><div class="ct">Import vehicles</div><div class="dz"><input type="file" id="impf" accept=".csv,.txt" onchange="importVeh(this)"><div style="font-size:26px;margin-bottom:8px;">📂</div><div style="font-size:13px;color:#6b7280;">Upload CSV / TXT</div></div><div id="impres" style="display:none;margin-top:10px;"></div></div>
+      <div class="card"><div class="ct">Import vehicles</div><div class="dz"><input type="file" id="impf" accept=".csv,.txt" onchange="importVeh(this)"><div style="font-size:26px;margin-bottom:8px;">ð</div><div style="font-size:13px;color:#6b7280;">Upload CSV / TXT</div></div><div id="impres" style="display:none;margin-top:10px;"></div></div>
       <div class="card"><div class="ct">Add manually</div><div class="fg"><input type="text" class="fi" id="addv" placeholder="e.g. QA-12345" autocapitalize="characters"></div><button class="btn bblu" onclick="addVeh()">Add vehicle</button></div>
     </div>
   </div>
 </div>
 </div>
 
-<div class="ovl" id="bmod" onclick="if(event.target===this)closeMod()"><div class="mb"><div class="mbhd"><span id="modtl">Bill</span><span class="mbc" onclick="closeMod()">✕</span></div><div id="modbody"></div></div></div>
+<div class="ovl" id="bmod" onclick="if(event.target===this)closeMod()"><div class="mb"><div class="mbhd"><span id="modtl">Bill</span><span class="mbc" onclick="closeMod()">â</span></div><div id="modbody"></div></div></div>
 <div class="ldr" id="ldr"><div class="spn"></div><div class="ltx" id="ltx">Loading...</div></div>
 
 <script>
-const GAS='https://script.google.com/macros/s/AKfycbxkcOxir7GhqANk8B4OdYqDNGSIT9zBrNmonWajNxHNIeAWnpiBosoxq6SQ4ev39PIc/exec';
-const PASS='Momdad143';
-const BKM=5;
-let C={refuels:[],exceptions:[],archive:[],vehicles:[]};
+// ── SUPABASE CONFIG ──
+const SB_URL = 'https://borrohofrdzazdqwubef.supabase.co';
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJvcnJvaG9mcmR6YXpkcXd1YmVmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc0Mzk5MjUsImV4cCI6MjA5MzAxNTkyNX0.guMYx_ikVbRaAsqKKy7-jREEXFKPYrCW9oAZbLm7REI';
+const PASS='Momdad143';const BKM=5;
+let C={refuels:[],exceptions:[],vehicles:[]};
 let bFile=null,bKind=null,bDURL=null,aiEx={},adminIn=false;
-
-async function gas(params){
+async function sb(method,table,body,params=''){
   setSS('busy');
   try{
-    const r=await fetch(GAS+'?'+new URLSearchParams(params),{redirect:'follow'});
-    const d=await r.json();setSS('on');return d;
-  }catch(e){setSS('off');throw e}
+    const opts={method,headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json','Prefer':method==='POST'?'return=representation':''}};
+    if(body)opts.body=JSON.stringify(body);
+    const r=await fetch(SB_URL+'/rest/v1/'+table+params,opts);
+    if(!r.ok){const err=await r.text();throw new Error(err);}
+    setSS('on');const txt=await r.text();return txt?JSON.parse(txt):[];
+  }catch(e){setSS('off');throw e;}
 }
-async function gasP(body){
-  setSS('busy');
-  try{
-    const r=await fetch(GAS,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body),redirect:'follow'});
-    const d=await r.json();setSS('on');return d;
-  }catch(e){setSS('off');throw e}
-}
-async function dbR(s){const d=await gas({action:'read',sheet:s});return Array.isArray(d)?d.map(r=>({...r.data,_id:r.id,_ts:r.ts})):[]}
-async function dbW(s,row){return gasP({action:'write',sheet:s,row})}
-async function dbD(s,id){return gasP({action:'delete',sheet:s,id})}
-
+async function dbRead(t,q='?order=created_at.desc'){return sb('GET',t,null,q);}
+async function dbInsert(t,d){return sb('POST',t,d);}
+async function dbUpdate(t,id,d){return sb('PATCH',t,d,'?id=eq.'+id);}
+async function dbDelete(t,id){return sb('DELETE',t,null,'?id=eq.'+id);}
 async function init(){
   try{
-    const[r,e,a,v]=await Promise.all([dbR('refuels'),dbR('exceptions'),dbR('archive'),dbR('vehicles')]);
-    C.refuels=r.sort((a,b)=>(b._ts||'').localeCompare(a._ts||''));
-    C.exceptions=e;C.archive=a;
-    C.vehicles=v.map(x=>x.vehicle||'').filter(x=>x);
-    updateVD();
-    document.getElementById('tbsub').textContent=`${C.refuels.length} refuels · ${C.vehicles.length} vehicles`;
-  }catch(e){
-    document.getElementById('tbsub').textContent='Connection error — check internet';
-    setSS('off');
-  }
+    const[r,e,v]=await Promise.all([dbRead('refuels'),dbRead('exceptions'),dbRead('vehicles','?order=vehicle.asc')]);
+    C.refuels=r||[];C.exceptions=e||[];C.vehicles=(v||[]).map(x=>x.vehicle);
+    updateVD();document.getElementById('tbsub').textContent=C.refuels.length+' refuels · '+C.vehicles.length+' vehicles';setSS('on');
+  }catch(e){document.getElementById('tbsub').textContent='Connection error';setSS('off');console.error(e);}
 }
-
-async function refreshAll(){await init()}
-async function aRefresh(){await refreshAll();if(adminIn)renderAdmin()}
-
-function setSS(s){
-  const d=document.getElementById('sdot');
-  d.className='sdot'+(s==='off'?' off':s==='busy'?' busy':'');
-}
-
-function goPage(p,el){
-  document.querySelectorAll('.pg').forEach(x=>x.classList.remove('on'));
-  document.querySelectorAll('.nb').forEach(x=>x.classList.remove('on'));
-  document.getElementById('pg-'+p).classList.add('on');el.classList.add('on');
-  if(p==='history'){refreshAll().then(renderHistory)}
-  if(p==='admin'&&adminIn){refreshAll().then(renderAdmin)}
-}
-
-function onBill(inp,kind){
-  const f=inp.files[0];if(!f)return;
-  bFile=f;bKind=kind;
-  document.querySelectorAll('.bo').forEach(x=>x.classList.remove('sel'));
-  document.getElementById('bo-'+kind.slice(0,3)).classList.add('sel');
-  document.getElementById('bprev').style.display='flex';
-  document.getElementById('bnm').textContent=f.name;
-  const kb=f.size<1024?f.size+'B':f.size<1048576?(f.size/1024).toFixed(1)+'KB':(f.size/1048576).toFixed(1)+'MB';
-  document.getElementById('bmt').textContent=kb;
-  const wrap=document.getElementById('bthumb');
-  if(f.type.startsWith('image/')){
-    const rd=new FileReader();
-    rd.onload=e=>{bDURL=e.target.result;wrap.innerHTML=`<img class="bth" src="${bDURL}" onclick="prevBill()">`;runAI(bDURL)};
-    rd.readAsDataURL(f);
-  }else{
-    bDURL=null;wrap.innerHTML=`<div class="bthp">📄</div>`;
-    document.getElementById('aibox').style.display='none';
-    document.getElementById('confcard').style.display='block';
-  }
-}
-
-function clearBill(){
-  bFile=null;bKind=null;bDURL=null;aiEx={};
-  document.getElementById('bprev').style.display='none';
-  document.getElementById('aibox').style.display='none';
-  document.getElementById('confcard').style.display='none';
-  document.querySelectorAll('.bo').forEach(x=>x.classList.remove('sel'));
-  ['fc','fg','fp','fa'].forEach(id=>document.getElementById(id).value='');
-}
-
-async function runAI(dURL){
-  const box=document.getElementById('aibox');
-  box.style.display='block';
-  document.getElementById('airows').innerHTML='<div style="text-align:center;padding:10px;font-size:13px;color:#0f4c81;">✨ Reading bill with AI...</div>';
-  document.getElementById('aiap').style.display='none';
-  try{
-    const b64=dURL.split(',')[1];
-    const res=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:400,messages:[{role:'user',content:[
-        {type:'image',source:{type:'base64',media_type:'image/jpeg',data:b64}},
-        {type:'text',text:'Read this fuel receipt. Return ONLY valid JSON: {"liters":number_or_null,"date":"YYYY-MM-DD_or_null","amount":"string_or_null","station":"string_or_null"} Null for anything not visible.'}
-      ]}]})
-    });
-    const d=await res.json();
-    const txt=d.content?.find(c=>c.type==='text')?.text||'{}';
-    aiEx=JSON.parse(txt.replace(/```json|```/g,'').trim());
-    const rows=[['Liters',aiEx.liters!=null?aiEx.liters+' L':null],['Date',aiEx.date],['Amount',aiEx.amount],['Station',aiEx.station]].filter(r=>r[1]);
-    if(rows.length){
-      document.getElementById('aiap').style.display='block';
-      document.getElementById('airows').innerHTML=rows.map(([k,v])=>`<div class="airow"><span class="aik">${k}</span><span class="aiv">${v}</span></div>`).join('');
-    }else{
-      document.getElementById('airows').innerHTML='<div style="font-size:12px;color:#6b7280;padding:4px 0;">Could not read bill. Fill in manually.</div>';
-    }
-  }catch(e){
-    document.getElementById('airows').innerHTML='<div style="font-size:12px;color:#6b7280;padding:4px 0;">Could not auto-read. Fill in manually.</div>';
-  }
-  document.getElementById('confcard').style.display='block';
-}
-
-function applyAI(){
-  if(aiEx.liters!=null)document.getElementById('c-lit').value=aiEx.liters;
-  if(aiEx.date)document.getElementById('c-dat').value=aiEx.date;
-  if(aiEx.amount)document.getElementById('c-amt').value=aiEx.amount;
-  document.getElementById('aibox').innerHTML='<div style="font-size:13px;color:#2e7d32;font-weight:600;padding:6px 0;">✅ Data applied — verify and submit.</div>';
-}
-
-function prevBill(){
-  if(!bDURL)return;
-  document.getElementById('modtl').textContent='Bill preview';
-  document.getElementById('modbody').innerHTML=`<img class="mimg" src="${bDURL}">`;
-  document.getElementById('bmod').classList.add('on');
-}
-
-function getVeh(){return document.getElementById('vman').value.trim().toUpperCase()||document.getElementById('vsel').value}
-function dAlert(cls,msg){const el=document.getElementById('d-alt');el.className='alt '+cls;el.innerHTML=msg;el.style.display='block';el.scrollIntoView({behavior:'smooth',block:'nearest'})}
-
+async function refreshAll(){await init();}
+async function aRefresh(){await refreshAll();if(adminIn)renderAdmin();}
+function setSS(s){const d=document.getElementById('sdot');d.className='sdot'+(s==='off'?' off':s==='busy'?' busy':'');}
+function goPage(p,el){document.querySelectorAll('.pg').forEach(x=>x.classList.remove('on'));document.querySelectorAll('.nb').forEach(x=>x.classList.remove('on'));document.getElementById('pg-'+p).classList.add('on');el.classList.add('on');if(p==='history'){refreshAll().then(renderHistory);}if(p==='admin'&&adminIn){refreshAll().then(renderAdmin);}}
+function onBill(inp,kind){const f=inp.files[0];if(!f)return;bFile=f;bKind=kind;document.querySelectorAll('.bo').forEach(x=>x.classList.remove('sel'));document.getElementById('bo-'+kind.slice(0,3)).classList.add('sel');document.getElementById('bprev').style.display='flex';document.getElementById('bnm').textContent=f.name;const kb=f.size<1024?f.size+'B':f.size<1048576?(f.size/1024).toFixed(1)+'KB':(f.size/1048576).toFixed(1)+'MB';document.getElementById('bmt').textContent=kb;const wrap=document.getElementById('bthumb');if(f.type.startsWith('image/')){const rd=new FileReader();rd.onload=e=>{bDURL=e.target.result;wrap.innerHTML='<img class="bth" src="'+bDURL+'" onclick="prevBill()">';runAI(bDURL);};rd.readAsDataURL(f);}else{bDURL=null;wrap.innerHTML='<div class="bthp">📄</div>';document.getElementById('aibox').style.display='none';document.getElementById('confcard').style.display='block';}}
+function clearBill(){bFile=null;bKind=null;bDURL=null;aiEx={};document.getElementById('bprev').style.display='none';document.getElementById('aibox').style.display='none';document.getElementById('confcard').style.display='none';document.querySelectorAll('.bo').forEach(x=>x.classList.remove('sel'));['fc','fg','fp','fa'].forEach(id=>document.getElementById(id).value='');}
+async function runAI(dURL){const box=document.getElementById('aibox');box.style.display='block';document.getElementById('airows').innerHTML='<div style="text-align:center;padding:10px;font-size:13px;color:#0f4c81;">✨ Reading bill with AI...</div>';document.getElementById('aiap').style.display='none';try{const b64=dURL.split(',')[1];const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:400,messages:[{role:'user',content:[{type:'image',source:{type:'base64',media_type:'image/jpeg',data:b64}},{type:'text',text:'Read this fuel receipt. Return ONLY valid JSON: {"liters":number_or_null,"date":"YYYY-MM-DD_or_null","amount":"string_or_null","station":"string_or_null"} Null if not visible.'}]}]})});const d=await res.json();const txt=d.content?.find(c=>c.type==='text')?.text||'{}';aiEx=JSON.parse(txt.replace(/```json|```/g,'').trim());const rows=[['Liters',aiEx.liters!=null?aiEx.liters+' L':null],['Date',aiEx.date],['Amount',aiEx.amount],['Station',aiEx.station]].filter(r=>r[1]);if(rows.length){document.getElementById('aiap').style.display='block';document.getElementById('airows').innerHTML=rows.map(([k,v])=>'<div class="airow"><span class="aik">'+k+'</span><span class="aiv">'+v+'</span></div>').join('');}else{document.getElementById('airows').innerHTML='<div style="font-size:12px;color:#6b7280;padding:4px 0;">Could not read bill. Fill in manually.</div>';}}catch(e){document.getElementById('airows').innerHTML='<div style="font-size:12px;color:#6b7280;padding:4px 0;">Could not auto-read. Fill in manually.</div>';}document.getElementById('confcard').style.display='block';}
+function applyAI(){if(aiEx.liters!=null)document.getElementById('c-lit').value=aiEx.liters;if(aiEx.date)document.getElementById('c-dat').value=aiEx.date;if(aiEx.amount)document.getElementById('c-amt').value=aiEx.amount;document.getElementById('aibox').innerHTML='<div style="font-size:13px;color:#2e7d32;font-weight:600;padding:6px 0;">✅ Data applied — verify and submit.</div>';}
+function prevBill(){if(!bDURL)return;document.getElementById('modtl').textContent='Bill preview';document.getElementById('modbody').innerHTML='<img class="mimg" src="'+bDURL+'">';document.getElementById('bmod').classList.add('on');}
+function getVeh(){return document.getElementById('vman').value.trim().toUpperCase()||document.getElementById('vsel').value;}
+function dAlert(cls,msg){const el=document.getElementById('d-alt');el.className='alt '+cls;el.innerHTML=msg;el.style.display='block';el.scrollIntoView({behavior:'smooth',block:'nearest'});}
 async function submitRefuel(){
-  const vehicle=getVeh(),liters=parseFloat(document.getElementById('c-lit').value);
+  const driver=document.getElementById('dname').value.trim();
+  const vehicle=getVeh();const liters=parseFloat(document.getElementById('c-lit').value);
   const date=document.getElementById('c-dat').value.trim()||new Date().toISOString().slice(0,10);
-  const amount=document.getElementById('c-amt').value.trim();
-  const odo=parseFloat(document.getElementById('c-odo').value);
-  if(!vehicle){dAlert('aer','⚠ Please select or enter your vehicle number.');return}
-  if(!bFile){dAlert('aer','⚠ Please attach a fuel bill.');return}
-  if(isNaN(liters)||liters<=0){dAlert('aer','⚠ Please enter the liters.');return}
-  if(isNaN(odo)||odo<=0){dAlert('aer','⚠ Please enter your current odometer reading.');return}
+  const amount=document.getElementById('c-amt').value.trim();const odo=parseFloat(document.getElementById('c-odo').value);
+  if(!driver){dAlert('aer','⚠ Please enter your name.');return;}
+  if(!vehicle){dAlert('aer','⚠ Please select or enter your vehicle number.');return;}
+  if(!bFile){dAlert('aer','⚠ Please attach a fuel bill.');return;}
+  if(isNaN(liters)||liters<=0){dAlert('aer','⚠ Please enter the liters.');return;}
+  if(isNaN(odo)||odo<=0){dAlert('aer','⚠ Please enter your current odometer reading.');return;}
   const expKm=Math.round(liters*BKM);
-  const prev=C.refuels.filter(r=>r.vehicle===vehicle)[0]||null;
+  const prev=C.refuels.filter(r=>r.vehicle===vehicle).sort((a,b)=>new Date(b.created_at)-new Date(a.created_at))[0]||null;
   let actKm=null,flagged=false,remark='',days=null;
-  if(prev){
-    actKm=Math.round(odo-(prev.odometer||0));
-    days=Math.round((new Date()-new Date(prev._ts||prev.timestamp))/86400000);
-    if(actKm<expKm){flagged=true;remark=`Expected ${expKm} km (${liters}L x 5), actual ${actKm} km - flagged`}
-    else if(actKm>expKm){remark=`Over average performance: ${actKm} km vs expected ${expKm} km`}
-    else{remark='Normal refuel'}
-  }else{remark='First refuel entry for this vehicle'}
-  if(flagged){
-    document.getElementById('rmbox').style.display='block';
-    document.getElementById('rmrsn').textContent=remark;
-    const dr=document.getElementById('rminp').value.trim();
-    if(!dr){dAlert('awn','⚠ Early refuel detected. Please add a remark explaining why.');document.getElementById('rmbox').scrollIntoView({behavior:'smooth',block:'nearest'});return}
-    remark=remark+' | Driver: '+dr;
-  }else{document.getElementById('rmbox').style.display='none'}
+  if(prev){actKm=Math.round(odo-(prev.odometer||0));days=Math.round((new Date()-new Date(prev.created_at))/86400000);if(actKm<expKm){flagged=true;remark='Expected '+expKm+' km ('+liters+'L x 5), actual '+actKm+' km - flagged';}else if(actKm>expKm){remark='Over average performance: '+actKm+' km vs expected '+expKm+' km';}else{remark='Normal refuel';}}else{remark='First refuel entry for this vehicle';}
+  if(flagged){document.getElementById('rmbox').style.display='block';document.getElementById('rmrsn').textContent=remark;const dr=document.getElementById('rminp').value.trim();if(!dr){dAlert('awn','⚠ Early refuel detected. Please add a remark explaining why.');document.getElementById('rmbox').scrollIntoView({behavior:'smooth',block:'nearest'});return;}remark=remark+' | Driver note: '+dr;}else{document.getElementById('rmbox').style.display='none';}
   showLoader('Saving to cloud...');
   try{
-    let imgData=null;
-    if(bDURL){imgData=bFile.size>400000?await compressImg(bDURL,0.55):bDURL}
-    const rec={vehicle,liters,date,amount,odometer:odo,expectedKm:expKm,actualKm:actKm,days,flagged,remark,timestamp:new Date().toISOString(),billName:bFile.name,billKind:bKind,billDataURL:imgData};
-    await dbW('refuels',rec);
-    if(flagged)await dbW('exceptions',{...rec,checkedAt:null});
-    if(!C.vehicles.includes(vehicle))await dbW('vehicles',{vehicle});
-    await refreshAll();
-    hideLoader();
-    const show={vehicle:rec.vehicle,liters:rec.liters,date:rec.date,amount:rec.amount||'—',expectedKm:rec.expectedKm,actualKm:rec.actualKm||'—',remark:rec.remark,timestamp:rec.timestamp};
-    document.getElementById('jdisp').textContent=JSON.stringify(show,null,2);
-    document.getElementById('resjson').style.display='block';
-    dAlert('aok','✅ Saved to cloud! '+(flagged?'⚠ Flagged for admin review.':''));
-    ['vman','c-lit','c-dat','c-amt','c-odo','rminp'].forEach(id=>document.getElementById(id).value='');
-    document.getElementById('vsel').value='';
-    document.getElementById('rmbox').style.display='none';
-    document.getElementById('confcard').style.display='none';
-    clearBill();
-    document.getElementById('resjson').scrollIntoView({behavior:'smooth',block:'start'});
-  }catch(e){hideLoader();dAlert('aer','Save failed: '+e.message)}
+    let imgData=null;if(bDURL){imgData=bFile.size>400000?await compressImg(bDURL,0.5):bDURL;}
+    const rec={vehicle,driver,liters,date,amount,odometer:odo,expected_km:expKm,actual_km:actKm,days_since:days,flagged,remark,bill_name:bFile.name,bill_kind:bKind,bill_data:imgData};
+    await dbInsert('refuels',rec);
+    if(flagged){await dbInsert('exceptions',{vehicle,driver,liters,date,amount,odometer:odo,expected_km:expKm,actual_km:actKm,remark,bill_name:bFile.name,bill_kind:bKind,bill_data:imgData,flag_reason:remark,checked:false});}
+    if(!C.vehicles.includes(vehicle)){await dbInsert('vehicles',{vehicle});}
+    await refreshAll();hideLoader();
+    const show={vehicle,driver,liters,date,amount:amount||'—',expected_km:expKm,actual_km:actKm||'—',remark,timestamp:new Date().toISOString()};
+    document.getElementById('jdisp').textContent=JSON.stringify(show,null,2);document.getElementById('resjson').style.display='block';
+    dAlert('aok','✅ Saved to cloud! '+(flagged?'⚠ Flagged for admin review.':'All good!'));
+    ['dname','vman','c-lit','c-dat','c-amt','c-odo','rminp'].forEach(id=>document.getElementById(id).value='');document.getElementById('vsel').value='';document.getElementById('rmbox').style.display='none';document.getElementById('confcard').style.display='none';clearBill();document.getElementById('resjson').scrollIntoView({behavior:'smooth',block:'start'});
+  }catch(e){hideLoader();dAlert('aer','❌ Save failed: '+e.message);}
 }
-
-async function compressImg(dURL,q){
-  return new Promise(resolve=>{
-    const img=new Image();
-    img.onload=()=>{const MAX=800,s=Math.min(1,MAX/Math.max(img.width,img.height)),c=document.createElement('canvas');c.width=Math.round(img.width*s);c.height=Math.round(img.height*s);c.getContext('2d').drawImage(img,0,0,c.width,c.height);resolve(c.toDataURL('image/jpeg',q))};
-    img.src=dURL;
-  });
-}
-
-function renderHistory(){
-  const q=(document.getElementById('hsrch').value||'').toLowerCase();
-  const list=C.refuels.filter(r=>!q||r.vehicle?.toLowerCase().includes(q));
-  const vehs=[...new Set(C.refuels.map(r=>r.vehicle))];
-  document.getElementById('ht').textContent=C.refuels.length;
-  document.getElementById('hv').textContent=vehs.length;
-  const el=document.getElementById('hlist');
-  if(!list.length){el.innerHTML='<div class="empty">No entries found.</div>';return}
-  el.innerHTML=list.map((r,i)=>`
-    <div class="li">
-      <div class="lir"><div class="lit">${r.vehicle||'—'}</div><span class="bdg ${r.flagged?'bfl':r.remark?.includes('Over')?'bov':'bok'}">${r.flagged?'⚠ Flagged':r.remark?.includes('Over')?'↑ Over avg':'✓ Normal'}</span></div>
-      <div class="lis">${r.date||'—'} · ${r.liters}L · ${r.amount||'—'}</div>
-      ${r.actualKm!=null?`<div class="lis">Actual: ${r.actualKm} km · Expected: ${r.expectedKm} km</div>`:''}
-      <div class="lis">📝 ${r.remark||'—'}</div>
-      ${r.billDataURL?`<div class="lib" onclick="viewBill(${i},'refuels')">📎 View bill</div>`:''}
-    </div>`).join('');
-}
-
-function viewBill(i,src){
-  const arr=src==='refuels'?C.refuels:src==='exceptions'?C.exceptions:C.archive;
-  const r=arr[i];if(!r)return;
-  document.getElementById('modtl').textContent=`${r.vehicle} — ${r.date||'—'}`;
-  const body=document.getElementById('modbody');
-  if(r.billDataURL){body.innerHTML=`<img class="mimg" src="${r.billDataURL}"><div style="margin-top:10px;font-size:12px;color:#6b7280;">${r.liters}L · ${r.amount||'—'}</div>`}
-  else{body.innerHTML=`<div style="text-align:center;padding:30px;background:#fff8e1;border-radius:10px;font-size:14px;color:#b45309;">📄 ${r.billName||'Bill'}</div>`}
-  document.getElementById('bmod').classList.add('on');
-}
-function closeMod(){document.getElementById('bmod').classList.remove('on')}
-
-function aLogin(){
-  if(document.getElementById('apass').value===PASS){
-    adminIn=true;
-    document.getElementById('alogin').style.display='none';
-    document.getElementById('adash').style.display='block';
-    document.getElementById('atag').style.display='block';
-    refreshAll().then(renderAdmin);
-  }else{document.getElementById('aerr').style.display='block'}
-}
-function aLogout(){
-  adminIn=false;
-  document.getElementById('alogin').style.display='block';
-  document.getElementById('adash').style.display='none';
-  document.getElementById('atag').style.display='none';
-  document.getElementById('apass').value='';
-  document.getElementById('aerr').style.display='none';
-}
-function stab(t,el){
-  document.querySelectorAll('.tp').forEach(x=>x.classList.remove('on'));
-  document.querySelectorAll('.stb').forEach(x=>x.classList.remove('on'));
-  document.getElementById('tp-'+t).classList.add('on');el.classList.add('on');
-}
-
-function renderAdmin(){
-  const vehs=[...new Set(C.refuels.map(r=>r.vehicle))];
-  document.getElementById('aot').textContent=C.refuels.length;
-  document.getElementById('aoe').textContent=C.exceptions.length;
-  document.getElementById('aov').textContent=C.vehicles.length;
-  let tKm=0,tL=0;C.refuels.forEach(r=>{if(r.actualKm)tKm+=r.actualKm;tL+=r.liters});
-  document.getElementById('aoa').textContent=tL>0?(tKm/tL).toFixed(1):'—';
-  const vp=document.getElementById('vperf');
-  if(!vehs.length){vp.innerHTML='<div class="empty">No data.</div>'}
-  else{vp.innerHTML=vehs.map(v=>{
-    const vr=C.refuels.filter(r=>r.vehicle===v);
-    const vf=C.exceptions.filter(e=>e.vehicle===v).length;
-    const km=vr.filter(r=>r.actualKm).reduce((s,r)=>s+r.actualKm,0);
-    const L=vr.reduce((s,r)=>s+r.liters,0);
-    return`<div class="vr"><div><div class="vn">${v}</div><div class="vm">${vr.length} refuels · avg ${L>0&&km>0?(km/L).toFixed(1):'—'} km/L</div></div><span class="bdg ${vf?'bfl':'bok'}">${vf?vf+' exc':'✓ Clean'}</span></div>`;
-  }).join('')}
-  const re=document.getElementById('recent');
-  re.innerHTML=C.refuels.length?C.refuels.slice(0,10).map((r,i)=>`
-    <div class="li"><div class="lir"><div class="lit">${r.vehicle||'—'}</div><span class="bdg ${r.flagged?'bfl':'bok'}" style="font-size:10px;">${r.flagged?'⚠':'✓'}</span></div>
-    <div class="lis">${r.date||'—'} · ${r.liters}L · ${r.amount||'—'}</div>
-    ${r.billDataURL?`<div class="lib" onclick="viewBill(${i},'refuels')">📎 View bill</div>`:''}
-    </div>`).join(''):'<div class="empty">No entries.</div>';
-  const el=document.getElementById('exlist');
-  el.innerHTML=C.exceptions.length?C.exceptions.map((e,i)=>`
-    <div class="exc exa"><div class="ext">⚠ ${e.vehicle}</div>
-    <div class="exb">${e.date||'—'} · ${e.liters}L · ${e.amount||'—'}<br>Actual: ${e.actualKm??'—'} km · Expected: ${e.expectedKm} km<br>📝 ${e.remark||'—'}</div>
-    <div class="exac"><button class="bgre" onclick="markChecked(${i})">✓ Mark checked</button>${e.billDataURL?`<button class="bbli" onclick="viewBill(${i},'exceptions')">📎 View bill</button>`:''}</div>
-    </div>`).join(''):'<div class="empty">No exceptions 🎉</div>';
-  const al=document.getElementById('arlist');
-  al.innerHTML=C.archive.length?C.archive.map((e,i)=>`
-    <div class="exc exr"><div class="ext">✓ ${e.vehicle} — Checked</div>
-    <div class="exb">${e.date||'—'} · ${e.liters}L<br>${e.remark||'—'}</div>
-    <div class="exac">${e.billDataURL?`<button class="bbli" onclick="viewBill(${i},'archive')">📎 View bill</button>`:''}<button class="bpup" onclick="restoreExc(${i})">↩ Restore</button></div>
-    </div>`).join(''):'<div class="empty">None yet.</div>';
-  document.getElementById('vcount').textContent=C.vehicles.length;
-  const vl=document.getElementById('vlist');
-  vl.innerHTML=C.vehicles.length?C.vehicles.map((v,i)=>`
-    <div class="vr"><div><div class="vn">${v}</div><div class="vm">${C.refuels.filter(r=>r.vehicle===v).length} refuels</div></div><button class="bred" onclick="delVeh(${i},'${v}')">🗑 Delete</button></div>`).join(''):'<div class="empty">No vehicles.</div>';
-}
-
-async function markChecked(i){
-  showLoader('Archiving...');
-  try{const exc=C.exceptions[i];exc.checkedAt=new Date().toISOString();if(exc._id){await dbD('exceptions',exc._id);await dbW('archive',{...exc});}await refreshAll();renderAdmin();}catch(e){alert('Failed: '+e.message)}
-  hideLoader();
-}
-async function restoreExc(i){
-  showLoader('Restoring...');
-  try{const arc=C.archive[i];if(arc._id){await dbD('archive',arc._id);await dbW('exceptions',{...arc,checkedAt:null});}await refreshAll();renderAdmin();}catch(e){alert('Failed: '+e.message)}
-  hideLoader();
-}
-function updateVD(){
-  const sel=document.getElementById('vsel'),cur=sel.value;
-  sel.innerHTML='<option value="">— Select your vehicle —</option>'+C.vehicles.map(v=>`<option value="${v}"${v===cur?' selected':''}>${v}</option>`).join('');
-}
-async function delVeh(i,name){
-  if(!confirm(`Delete "${name}"?`))return;
-  showLoader('Deleting...');
-  try{const rows=await dbR('vehicles');const row=rows.find(r=>r.vehicle===name);if(row&&row._id)await dbD('vehicles',row._id);await refreshAll();renderAdmin();}catch(e){alert('Failed: '+e.message)}
-  hideLoader();
-}
-async function addVeh(){
-  const v=document.getElementById('addv').value.trim().toUpperCase();
-  if(!v||C.vehicles.includes(v))return;
-  showLoader('Adding...');
-  try{await dbW('vehicles',{vehicle:v});await refreshAll();if(adminIn)renderAdmin();document.getElementById('addv').value='';}catch(e){alert('Failed: '+e.message)}
-  hideLoader();
-}
-async function importVeh(inp){
-  const f=inp.files[0];if(!f)return;
-  const rd=new FileReader();h
-  rd.onload=async function(e){
-    showLoader('Importing...');
-    const skip=['VEHICLE','NUMBER','PLATE','VEH','ID','NO','REG','NAME'];
-    const lines=e.target.result.split(/\r?\n/).map(l=>l.trim()).filter(Boolean);
-    let added=0;
-    for(const line of lines){
-      const raw=line.split(',')[0].trim().replace(/^["']|["']$/g,'').toUpperCase();
-      if(raw&&raw.length>1&&!skip.includes(raw)&&!C.vehicles.includes(raw)){
-        try{await dbW('vehicles',{vehicle:raw});C.vehicles.push(raw);added++}catch(e){}
-      }
-    }
-    await refreshAll();if(adminIn)renderAdmin();
-    const el=document.getElementById('impres');
-    el.className='alt aok';el.textContent=`Imported ${added} vehicles. Total: ${C.vehicles.length}`;el.style.display='block';
-    hideLoader();
-  };
-  rd.readAsText(f);
-}
-function showLoader(t){document.getElementById('ltx').textContent=t||'Loading...';document.getElementById('ldr').classList.add('on')}
-function hideLoader(){document.getElementById('ldr').classList.remove('on')}
-
+async function compressImg(dURL,q){return new Promise(resolve=>{const img=new Image();img.onload=()=>{const MAX=800,s=Math.min(1,MAX/Math.max(img.width,img.height));const c=document.createElement('canvas');c.width=Math.round(img.width*s);c.height=Math.round(img.height*s);c.getContext('2d').drawImage(img,0,0,c.width,c.height);resolve(c.toDataURL('image/jpeg',q));};img.src=dURL;});}
+function renderHistory(){const q=(document.getElementById('hsrch').value||'').toLowerCase();const list=C.refuels.filter(r=>!q||r.vehicle?.toLowerCase().includes(q)||r.driver?.toLowerCase().includes(q));const vehs=[...new Set(C.refuels.map(r=>r.vehicle))];document.getElementById('ht').textContent=C.refuels.length;document.getElementById('hv').textContent=vehs.length;const el=document.getElementById('hlist');if(!list.length){el.innerHTML='<div class="empty">No entries found.</div>';return;}el.innerHTML=list.map((r,i)=>'<div class="li"><div class="lir"><div class="lit">'+(r.vehicle||'—')+'</div><span class="bdg '+(r.flagged?'bfl':r.remark?.includes('Over')?'bov':'bok')+'">'+(r.flagged?'⚠ Flagged':r.remark?.includes('Over')?'↑ Over avg':'✓ Normal')+'</span></div><div class="lis">'+(r.driver||'—')+' · '+(r.date||'—')+' · '+r.liters+'L · '+(r.amount||'—')+'</div>'+(r.actual_km!=null?'<div class="lis">Actual: '+r.actual_km+' km · Expected: '+r.expected_km+' km'+(r.days_since!=null?' · '+r.days_since+'d':'')+'</div>':'')+'<div class="lis">📝 '+(r.remark||'—')+'</div>'+(r.bill_data?'<div class="lib" onclick="viewBill('+i+')">📎 '+(r.bill_name||'View bill')+'</div>':'')+'</div>').join('');}
+function viewBill(i,src){const arr=src==='exc'?C.exceptions:C.refuels;const r=arr[i];if(!r)return;document.getElementById('modtl').textContent=r.vehicle+' — '+(r.date||'—');const body=document.getElementById('modbody');if(r.bill_data){body.innerHTML='<img class="mimg" src="'+r.bill_data+'"><div style="margin-top:10px;font-size:12px;color:#6b7280;">'+(r.driver||'')+' · '+r.liters+'L · '+(r.amount||'—')+'</div>';}else{body.innerHTML='<div style="text-align:center;padding:30px;background:#fff8e1;border-radius:10px;font-size:14px;color:#b45309;">📄 '+(r.bill_name||'Bill')+'<br><br>'+(r.driver||'')+' · '+(r.date||'—')+'</div>';}document.getElementById('bmod').classList.add('on');}
+function closeMod(){document.getElementById('bmod').classList.remove('on');}
+function aLogin(){if(document.getElementById('apass').value===PASS){adminIn=true;document.getElementById('alogin').style.display='none';document.getElementById('adash').style.display='block';document.getElementById('atag').style.display='block';refreshAll().then(renderAdmin);}else{document.getElementById('aerr').style.display='block';}}
+function aLogout(){adminIn=false;document.getElementById('alogin').style.display='block';document.getElementById('adash').style.display='none';document.getElementById('atag').style.display='none';document.getElementById('apass').value='';document.getElementById('aerr').style.display='none';}
+function stab(t,el){document.querySelectorAll('.tp').forEach(x=>x.classList.remove('on'));document.querySelectorAll('.stb').forEach(x=>x.classList.remove('on'));document.getElementById('tp-'+t).classList.add('on');el.classList.add('on');}
+function renderAdmin(){const vehs=[...new Set(C.refuels.map(r=>r.vehicle))];const aE=C.exceptions.filter(e=>!e.checked);document.getElementById('aot').textContent=C.refuels.length;document.getElementById('aoe').textContent=aE.length;document.getElementById('aov').textContent=C.vehicles.length;let tK=0,tL=0;C.refuels.forEach(r=>{if(r.actual_km)tK+=r.actual_km;tL+=r.liters;});document.getElementById('aoa').textContent=tL>0?(tK/tL).toFixed(1):'—';const vp=document.getElementById('vperf');if(!vehs.length){vp.innerHTML='<div class="empty">No data.</div>';}else{vp.innerHTML=vehs.map(v=>{const vr=C.refuels.filter(r=>r.vehicle===v);const vf=aE.filter(e=>e.vehicle===v).length;const km=vr.filter(r=>r.actual_km).reduce((s,r)=>s+r.actual_km,0);const L=vr.reduce((s,r)=>s+r.liters,0);const last=vr[0];return'<div class="vr"><div><div class="vn">'+v+'</div><div class="vm">'+vr.length+' refuels · avg '+(L>0&&km>0?(km/L).toFixed(1):'—')+' km/L'+(last?' · '+new Date(last.created_at).toLocaleDateString('en-GB'):'')+' </div></div><span class="bdg '+(vf?'bfl':'bok')+'">'+(vf?vf+' exc':'✓ Clean')+'</span></div>';}).join('');}const re=document.getElementById('recent');re.innerHTML=C.refuels.length?C.refuels.slice(0,10).map((r,i)=>'<div class="li"><div class="lir"><div class="lit">'+(r.vehicle||'—')+'</div><span class="bdg '+(r.flagged?'bfl':'bok')+'" style="font-size:10px;">'+(r.flagged?'⚠':'✓')+'</span></div><div class="lis">'+(r.driver||'—')+' · '+(r.date||'—')+' · '+r.liters+'L</div>'+(r.bill_data?'<div class="lib" onclick="viewBill('+i+')">📎 View bill</div>':'')+'</div>').join(''):'<div class="empty">No entries.</div>';const el=document.getElementById('exlist');el.innerHTML=aE.length?aE.map((e,i)=>'<div class="exc exa"><div class="ext">⚠ '+e.vehicle+'</div><div class="exb">'+(e.driver||'—')+' · '+(e.date||'—')+' · '+e.liters+'L · '+(e.amount||'—')+'<br>Actual: '+(e.actual_km??'—')+' km · Expected: '+e.expected_km+' km<br>📝 '+(e.remark||'—')+'</div><div class="exac"><button class="bgre" onclick="markChecked('+e.id+')">✓ Mark checked</button>'+(e.bill_data?'<button class="bbli" onclick="viewBillExc('+i+')">📎 View bill</button>':'')+'</div></div>').join(''):'<div class="empty">No exceptions 🎉</div>';const al=document.getElementById('arlist');const arch=C.exceptions.filter(e=>e.checked);al.innerHTML=arch.length?arch.map((e,i)=>'<div class="exc exr"><div class="ext">✓ '+e.vehicle+' — Checked</div><div class="exb">'+(e.driver||'—')+' · '+(e.date||'—')+' · '+e.liters+'L<br>'+(e.remark||'—')+'<br>Checked: '+(e.checked_at?new Date(e.checked_at).toLocaleDateString('en-GB'):'—')+'</div><div class="exac">'+(e.bill_data?'<button class="bbli" onclick="viewBillExc('+i+')">📎 View bill</button>':'')+'<button class="bpup" onclick="uncheck('+e.id+')">↩ Restore</button></div></div>').join(''):'<div class="empty">None yet.</div>';document.getElementById('vcount').textContent=C.vehicles.length;const vl=document.getElementById('vlist');vl.innerHTML=C.vehicles.length?C.vehicles.map(v=>'<div class="vr"><div><div class="vn">'+v+'</div><div class="vm">'+C.refuels.filter(r=>r.vehicle===v).length+' refuels</div></div><button class="bred" onclick="delVeh(''+v+'')">🗑 Delete</button></div>').join(''):'<div class="empty">No vehicles.</div>';}
+function viewBillExc(i,type){const arr=type==='arch'?C.exceptions.filter(e=>e.checked):C.exceptions.filter(e=>!e.checked);const r=arr[i];if(!r)return;document.getElementById('modtl').textContent=r.vehicle+' — '+(r.date||'—');const body=document.getElementById('modbody');if(r.bill_data){body.innerHTML='<img class="mimg" src="'+r.bill_data+'"><div style="margin-top:10px;font-size:12px;color:#6b7280;">'+(r.driver||'')+' · '+r.liters+'L</div>';}else{body.innerHTML='<div style="text-align:center;padding:30px;background:#fff8e1;border-radius:10px;font-size:14px;color:#b45309;">📄 '+(r.bill_name||'Bill')+'</div>';}document.getElementById('bmod').classList.add('on');}
+async function markChecked(id){showLoader('Archiving...');try{await dbUpdate('exceptions',id,{checked:true,checked_at:new Date().toISOString()});await refreshAll();renderAdmin();}catch(e){alert('Failed: '+e.message);}hideLoader();}
+async function uncheck(id){showLoader('Restoring...');try{await dbUpdate('exceptions',id,{checked:false,checked_at:null});await refreshAll();renderAdmin();}catch(e){alert('Failed: '+e.message);}hideLoader();}
+function updateVD(){const sel=document.getElementById('vsel'),cur=sel.value;sel.innerHTML='<option value="">— Select vehicle —</option>'+C.vehicles.map(v=>'<option value="'+v+'"'+(v===cur?' selected':'')+'>'+v+'</option>').join('');}
+async function delVeh(v){if(!confirm('Delete vehicle "'+v+'"? Entry history is kept.'))return;showLoader('Deleting...');try{const rows=await dbRead('vehicles','?vehicle=eq.'+encodeURIComponent(v));if(rows&&rows[0])await dbDelete('vehicles',rows[0].id);await refreshAll();renderAdmin();}catch(e){alert('Failed: '+e.message);}hideLoader();}
+async function addVeh(){const v=document.getElementById('addv').value.trim().toUpperCase();if(!v||C.vehicles.includes(v))return;showLoader('Adding...');try{await dbInsert('vehicles',{vehicle:v});await refreshAll();if(adminIn)renderAdmin();document.getElementById('addv').value='';}catch(e){alert('Failed: '+e.message);}hideLoader();}
+async function importVeh(inp){const f=inp.files[0];if(!f)return;const rd=new FileReader();rd.onload=async function(e){showLoader('Importing...');const skip=['VEHICLE','NUMBER','PLATE','VEH','ID','NO','REG','NAME'];const lines=e.target.result.split(/?
+/).map(l=>l.trim()).filter(Boolean);let added=0;for(const line of lines){const raw=line.split(',')[0].trim().replace(/^["']|["']$/g,'').toUpperCase();if(raw&&raw.length>1&&!skip.includes(raw)&&!C.vehicles.includes(raw)){try{await dbInsert('vehicles',{vehicle:raw});C.vehicles.push(raw);added++;}catch(e){}}}await refreshAll();if(adminIn)renderAdmin();const el=document.getElementById('impres');el.className='alt aok';el.textContent='✅ Imported '+added+' vehicles. Total: '+C.vehicles.length;el.style.display='block';hideLoader();};rd.readAsText(f);}
+function showLoader(t){document.getElementById('ltx').textContent=t||'Loading...';document.getElementById('ldr').classList.add('on');}
+function hideLoader(){document.getElementById('ldr').classList.remove('on');}
 init();
 </script>
 </body>
